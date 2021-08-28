@@ -1,5 +1,7 @@
-node_modules
-.DS_Store
 dist
 dist-ssr
+.DS_Store
+.env.prod
+.env.development
 *.local
+node_modules
