@@ -4,6 +4,8 @@
       <img :src="image.logo" height="30" width="30">
     </div>
     <div class="w-2/6 flex justify-between items-center">
+      <a href="#">{{ $t("link.blog") }}</a>
+      <a href="#">{{ $t("link.trend") }}</a>
     </div>
     <div class="w-3/6 flex justify-end items-center">
       <p class="mr-2">hogehoge</p>
