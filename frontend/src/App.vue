@@ -10,12 +10,22 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.bg-gold-500 {
+  background-color: theme('colors.gold.default');
+}
+.bg-silver-500 {
+  background-color: theme('colors.silver.default');
+}
+.border-gold-500 {
+  border-color: theme('colors.gold.default');
+}
+.border-silver-500 {
+  border-color: theme('colors.silver.default');
+}
+.text-gold-500 {
+  color: theme('colors.gold.default');
+}
+.text-silver-500 {
+  color: theme('colors.silver.default');
 }
 </style>
