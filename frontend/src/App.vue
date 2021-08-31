@@ -2,11 +2,15 @@
   <div>
     <Header />
     
+    <div class="h-main w-full">
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from './components/shared/Header.vue'
+import Footer from './components/shared/Footer.vue'
 export default {
   data(){
     return {
@@ -14,6 +18,7 @@ export default {
     }
   },
   components: {
+    Footer,
     Header,
   },
 }
@@ -31,6 +36,10 @@ export default {
 }
 .border-silver-500 {
   border-color: theme('colors.silver.default');
+}
+.h-main {
+  height: calc(100vh - 48px - 64px);
+  background-color: #F0F0F0;
 }
 .text-gold-500 {
   color: theme('colors.gold.default');
