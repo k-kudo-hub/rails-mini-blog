@@ -1,9 +1,9 @@
 <template>
   <div>
     <Header />
-    <div class="h-main w-full">
+    <article class="h-main p-3 bg-gray-100">
       <router-view />
-    </div>
+    </article>
     <Footer />
   </div>
 </template>
@@ -38,8 +38,8 @@ export default {
   border-color: theme('colors.silver.default');
 }
 .h-main {
-  height: calc(100vh - 48px - 64px);
-  background-color: #F0F0F0;
+  min-height: calc(100vh - 48px - 64px);
+  margin-bottom: 64px;
 }
 .text-gold-500 {
   color: theme('colors.gold.default');

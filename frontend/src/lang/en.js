@@ -3,7 +3,12 @@ const messages = Object.freeze({
     blog: "blogs",
     trend: "trend",
     star: "stars",
-    account: "account"
+    account: "my page"
+  },
+  profile: {
+    blogs: "Blogs",
+    follow: "following",
+    follower: "follower",
   }
 })
 
