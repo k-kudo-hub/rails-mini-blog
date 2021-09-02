@@ -1,10 +1,11 @@
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n/index'
 import { createRouter, createWebHistory } from 'vue-router'
-import ja_file from './lang/ja'
-import en_file from './lang/en'
+import { csrfToken } from 'rails-ujs'
 import App from './App.vue'
-
+import axios from 'axios'
+import en_file from './lang/en'
+import ja_file from './lang/ja'
 import routes from './router.js'
 import './index.css'
 
@@ -22,6 +23,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes: routes
 });
+
+axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 const app = createApp(App)
 app.use(i18n)
