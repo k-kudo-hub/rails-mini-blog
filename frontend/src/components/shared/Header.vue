@@ -14,8 +14,8 @@
       </div>
     </div>
     <div v-else class="w-3/6 flex justify-end items-center">
-      <router-link to="/login" class="mr-2">ログイン</router-link>
-      <router-link to="/registration" class="mr-2">新規登録</router-link>
+      <router-link to="/login" class="mr-2">{{ $t("session.sign_in") }}</router-link>
+      <router-link to="/registration" class="mr-2">{{ $t("session.sign_up") }}</router-link>
     </div>
   </header>
 </template>

@@ -32,8 +32,6 @@
 
 <script>
 import axios from 'axios'
-import { csrfToken } from 'rails-ujs'
-axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 export default {
   data(){
     return {
@@ -77,10 +75,9 @@ export default {
     },
     inputValidation(){
       this.resetErrors()
-      // FIXME: Vuei18nを使用して英語でも出力できるようにしたい
-      if(!this.user.name){ this.errors.name.push("ユーザー名を入力してください。") }
-      if(!this.user.email){ this.errors.email.push("メールアドレスを入力してください。") }
-      if(!this.user.password){ this.errors.password.push("パスワードを入力してください。") }
+      if(!this.user.name){ this.errors.name.push(this.$t("session.name") + this.$t("form.require_message")) }
+      if(!this.user.email){ this.errors.email.push(this.$t("session.email") + this.$t("form.require_message")) }
+      if(!this.user.password){ this.errors.password.push(this.$t("session.password") + this.$t("form.require_message")) }
     },
     catchErrorMessages(errors){
       this.resetErrors()

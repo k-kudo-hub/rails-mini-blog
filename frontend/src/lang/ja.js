@@ -2,7 +2,8 @@ const messages = Object.freeze({
   form: {
     require: "必須",
     character_20: "20文字以内",
-    character_8_password: "8文字以上・英数字混合"
+    character_8_password: "8文字以上・英数字混合",
+    require_message: "を入力してください。"
   },
   link: {
     blog: "ブログ",
@@ -17,6 +18,7 @@ const messages = Object.freeze({
   },
   session: {
     sign_up: "新規登録",
+    sign_in: "ログイン",
     registration: "登録",
     name: "ユーザー名",
     email: "メールアドレス",
