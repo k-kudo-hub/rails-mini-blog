@@ -24,7 +24,10 @@
         </template>
       </div>
       <div class="flex justify-end mr-4">
-        <button @click="registrationUser" name="password" type="submit" class="border border-gold-500 text-gold-500 bg-white py-1 px-2 rounded-2xl shadow-md">{{ $t("session.registration") }}</button>
+        <button-default 
+          @click="registrationUser"
+          :text="$t('session.registration')"
+        />
       </div>
     </form>
   </div>
@@ -33,6 +36,7 @@
 <script>
 import axios from 'axios'
 import RequireLabel from '../shared/RequireLabel.vue'
+import ButtonDefault from '../shared/ButtonDefault.vue'
 export default {
   data(){
     return {
@@ -50,6 +54,7 @@ export default {
   },
   components: {
     RequireLabel,
+    ButtonDefault
   },
   methods: {
     registration(){

@@ -25,10 +25,12 @@ export default {
 </script>
 
 <style>
-.bg-gold-500 {
+.bg-gold-500,
+.hover\:bg-gold-500:hover {
   background-color: theme('colors.gold.default');
 }
-.bg-silver-500 {
+.bg-silver-500,
+.hover\:bg-silver-500:hover {
   background-color: theme('colors.silver.default');
 }
 .border-gold-500 {
@@ -41,10 +43,14 @@ export default {
   min-height: calc(100vh - 48px - 64px);
   margin-bottom: 64px;
 }
-.text-gold-500 {
+.text-gold-500,
+.hover\:text-gold-500:hover,
+.focus\:text-gold-500:focus {
   color: theme('colors.gold.default');
 }
-.text-silver-500 {
+.text-silver-500,
+.hover\:text-silver-500:hover,
+.focus\:text-silver-500:focus {
   color: theme('colors.silver.default');
 }
 </style>
