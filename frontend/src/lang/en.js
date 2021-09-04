@@ -3,7 +3,8 @@ const messages = Object.freeze({
     require: "required",
     character_20: "20 characters or less",
     character_8_password: "8 characters or more. Must use Alphabets and numbers",
-    require_message: " can't be blank."
+    require_message: " can't be blank.",
+    wrong_message: "Wrong email address or password."
   },
   link: {
     blog: "blogs",

@@ -3,7 +3,8 @@ const messages = Object.freeze({
     require: "必須",
     character_20: "20文字以内",
     character_8_password: "8文字以上・英数字混合",
-    require_message: "を入力してください。"
+    require_message: "を入力してください。",
+    wrong_message: "メールアドレスかパスワードが間違っています。"
   },
   link: {
     blog: "ブログ",
