@@ -3,21 +3,21 @@
     <h1 class="mb-4 text-lg">{{ $t("session.sign_up") }}</h1>
     <form @submit.prevent>
       <div class="flex flex-col mb-3">
-        <label for="name" class="mb-2 flex items-center">{{ $t("session.name") }}<span class="ml-2 bg-gold-500 text-white text-xs px-2 py-1 rounded-2xl">{{ $t("form.require") }}</span></label>
+        <label for="name" class="mb-2 flex items-center">{{ $t("session.name") }}<require-label/></label>
         <input v-model="user.name" name="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" :placeholder="$t('form.character_20')">
         <template v-if="errors.name.length > 0">
           <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
       <div class="flex flex-col mb-3">
-        <label for="email" class="mb-2 flex items-center">{{ $t("session.email") }}<span class="ml-2 bg-gold-500 text-white text-xs px-2 py-1 rounded-2xl">{{ $t("form.require") }}</span></label>
+        <label for="email" class="mb-2 flex items-center">{{ $t("session.email") }}<require-label/></label>
         <input v-model="user.email" name="email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text">
         <template v-if="errors.email.length > 0">
           <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
       <div class="flex flex-col mb-5">
-        <label for="password" class="mb-2 flex items-center">{{ $t("session.password") }}<span class="ml-2 bg-gold-500 text-white text-xs px-2 py-1 rounded-2xl">{{ $t("form.require") }}</span></label>
+        <label for="password" class="mb-2 flex items-center">{{ $t("session.password") }}<require-label/></label>
         <input v-model="user.password" name="password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" :placeholder="$t('form.character_8_password')">
         <template v-if="errors.password.length > 0">
           <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
@@ -32,6 +32,7 @@
 
 <script>
 import axios from 'axios'
+import RequireLabel from '../shared/RequireLabel.vue'
 export default {
   data(){
     return {
@@ -46,6 +47,9 @@ export default {
         password: [],
       }
     }
+  },
+  components: {
+    RequireLabel,
   },
   methods: {
     registration(){
