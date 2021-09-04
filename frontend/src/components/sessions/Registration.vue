@@ -60,6 +60,9 @@ export default {
         .then(response => {
           console.log(`${response.data}さんの登録が成功しました！`)
           this.resetErrors()
+          this.$router.push({
+            name: 'home'
+          })
         })
         .catch(error => {
           console.log(error.response.data)
