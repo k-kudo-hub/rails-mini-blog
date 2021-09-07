@@ -26,6 +26,7 @@ const router = createRouter({
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.withCredentials = true
 
 const app = createApp(App)
 app.use(i18n)
