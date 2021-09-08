@@ -13,4 +13,8 @@ class User < ApplicationRecord
   validates :email,    uniqueness: { message: "はすでに使用されています。" }
   validates :password, presence:   { message: "が入力されていません。" }, on: :create
   validates :password, format:     { with: VALID_PASSWORD_REGAX, message: 'は8文字以上の半角英数字混合で登録できます。' }
+
+  scope :find_and_select_by_id, ->(id) {
+    select(:id, :name, :introduce, :picture, :cover).find(id)
+  }
 end
