@@ -20,6 +20,7 @@ const messages = Object.freeze({
   session: {
     sign_up: "Sign up",
     sign_in: "Sign in",
+    sign_out: "Sign out",
     registration: "registration",
     name: "Name",
     email: "Email",
