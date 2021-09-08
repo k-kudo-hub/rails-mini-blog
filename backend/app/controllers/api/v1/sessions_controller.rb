@@ -1,4 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
+  skip_before_action :require_login
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     render json: { error: '404 not found' }, status: :not_found
   end
@@ -7,7 +8,8 @@ class Api::V1::SessionsController < ApplicationController
     user = User.find_by(email: session_params[:email])
     if user&.authenticate(session_params[:password])
       session[:user_id] = user.id
-      render json: user.name
+      response = { id: user.id, name: user.name }
+      render json: response
     else
       render json: user.errors, status: :unprocessable_entity
     end
