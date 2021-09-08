@@ -1,10 +1,10 @@
 <template>
   <section>
-    <img v-if="user.cover" :src="exportProfileHeaderImage(user.cover)" alt="" class="h-32 w-full object-cover shadow-md">
-    <img v-else :src="exportProfileHeaderImage('dummy-header2.jpg')" alt="" class="h-32 w-full object-cover shadow-md">
+    <img v-if="user.cover" :src="user.cover" alt="" class="h-32 w-full object-cover shadow-md">
+    <img v-else :src="dummy_header" alt="" class="h-32 w-full object-cover shadow-md">
     <div class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img v-if="user.picture" :src="exportProfileHeaderImage(user.picture)" alt="" height="60" width="60">
-      <img v-else :src="exportProfileHeaderImage('logo.png')" alt="" height="60" width="60">
+      <img v-if="user.picture" :src="user.picture" alt="" height="60" width="60">
+      <img v-else :src="logo" alt="" height="60" width="60">
     </div>
     <div class="m-8 mx-2">
       <h1 class="text-2xl mb-1">{{ user.name }}</h1>
@@ -24,7 +24,8 @@ import logo from '../../assets/logo.png'
 export default {
   data(){
     return {
-
+      dummy_header,
+      logo,
     }
   },
   props: {
@@ -36,11 +37,6 @@ export default {
       cover: String,
     }
   },
-  methods: {
-    exportProfileHeaderImage(file){
-      return `/src/assets/${file}`
-    },
-  }
 }
 </script>
 

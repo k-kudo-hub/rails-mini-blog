@@ -6,7 +6,7 @@
         <h1 class="h-1/2 flex items-center">{{ card.title }}</h1>
         <div class="h-1/2 flex items-center">
           <div class="h-6 w-6 bg-white rounded-2xl mr-2 flex justify-center items-center">
-            <img :src="exportCardProfileImage(card.picture)" alt="" height="20" width="20">
+            <img :src="card.picture" alt="" height="20" width="20">
           </div>
           <p>{{ card.name }}</p>
         </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import logo from '../../assets/logo.png'
 export default {
   data(){
     return {
@@ -23,22 +24,22 @@ export default {
         {
           id: 1,
           title: "dummy blog title",
-          cover: "dummy-header.jpg",
-          picture: "logo.png",
+          cover: "/src/assets/dummy-header.jpg",
+          picture: logo,
           name: "John Star"
         },
         {
           id: 2,
           title: "dummy blog title2",
-          cover: "dummy-header2.jpg",
-          picture: "logo.png",
+          cover: "/src/assets/dummy-header2.jpg",
+          picture: logo,
           name: "Ivan Lod"
         },
         {
           id: 3,
           title: "dummy blog title3",
-          cover: "dummy-header3.jpg",
-          picture: "logo.png",
+          cover: "/src/assets/dummy-header3.jpg",
+          picture: logo,
           name: "Jeff Arren"
         }
       ]
@@ -46,10 +47,7 @@ export default {
   },
   methods: {
     exportBgImage(file){
-      return `background-image: url('/src/assets/${file}')`
-    },
-    exportCardProfileImage(file){
-      return `/src/assets/${file}`
+      return `background-image: url('${file}')`
     }
   }
 }
