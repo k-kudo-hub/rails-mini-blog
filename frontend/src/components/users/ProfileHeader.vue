@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <img :src="exportProfileHeaderImage(user.cover)" alt="" class="h-32 w-full object-cover shadow-md">
+  <section>
+    <img v-if="user.cover" :src="exportProfileHeaderImage(user.cover)" alt="" class="h-32 w-full object-cover shadow-md">
+    <img v-else :src="exportProfileHeaderImage('dummy-header2.jpg')" alt="" class="h-32 w-full object-cover shadow-md">
     <div class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img :src="exportProfileHeaderImage(user.picture)" alt="" height="60" width="60">
+      <img v-if="user.picture" :src="exportProfileHeaderImage(user.picture)" alt="" height="60" width="60">
+      <img v-else :src="exportProfileHeaderImage('logo.png')" alt="" height="60" width="60">
     </div>
     <div class="m-8 mx-2">
       <h1 class="text-2xl mb-1">{{ user.name }}</h1>
@@ -13,7 +15,7 @@
         <a href="#" class="ml-1"><span class="font-bold mr-1">145</span>{{ $t("profile.follower") }}</a>
       </p>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -22,13 +24,16 @@ import logo from '../../assets/logo.png'
 export default {
   data(){
     return {
-      user: {
-        cover: "dummy-header2.jpg",
-        link: "https://example.com",
-        introduce: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        picture: "logo.png",
-        name: "dummy",
-      }
+
+    }
+  },
+  props: {
+    user: { 
+      id: Number,
+      name: String,
+      introduce: String,
+      picture: String,
+      cover: String,
     }
   },
   methods: {

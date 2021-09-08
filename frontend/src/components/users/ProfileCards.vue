@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-2">
+  <section class="mx-2 mb-4">
     <h1 class="mb-2 text-xl">{{ $t("profile.blogs") }}</h1>
     <article :style="exportBgImage(card.cover)" class="bg-center bg-cover h-24 mb-2" v-for="card in cards" :key="card.id">
       <div class="w-full h-full bg-black bg-opacity-50 text-white pl-4">

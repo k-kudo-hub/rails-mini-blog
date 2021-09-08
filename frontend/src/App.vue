@@ -1,26 +1,55 @@
 <template>
   <div>
-    <Header />
+    <Header 
+      :user="user"
+    />
     <article class="h-main p-3 bg-gray-100">
-      <router-view />
+      <router-view 
+        :user="user"
+      />
     </article>
-    <Footer />
+    <Footer 
+      :user="user"
+    />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Header from './components/shared/Header.vue'
 import Footer from './components/shared/Footer.vue'
 export default {
   data(){
     return {
-
+      user: {
+        id: 0,
+        name: "",
+        introduce: "",
+        picture: "",
+        cover: "",
+      }
     }
   },
   components: {
     Footer,
     Header,
   },
+  mounted(){
+    this.getUsersInfo();
+  },
+  methods: {
+    getUsersInfo(){
+      axios
+        .get('http://localhost:3000/api/v1/users/0')
+        .then(response => {
+          this.user = response.data
+          console.log(this.user)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
 
