@@ -3,21 +3,21 @@
     <h1 class="mb-4 text-lg">{{ $t("session.sign_up") }}</h1>
     <form @submit.prevent>
       <div class="flex flex-col mb-3">
-        <label for="name" class="mb-2 flex items-center">{{ $t("session.name") }}<require-label/></label>
+        <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
         <input v-model="user.name" name="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" :placeholder="$t('form.character_20')">
         <template v-if="errors.name.length > 0">
           <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
       <div class="flex flex-col mb-3">
-        <label for="email" class="mb-2 flex items-center">{{ $t("session.email") }}<require-label/></label>
+        <label for="email" class="mb-2 flex items-center">{{ $t("user.email") }}<require-label/></label>
         <input v-model="user.email" name="email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text">
         <template v-if="errors.email.length > 0">
           <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
       <div class="flex flex-col mb-5">
-        <label for="password" class="mb-2 flex items-center">{{ $t("session.password") }}<require-label/></label>
+        <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
         <input v-model="user.password" name="password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" :placeholder="$t('form.character_8_password')">
         <template v-if="errors.password.length > 0">
           <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
@@ -87,9 +87,9 @@ export default {
     },
     inputValidation(){
       this.resetErrors()
-      if(!this.user.name){ this.errors.name.push(this.$t("session.name") + this.$t("form.require_message")) }
-      if(!this.user.email){ this.errors.email.push(this.$t("session.email") + this.$t("form.require_message")) }
-      if(!this.user.password){ this.errors.password.push(this.$t("session.password") + this.$t("form.require_message")) }
+      if(!this.user.name){ this.errors.name.push(this.$t("user.name") + this.$t("form.require_message")) }
+      if(!this.user.email){ this.errors.email.push(this.$t("user.email") + this.$t("form.require_message")) }
+      if(!this.user.password){ this.errors.password.push(this.$t("user.password") + this.$t("form.require_message")) }
     },
     catchErrorMessages(errors){
       this.resetErrors()
