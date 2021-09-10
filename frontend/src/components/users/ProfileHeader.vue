@@ -7,7 +7,10 @@
       <img v-else :src="logo" alt="" height="60" width="60">
     </div>
     <div class="m-8 mx-2">
-      <h1 class="text-2xl mb-1">{{ user.name }}</h1>
+      <div class="flex items-center">
+        <h1 class="text-2xl mb-1 mr-3">{{ user.name }}</h1>
+        <i @click="$emit('toggleEditModal')" class="fas fa-pen text-gray-500"></i>
+      </div>
       <p class="mb-1">{{ user.introduce }}</p>
       <a class="text-silver-500 underline" :href="user.link" target="_blank" rel="nofollow noopener">{{ user.link }}</a>
       <p class="mt-2 mx-2">

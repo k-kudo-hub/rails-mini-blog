@@ -1,10 +1,16 @@
 <template>
   <div class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
+      <ProfileEdit
+        v-if="isOpenEditModal"
+        @toggleEditModal="toggleEditModal"
+      />
       <ProfileHeader
         :user="user"
+        @toggleEditModal="toggleEditModal"
       />
-      <ProfileCards/>
+      <ProfileCards
+      />
       <div class="flex justify-end mr-4">
         <button-default
           @click="signOut"
@@ -25,12 +31,14 @@ import dummy_header from '../../assets/dummy-header.jpg'
 import logo from '../../assets/logo.png'
 import ButtonDefault from '../shared/ButtonDefault.vue'
 import ProfileCards from './ProfileCards.vue'
+import ProfileEdit from './ProfileEdit.vue'
 import ProfileHeader from './ProfileHeader.vue'
 export default {
   data(){
     return {
       dummy: dummy_header,
       logo: logo,
+      isOpenEditModal: false,
     }
   },
   props: {
@@ -43,8 +51,9 @@ export default {
     }
   },
   components: {
-    ProfileHeader,
     ProfileCards,
+    ProfileEdit,
+    ProfileHeader,
     ButtonDefault,
   },
   methods: {
@@ -56,6 +65,9 @@ export default {
             name: 'home',
           })
         })
+    },
+    toggleEditModal(){
+      this.isOpenEditModal ? this.isOpenEditModal = false : this.isOpenEditModal = true;
     }
   }
 }
