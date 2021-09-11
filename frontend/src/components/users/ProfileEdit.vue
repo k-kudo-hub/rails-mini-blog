@@ -72,6 +72,7 @@ export default {
   },
   computed: {
     propsUser: {
+      // TODO: エラーがあった際に入力値がリセットされないようにしたい。
       get(){
         return this.user
       }
