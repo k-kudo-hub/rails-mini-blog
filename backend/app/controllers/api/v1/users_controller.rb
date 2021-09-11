@@ -14,13 +14,23 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @current_user
+    render json: @current_user, methods: [:picture_url]
   end
 
   def update
     user = User.find(@current_user.id)
     if user.update(user_update_params)
       response = { name: user.name, introduce: user.introduce, link: user.link }
+      render json: response, status: :created
+    else
+      render json: user.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def upload
+    user = User.find(@current_user.id)
+    if user.update(user_upload_params)
+      response = { picture: user.picture.url, cover: user.cover }
       render json: response, status: :created
     else
       render json: user.errors.full_messages, status: :unprocessable_entity
@@ -35,8 +45,12 @@ class Api::V1::UsersController < ApplicationController
   def user_create_params
     params.require(:user).permit(:name, :email, :password)
   end
-  
+
   def user_update_params
     params.require(:user).permit(:name, :introduce, :link)
+  end
+
+  def user_upload_params
+    params.require(:user).permit(:picture, :cover)
   end
 end

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  mount_uploader :picture, PictureUploader
 
   VALID_EMAIL_REGEX        = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGAX     = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
@@ -21,4 +22,8 @@ class User < ApplicationRecord
   scope :find_and_select_by_id, ->(id) {
     select(:id, :name, :introduce, :picture, :cover, :link).find(id)
   }
+
+  def picture_url
+    picture.present? ? picture.url : nil
+  end
 end
