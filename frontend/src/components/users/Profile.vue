@@ -6,7 +6,7 @@
         :errors="errors"
         v-if="isOpenEditModal"
         @toggleEditModal="toggleEditModal"
-        @updateUser="updateUser"
+        @updateUserInfo="updateUserInfo"
       />
       <ProfileHeader
         :user="user"
@@ -119,17 +119,19 @@ export default {
         }
       })
     },
-    update(){
+    updateUser(newName, newIntroduce, newLink){
       axios
         .put(`http://localhost:3000/api/v1/users/${this.user.id}`,{
           user: {
-            name: this.user.name,
-            introduce: this.user.introduce,
-            link: this.user.link,
+            name: newName,
+            introduce: newIntroduce,
+            link: newLink,
           }
         })
         .then(response => {
-          console.log(response.data)
+          this.user.name = response.data.name
+          this.user.introduce = response.data.introduce
+          this.user.link = response.data.link
           this.toggleEditModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })
@@ -138,9 +140,9 @@ export default {
           this.catchErrorMessages(error.response.data)
         })
     },
-    updateUser(){
-      if(this.user.name){
-        this.update();
+    updateUserInfo(...args){
+      if(args[0]){
+        this.updateUser(args[0], args[1], args[2]);
       } else {
         this.inputValidation();
       }

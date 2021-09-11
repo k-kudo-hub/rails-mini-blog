@@ -5,21 +5,21 @@
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
-          <input v-model="propsUser.name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" name="name" :placeholder="$t('form.character_20')">
+          <input :value="propsUser.name" :ref="propsUser.name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" name="name" :placeholder="$t('form.character_20')">
           <template v-if="errors.name.length > 0">
             <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
           </template>
         </div>
         <div class="flex flex-col mb-3">
           <label for="introduce" class="mb-2 flex items-center">{{ $t("user.introduce") }}</label>
-          <textarea v-model="propsUser.introduce" :class="addErrorBorder(errors.introduce)" class="border-b h-20" type="text" name="introduce"></textarea>
+          <textarea :value="propsUser.introduce" :ref="propsUser.introduce" :class="addErrorBorder(errors.introduce)" class="border-b h-20" type="text" name="introduce"></textarea>
           <template v-if="errors.introduce.length > 0">
             <p v-for="(item, index) in errors.introduce" :key="index" class="text-red-500">{{ item }}</p>
           </template>
         </div>
         <div class="flex flex-col mb-5">
           <label for="link" class="mb-2 flex items-center">{{ $t("user.link") }}</label>
-          <input v-model="propsUser.link" :class="addErrorBorder(errors.link)" class="border-b h-10" type="text" name="link">
+          <input :value="propsUser.link" :ref="propsUser.link" :class="addErrorBorder(errors.link)" class="border-b h-10" type="text" name="link">
           <template v-if="errors.link.length > 0">
             <p v-for="(item, index) in errors.link" :key="index" class="text-red-500">{{ item }}</p>
           </template>
@@ -30,7 +30,11 @@
           :text="$t('form.cancel')"
           />
           <button-filled
-          @click="$emit('updateUser', user)"
+          @click="$emit('updateUserInfo',
+                        this.$refs[propsUser.name].value,
+                        this.$refs[propsUser.introduce].value,
+                        this.$refs[propsUser.link].value
+                  )"
           :text="$t('form.update')"
           />
         </div>
