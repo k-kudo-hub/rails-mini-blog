@@ -1,16 +1,24 @@
 <template>
-  <div class="w-full bg-white shadow-md relative pb-5">
+  <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
       <ProfileEdit
         :user="user"
         :errors="errors"
         v-if="isOpenEditModal"
         @toggleEditModal="toggleEditModal"
-        @updateUserInfo="updateUserInfo"
+        @updateUserInfo="beforeUpdateUserInfo"
+      />
+      <ProfilePictureEdit
+        :user="user"
+        :errors="errors"
+        v-if="isOpenPictureModal"
+        @togglePictureModal="togglePictureModal"
+        @updateUserPicture="beforeUpdateUserPicture"
       />
       <ProfileHeader
         :user="user"
         @toggleEditModal="toggleEditModal"
+        @togglePictureModal="togglePictureModal"
       />
       <ProfileCards
       />
@@ -31,25 +39,22 @@
 </template>
 
 <script>
-import axios from 'axios'
-import dummy_header from '../../assets/dummy-header.jpg'
-import logo from '../../assets/logo.png'
-import ButtonDefault from '../shared/ButtonDefault.vue'
-import ProfileCards from './ProfileCards.vue'
-import ProfileEdit from './ProfileEdit.vue'
-import ProfileFooter from './ProfileFooter.vue'
-import ProfileHeader from './ProfileHeader.vue'
+import axios              from 'axios'
+import ButtonDefault      from '../shared/ButtonDefault.vue'
+import ProfileCards       from './ProfileCards.vue'
+import ProfileEdit        from './ProfileEdit.vue'
+import ProfileFooter      from './ProfileFooter.vue'
+import ProfileHeader      from './ProfileHeader.vue'
+import ProfilePictureEdit from './ProfilePictureEdit.vue'
 export default {
   data(){
     return {
-      dummy: dummy_header,
-      logo: logo,
-      isOpenEditModal: false,
       user: {
         id: 0,
         name: "",
         introduce: "",
         picture: "",
+        picture_url: "",
         cover: "",
         link: "",
       },
@@ -57,20 +62,31 @@ export default {
         name: [],
         introduce: [],
         link: [],
+        picture: [],
       },
-      flashMessage: "",
       displayFlashMessages: false,
+      flashMessage: "",
+      isOpenEditModal: false,
+      isOpenPictureModal: false,
     }
   },
   components: {
+    ButtonDefault,
     ProfileCards,
     ProfileEdit,
     ProfileFooter,
     ProfileHeader,
-    ButtonDefault,
+    ProfilePictureEdit,
   },
   created() {
     this.getUsersInfo()
+  },
+  computed: {
+    whenOpenModal: function(){
+      if(this.isOpenPictureModal || this.isOpenEditModal){
+        return "h-main-fixed"
+      }
+    }
   },
   methods: {
     signOut(){
@@ -84,6 +100,10 @@ export default {
     },
     toggleEditModal(){
       this.isOpenEditModal ? this.isOpenEditModal = false : this.isOpenEditModal = true;
+    },
+    togglePictureModal(){
+      this.isOpenPictureModal ? this.isOpenPictureModal = false : this.isOpenPictureModal = true;
+      this.resetErrors()
     },
     // 多少非効率だが、ユーザー情報を再取得している。
     getUsersInfo(){
@@ -117,9 +137,21 @@ export default {
           this.errors.link.push(error)
           return
         }
+        if(error.match('Picture | プロフィール画像')){
+          this.errors.picture.push(error)
+          return
+        }
       })
     },
-    updateUser(newName, newIntroduce, newLink){
+    // プロフィール情報更新
+    beforeUpdateUserInfo(...args){
+      if(args[0]){
+        this.updateUserInfo(args[0], args[1], args[2]);
+      } else {
+        this.inputValidation();
+      }
+    },
+    updateUserInfo(newName, newIntroduce, newLink){
       axios
         .put(`http://localhost:3000/api/v1/users/${this.user.id}`,{
           user: {
@@ -140,13 +172,32 @@ export default {
           this.catchErrorMessages(error.response.data)
         })
     },
-    updateUserInfo(...args){
-      if(args[0]){
-        this.updateUser(args[0], args[1], args[2]);
+    // プロフィール画像・カバー更新
+    beforeUpdateUserPicture(...args){
+      const newPicture = args[0]
+      if(newPicture.name){
+        this.updateUserPicture(newPicture)
       } else {
-        this.inputValidation();
+        this.errors.picture.push("ファイルが選択されていません。更新できませんでした。")
       }
     },
+    updateUserPicture(newPicture){
+      const formData = new FormData()
+      formData.append('user[picture]', newPicture)
+      axios
+        .put(`http://localhost:3000/api/v1/users/upload`, formData)
+        .then(response => {
+          this.user.picture_url = response.data.picture
+          // this.user.cover = response.data.cover
+          this.togglePictureModal()
+          this.putFlashMessage(this.$t("form.update_success"))
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.catchErrorMessages(error.response.data)
+        })
+    },
+    // 更新時フラッシュメッセージ出力
     putFlashMessage(message){
       this.flashMessage = message
       this.displayFlashMessages = true
@@ -156,7 +207,7 @@ export default {
     },
     resetErrors(){
       // FIXME: 初期化する関数に置き換えたい
-      this.errors = { name: [], introduce: [], link: [] }
+      this.errors = { name: [], introduce: [], link: [], picture: [] }
     },
   }
 }
@@ -170,5 +221,9 @@ export default {
 .component-fade-enter,
 .component-fade-leave-to {
   opacity: 0;
+}
+.h-main-fixed {
+  max-height: calc(100vh - 48px - 64px - 1.5rem);
+  overflow: hidden;
 }
 </style>

@@ -2,9 +2,9 @@
   <section>
     <img v-if="user.cover" :src="user.cover" alt="" class="h-32 w-full object-cover shadow-md">
     <img v-else :src="dummy_header" alt="" class="h-32 w-full object-cover shadow-md">
-    <div class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img v-if="user.picture" :src="user.picture" alt="" height="60" width="60">
-      <img v-else :src="logo" alt="" height="60" width="60">
+    <div @click="$emit('togglePictureModal')" class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
+      <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="60" width="60">
+      <img v-else :src="default_image" alt="" height="60" width="60">
     </div>
     <div class="m-8 mx-2">
       <div class="flex items-center">
@@ -23,12 +23,12 @@
 
 <script>
 import dummy_header from '../../assets/dummy-header.jpg'
-import logo from '../../assets/logo.png'
+import default_image from '../../assets/profile_default.png'
 export default {
   data(){
     return {
       dummy_header,
-      logo,
+      default_image,
     }
   },
   props: {
@@ -37,9 +37,15 @@ export default {
       name: String,
       introduce: String,
       picture: String,
+      picture_url: String,
       cover: String,
     }
   },
+  methods: {
+    returnPictureFullPath(path){
+      return 'http://localhost:3000'+path
+    }
+  }
 }
 </script>
 
