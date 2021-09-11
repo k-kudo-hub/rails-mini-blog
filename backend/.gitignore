@@ -27,3 +27,5 @@
 /config/master.key
 
 tmp/cache
+public/uploads/*
+!public/uploads/.keep
