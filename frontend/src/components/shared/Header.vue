@@ -9,8 +9,8 @@
     </div>
     <div v-if="user.id" class="w-3/6 flex justify-end items-center">
       <p class="mr-2">{{ user.name }}</p>
-      <div class="w-8 h-8 mr-2 border-2 rounded-3xl border-gold-500">
-        <img v-if="user.picture" :src="user.picture" height="32" width="32">
+      <div class="w-8 h-8 mr-2 border-2 rounded-3xl border-white overflow-hidden">
+        <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" height="32" width="32">
         <img v-else :src="logo" height="32" width="32">
       </div>
     </div>
@@ -36,9 +36,15 @@ export default {
       name: String,
       introduce: String,
       picture: String,
+      picture_url: String,
       cover: String,
     }
   },
+  methods: {
+    returnPictureFullPath(path){
+      return 'http://localhost:3000'+path
+    }
+  }
 }
 </script>
 

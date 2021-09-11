@@ -1,7 +1,7 @@
 <template>
   <div @click.self="$emit('toggleEditModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
-      <h1 class="mb-4">ユーザー情報編集</h1>
+      <h1 class="mb-4">{{ $t("profile.profile") + " " + $t("form.edit") }}</h1>
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
