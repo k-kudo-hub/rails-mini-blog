@@ -6,6 +6,7 @@ const messages = Object.freeze({
     character_8_password: "8文字以上・英数字混合",
     require_message: "を入力してください。",
     update: "更新する",
+    update_success: "更新が成功しました。",
     wrong_message: "メールアドレスかパスワードが間違っています。"
   },
   link: {

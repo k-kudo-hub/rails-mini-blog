@@ -6,6 +6,7 @@ const messages = Object.freeze({
     require: "required",
     require_message: " can't be blank.",
     update: "Update",
+    update_success: "The update was successful.",
     wrong_message: "Wrong email address or password."
   },
   link: {
