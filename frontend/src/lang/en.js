@@ -3,10 +3,12 @@ const messages = Object.freeze({
     cancel: "Cancel",
     character_20: "20 characters or less",
     character_8_password: "8 characters or more. Must use Alphabets and numbers",
+    edit: "Edit",
     require: "required",
     require_message: " can't be blank.",
     update: "Update",
     update_success: "The update was successful.",
+    upload: "Upload",
     wrong_message: "Wrong email address or password."
   },
   link: {
@@ -16,6 +18,7 @@ const messages = Object.freeze({
     account: "my page"
   },
   profile: {
+    profile: "Profile",
     blogs: "Blogs",
     follow: "following",
     follower: "follower",

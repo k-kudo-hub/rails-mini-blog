@@ -1,12 +1,14 @@
 const messages = Object.freeze({
   form: {
     cancel: "キャンセル",
-    require: "必須",
     character_20: "20文字以内",
     character_8_password: "8文字以上・英数字混合",
+    edit: "編集",
+    require: "必須",
     require_message: "を入力してください。",
     update: "更新する",
     update_success: "更新が成功しました。",
+    upload: "アップロード",
     wrong_message: "メールアドレスかパスワードが間違っています。"
   },
   link: {
@@ -16,6 +18,7 @@ const messages = Object.freeze({
     account: "マイページ"
   },
   profile: {
+    profile: "プロフィール",
     blogs: "記事一覧",
     follow: "フォロー",
     follower: "フォロワー",
