@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @current_user, methods: [:picture_url]
+    render json: @current_user, methods: [:picture_url, :cover_url]
   end
 
   def update

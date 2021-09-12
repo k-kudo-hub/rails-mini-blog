@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   mount_uploader :picture, PictureUploader
+  mount_uploader :cover,   CoverUploader
 
   VALID_EMAIL_REGEX        = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGAX     = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i

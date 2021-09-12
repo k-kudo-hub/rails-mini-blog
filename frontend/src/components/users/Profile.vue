@@ -15,10 +15,18 @@
         @togglePictureModal="togglePictureModal"
         @updateUserPicture="beforeUpdateUserPicture"
       />
+      <ProfileCoverEdit
+        v-if="isOpenCoverModal"
+        :errors="errors"
+        :user="user"
+        @toggleCoverModal="toggleCoverModal"
+        @updateUserCover="beforeUpdateUserCover"
+      />
       <ProfileHeader
         :user="user"
         @toggleEditModal="toggleEditModal"
         @togglePictureModal="togglePictureModal"
+        @toggleCoverModal="toggleCoverModal"
       />
       <ProfileCards
       />
@@ -41,6 +49,7 @@ import ProfileEdit        from './ProfileEdit.vue'
 import ProfileFooter      from './ProfileFooter.vue'
 import ProfileHeader      from './ProfileHeader.vue'
 import ProfilePictureEdit from './ProfilePictureEdit.vue'
+import ProfileCoverEdit   from './ProfileCoverEdit.vue'
 import FlashMessage       from '../shared/FlashMessage.vue'
 export default {
   data(){
@@ -52,6 +61,7 @@ export default {
         picture: "",
         picture_url: "",
         cover: "",
+        cover_url: "",
         link: "",
       },
       errors: {
@@ -59,11 +69,13 @@ export default {
         introduce: [],
         link: [],
         picture: [],
+        cover: [],
       },
       displayFlashMessages: false,
       flashMessage: "",
       isOpenEditModal: false,
       isOpenPictureModal: false,
+      isOpenCoverModal: false,
     }
   },
   components: {
@@ -73,6 +85,7 @@ export default {
     ProfileFooter,
     ProfileHeader,
     ProfilePictureEdit,
+    ProfileCoverEdit,
     FlashMessage,
   },
   created() {
@@ -80,7 +93,7 @@ export default {
   },
   computed: {
     whenOpenModal: function(){
-      if(this.isOpenPictureModal || this.isOpenEditModal){
+      if(this.isOpenPictureModal || this.isOpenEditModal || this.isOpenCoverModal){
         return "h-main-fixed"
       }
     }
@@ -100,6 +113,10 @@ export default {
     },
     togglePictureModal(){
       this.isOpenPictureModal ? this.isOpenPictureModal = false : this.isOpenPictureModal = true;
+      this.resetErrors()
+    },
+    toggleCoverModal(){
+      this.isOpenCoverModal ? this.isOpenCoverModal = false : this.isOpenCoverModal = true;
       this.resetErrors()
     },
     // 多少非効率だが、ユーザー情報を再取得している。
@@ -141,7 +158,7 @@ export default {
           return
         }
         if(error.match('Cover | カバー画像')){
-          this.errors.picture.push(error)
+          this.errors.cover.push(error)
           return
         }
       })
@@ -199,6 +216,30 @@ export default {
           this.catchErrorMessages(error.response.data)
         })
     },
+    // カバー更新
+    beforeUpdateUserCover(...args){
+      const newCover = args[0]
+      if(newCover.name){
+        this.updateUserCover(newCover)
+      } else {
+        this.errors.cover.push("ファイルが選択されていません。更新できませんでした。")
+      }
+    },
+    updateUserCover(newCover){
+      const formData = new FormData()
+      formData.append('user[cover]', newCover)
+      axios
+        .put(`http://localhost:3000/api/v1/pictures/upload_cover`, formData)
+        .then(response => {
+          this.user.cover_url = response.data
+          this.toggleCoverModal()
+          this.putFlashMessage(this.$t("form.update_success"))
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.catchErrorMessages(error.response.data)
+        })
+    },
     // 更新時フラッシュメッセージ出力
     putFlashMessage(message){
       this.flashMessage = message
@@ -209,7 +250,7 @@ export default {
     },
     resetErrors(){
       // FIXME: 初期化する関数に置き換えたい
-      this.errors = { name: [], introduce: [], link: [], picture: [] }
+      this.errors = { name: [], introduce: [], link: [], picture: [], cover: [] }
     },
   }
 }
