@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import menu from '../../menu.js'
+import menu from '../../plugins/menu.js'
 export default {
   props: {
     user: {
