@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     render json: { error: '404 not found' }, status: :not_found
   end
-  
+
   def create
     user = User.new(user_create_params)
     if user.save
@@ -28,17 +28,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def upload
-    user = User.find(@current_user.id)
-    if user.valid?(:picture_validation)
-      user.update(user_upload_params)
-      response = { picture: user.picture_url, cover: user.cover_url }
-      render json: response, status: :created
-    else
-      render json: user.errors.full_messages, status: :unprocessable_entity
-    end
-  end
-
   def destroy
   end
 
@@ -50,9 +39,5 @@ class Api::V1::UsersController < ApplicationController
 
   def user_update_params
     params.require(:user).permit(:name, :introduce, :link)
-  end
-
-  def user_upload_params
-    params.require(:user).permit(:picture, :cover)
   end
 end

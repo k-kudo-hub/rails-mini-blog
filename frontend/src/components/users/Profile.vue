@@ -188,9 +188,9 @@ export default {
       const formData = new FormData()
       formData.append('user[picture]', newPicture)
       axios
-        .put(`http://localhost:3000/api/v1/users/upload`, formData)
+        .put(`http://localhost:3000/api/v1/pictures/upload_picture`, formData)
         .then(response => {
-          this.user.picture_url = response.data.picture
+          this.user.picture_url = response.data
           this.togglePictureModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })
