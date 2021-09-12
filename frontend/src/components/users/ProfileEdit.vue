@@ -48,11 +48,6 @@ import ButtonDefault from '../shared/ButtonDefault.vue'
 import ButtonFilled from '../shared/ButtonFilled.vue'
 import RequireLabel from '../shared/RequireLabel.vue'
 export default {
-  data(){
-    return {
-
-    }
-  },
   props: {
     user: {
       name: String,

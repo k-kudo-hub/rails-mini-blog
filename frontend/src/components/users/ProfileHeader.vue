@@ -3,8 +3,8 @@
     <img v-if="user.cover" :src="user.cover" alt="" class="h-32 w-full object-cover shadow-md">
     <img v-else :src="dummy_header" alt="" class="h-32 w-full object-cover shadow-md">
     <div @click="$emit('togglePictureModal')" class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="60" width="60">
-      <img v-else :src="default_image" alt="" height="60" width="60">
+      <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="70" width="70">
+      <img v-else :src="default_image" alt="" height="70" width="70">
     </div>
     <div class="m-8 mx-2">
       <div class="flex items-center">
