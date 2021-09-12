@@ -28,10 +28,6 @@
         </div>
       </form>
     </template>
-    <template v-else>
-      <!-- TODO: 可能であればリダイレクト&リロードしたい。 -->
-      <p>ようこそ{{ user.name }}さん！</p>
-    </template>
   </div>
 </template>
 
@@ -65,6 +61,15 @@ export default {
   components: {
     RequireLabel,
     ButtonDefault
+  },
+  watch: {
+    'user.id': function(val){
+      if(val){
+        this.$router.push({
+          path: "/profile"
+        })
+      }
+    }
   },
   methods: {
     authenticate(){

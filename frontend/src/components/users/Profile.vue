@@ -31,10 +31,6 @@
         @signOut="signOut"
       />
     </template>
-    <template v-else>
-      <!-- TODO: 可能であればリダイレクト&リロードしたい -->
-      <p class="text-center pt-3">ログインしてブログを書いてみましょう。</p>
-    </template>
   </div>
 </template>
 
@@ -111,10 +107,12 @@ export default {
         .get('http://localhost:3000/api/v1/users/0')
         .then(response => {
           this.user = response.data
-          console.log(this.user)
         })
         .catch(error => {
           console.log(error)
+          this.$router.push({
+            name: 'login'
+          })
         })
     },
     inputValidation(){
