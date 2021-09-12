@@ -43,6 +43,7 @@
 
 <script>
 import axios              from 'axios'
+import user               from '../../models/user.js'
 import ButtonDefault      from '../shared/ButtonDefault.vue'
 import ProfileCards       from './ProfileCards.vue'
 import ProfileEdit        from './ProfileEdit.vue'
@@ -110,14 +111,15 @@ export default {
     },
     toggleEditModal(){
       this.isOpenEditModal ? this.isOpenEditModal = false : this.isOpenEditModal = true;
+      user.resetErrors(this)
     },
     togglePictureModal(){
       this.isOpenPictureModal ? this.isOpenPictureModal = false : this.isOpenPictureModal = true;
-      this.resetErrors()
+      user.resetErrors(this)
     },
     toggleCoverModal(){
       this.isOpenCoverModal ? this.isOpenCoverModal = false : this.isOpenCoverModal = true;
-      this.resetErrors()
+      user.resetErrors(this)
     },
     // 多少非効率だが、ユーザー情報を再取得している。
     getUsersInfo(){
@@ -134,34 +136,8 @@ export default {
         })
     },
     inputValidation(){
-      this.resetErrors()
+      user.resetErrors(this)
       this.errors.name.push(this.$t("user.name") + this.$t("form.require_message"))
-    },
-    catchErrorMessages(errors){
-      this.resetErrors()
-      // FIXME: Vuei18nを使用して動的に判別したい
-      errors.forEach((error) => {
-        if(error.match('Name | ユーザー名')){ 
-          this.errors.name.push(error)
-          return
-        }
-        if(error.match('Introduce | 自己紹介')){
-          this.errors.introduce.push(error)
-          return
-        }
-        if(error.match('Link | URL')){
-          this.errors.link.push(error)
-          return
-        }
-        if(error.match('Picture | プロフィール画像')){
-          this.errors.picture.push(error)
-          return
-        }
-        if(error.match('Cover | カバー画像')){
-          this.errors.cover.push(error)
-          return
-        }
-      })
     },
     // プロフィール情報更新
     beforeUpdateUserInfo(...args){
@@ -189,7 +165,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          this.catchErrorMessages(error.response.data)
+          user.catchErrorMessages(error.response.data, this)
         })
     },
     // プロフィール画像・カバー更新
@@ -213,7 +189,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          this.catchErrorMessages(error.response.data)
+          user.catchErrorMessages(error.response.data, this)
         })
     },
     // カバー更新
@@ -237,7 +213,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          this.catchErrorMessages(error.response.data)
+          user.catchErrorMessages(error.response.data, this)
         })
     },
     // 更新時フラッシュメッセージ出力
@@ -247,10 +223,6 @@ export default {
       setTimeout(() => {
         this.displayFlashMessages = false
       }, 2000)
-    },
-    resetErrors(){
-      // FIXME: 初期化する関数に置き換えたい
-      this.errors = { name: [], introduce: [], link: [], picture: [], cover: [] }
     },
   }
 }
