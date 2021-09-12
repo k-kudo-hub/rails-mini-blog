@@ -16,12 +16,24 @@ class User < ApplicationRecord
                         uniqueness: { message: "はすでに使用されています。" }, on: :create
   validates :password,  presence:   { message: "が入力されていません。" }, on: :create,
                         format:     { with: VALID_PASSWORD_REGAX, message: 'は8文字以上の半角英数字混合で登録できます。' }, on: :create
-  validates :link,      format:     { with: VALID_URL_REGAX , message: 'はhttpまたはhttpsを先頭にしてください。' }
+  validates :link,      format:     { with: VALID_URL_REGAX , message: 'はhttpまたはhttpsを先頭にしてください。' }, on: :update
   validates :introduce, length:     { maximum: INTRODUCE_MAXIMUM_LENGTH, message: "は#{INTRODUCE_MAXIMUM_LENGTH}文字以内で登録できます。" }
+
+  with_options on: :cover_validation do
+    validates :cover,   presence:   { message: "が選択されていません。" }
+  end
+
+  with_options on: :picture_validation do
+    validates :picture, presence:   { message: "が選択されていません。" }
+  end
 
   scope :find_and_select_by_id, ->(id) {
     select(:id, :name, :introduce, :picture, :cover, :link).find(id)
   }
+
+  def cover_url
+    cover.present? ? cover.url : nil
+  end
 
   def picture_url
     picture.present? ? picture.url : nil

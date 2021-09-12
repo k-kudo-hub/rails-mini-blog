@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :require_login, only: [:create]
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     render json: { error: '404 not found' }, status: :not_found
   end
@@ -29,8 +30,9 @@ class Api::V1::UsersController < ApplicationController
 
   def upload
     user = User.find(@current_user.id)
-    if user.update(user_upload_params)
-      response = { picture: user.picture.url, cover: user.cover }
+    if user.valid?(:picture_validation)
+      user.update(user_upload_params)
+      response = { picture: user.picture_url, cover: user.cover_url }
       render json: response, status: :created
     else
       render json: user.errors.full_messages, status: :unprocessable_entity
