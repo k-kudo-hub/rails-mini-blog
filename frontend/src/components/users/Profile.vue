@@ -2,16 +2,16 @@
   <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
       <ProfileEdit
-        :user="user"
-        :errors="errors"
         v-if="isOpenEditModal"
+        :errors="errors"
+        :user="user"
         @toggleEditModal="toggleEditModal"
         @updateUserInfo="beforeUpdateUserInfo"
       />
       <ProfilePictureEdit
-        :user="user"
-        :errors="errors"
         v-if="isOpenPictureModal"
+        :errors="errors"
+        :user="user"
         @togglePictureModal="togglePictureModal"
         @updateUserPicture="beforeUpdateUserPicture"
       />
@@ -140,6 +140,10 @@ export default {
           this.errors.picture.push(error)
           return
         }
+        if(error.match('Cover | カバー画像')){
+          this.errors.picture.push(error)
+          return
+        }
       })
     },
     // プロフィール情報更新
@@ -187,7 +191,6 @@ export default {
         .put(`http://localhost:3000/api/v1/users/upload`, formData)
         .then(response => {
           this.user.picture_url = response.data.picture
-          // this.user.cover = response.data.cover
           this.togglePictureModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })

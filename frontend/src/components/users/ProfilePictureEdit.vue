@@ -45,11 +45,9 @@ export default {
   props: {
     user: {
       picture: String,
-      cover: String,
     },
     errors: {
       picture: [],
-      cover: [],
     }
   },
   components: {

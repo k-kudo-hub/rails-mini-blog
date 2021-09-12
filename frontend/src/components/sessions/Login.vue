@@ -15,7 +15,7 @@
         </div>
         <div class="flex flex-col mb-3">
           <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
-          <input v-model="visitor.password" :class="addErrorBorder(errors.email)" class="border-b h-10" type="password" name="password">
+          <input v-model="visitor.password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" name="password">
           <template v-if="errors.password.length > 0">
             <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
           </template>
