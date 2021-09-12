@@ -22,11 +22,10 @@
       />
       <ProfileCards
       />
-      <transition name="component-fade">
-        <div v-if="displayFlashMessages" class="w-full fixed bottom-20">
-          <p class="bg-gold-500 text-white w-3/4 p-2 z-50 rounded-3xl text-center mx-auto">{{ flashMessage }}</p>
-        </div>
-      </transition>
+      <flash-message
+        :hook="displayFlashMessages"
+        :message="flashMessage"
+      />
       <ProfileFooter
         @signOut="signOut"
       />
@@ -42,6 +41,7 @@ import ProfileEdit        from './ProfileEdit.vue'
 import ProfileFooter      from './ProfileFooter.vue'
 import ProfileHeader      from './ProfileHeader.vue'
 import ProfilePictureEdit from './ProfilePictureEdit.vue'
+import FlashMessage       from '../shared/FlashMessage.vue'
 export default {
   data(){
     return {
@@ -73,6 +73,7 @@ export default {
     ProfileFooter,
     ProfileHeader,
     ProfilePictureEdit,
+    FlashMessage,
   },
   created() {
     this.getUsersInfo()
@@ -212,14 +213,6 @@ export default {
 </script>
 
 <style>
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity .3s ease;
-}
-.component-fade-enter,
-.component-fade-leave-to {
-  opacity: 0;
-}
 .h-main-fixed {
   max-height: calc(100vh - 48px - 64px - 1.5rem);
   overflow: hidden;
