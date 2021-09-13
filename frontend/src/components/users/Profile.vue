@@ -55,23 +55,8 @@ import FlashMessage       from '../shared/FlashMessage.vue'
 export default {
   data(){
     return {
-      user: {
-        id: 0,
-        name: "",
-        introduce: "",
-        picture: "",
-        picture_url: "",
-        cover: "",
-        cover_url: "",
-        link: "",
-      },
-      errors: {
-        name: [],
-        introduce: [],
-        link: [],
-        picture: [],
-        cover: [],
-      },
+      user: new User(),
+      errors: new UserError(),
       displayFlashMessages: false,
       flashMessage: "",
       isOpenEditModal: false,
