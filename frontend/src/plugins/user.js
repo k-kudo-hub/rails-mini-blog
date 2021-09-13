@@ -23,8 +23,3 @@ export function catchErrorMessages(errors, self){
     }
   })
 }
-
-export function resetErrors(self){
-  // FIXME: 初期化する関数に置き換えたい
-  self.errors = { name: [], introduce: [], link: [], picture: [], cover: [] }
-}
