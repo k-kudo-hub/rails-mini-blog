@@ -6,9 +6,9 @@
       <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="70" width="70">
       <img v-else :src="default_image" alt="" height="70" width="70">
     </div>
-    <div class="m-8 mx-2">
+    <div class="mt-10 mb-8 mx-2">
       <div class="flex items-center">
-        <h1 class="text-2xl mb-1 mr-3">{{ user.name }}</h1>
+        <h1 class="text-xl mb-1 mr-3 font-bold">{{ user.name }}</h1>
         <i @click="$emit('toggleEditModal')" class="fas fa-pen text-gray-500"></i>
       </div>
       <p class="mb-1 whitespace-pre-wrap break-words">{{ user.introduce }}</p>
