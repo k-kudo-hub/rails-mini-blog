@@ -95,15 +95,15 @@ export default {
       this.resetErrors()
       // FIXME: Vuei18nを使用して動的に判別したい
       errors.forEach((error) => {
-        if(error.match('Name | ユーザー名')){ 
+        if(error.match('Name|ユーザー名')){ 
           this.errors.name.push(error)
           return
         }
-        if(error.match('Email | メールアドレス')){
+        if(error.match('Email|メールアドレス')){
           this.errors.email.push(error)
           return
         }
-        if(error.match('Password | パスワード')){
+        if(error.match('Password|パスワード')){
           this.errors.password.push(error)
           return
         }
