@@ -20,7 +20,8 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     user = User.find(@current_user.id)
-    if user.update(user_update_params)
+    user.assign_profile_attributes(user_update_params[:name], user_update_params[:introduce], user_update_params[:link])
+    if user.valid?(:update_profile_validation) && user.update(user_update_params)
       response = { name: user.name, introduce: user.introduce, link: user.link }
       render json: response, status: :created
     else
