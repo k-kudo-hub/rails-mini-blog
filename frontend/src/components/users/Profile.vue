@@ -123,13 +123,14 @@ export default {
         })
     },
     inputValidation(){
-      this.errors = new UserError();
       this.errors.name.push(this.$t("user.name") + this.$t("form.require_message"))
     },
     // プロフィール情報更新
     beforeUpdateUserInfo(...args){
-      if(args[0]){
-        this.updateUserInfo(args[0], args[1], args[2]);
+      this.errors = new UserError();
+      const params = args[0] // [name, introduce, link]
+      if(params[0]){
+        this.updateUserInfo(params[0], params[1], params[2]);
       } else {
         this.inputValidation();
       }
