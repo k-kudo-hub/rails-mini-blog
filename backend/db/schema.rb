@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_27_040501) do
+ActiveRecord::Schema.define(version: 2021_09_10_085140) do
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20, null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_08_27_040501) do
     t.string "provider", limit: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "link"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end

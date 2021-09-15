@@ -1,14 +1,17 @@
 <template>
   <section>
-    <img v-if="user.cover" :src="user.cover" alt="" class="h-32 w-full object-cover shadow-md">
-    <img v-else :src="dummy_header" alt="" class="h-32 w-full object-cover shadow-md">
-    <div class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img v-if="user.picture" :src="user.picture" alt="" height="60" width="60">
-      <img v-else :src="logo" alt="" height="60" width="60">
+    <img v-if="user.cover_url" @click="$emit('toggleCoverModal')" :src="returnPictureFullPath(user.cover_url)" alt="" class="h-32 w-full object-cover shadow-md">
+    <img v-else :src="dummy_header" @click="$emit('toggleCoverModal')" alt="" class="h-32 w-full object-cover shadow-md">
+    <div @click="$emit('togglePictureModal')" class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
+      <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="70" width="70">
+      <img v-else :src="default_image" alt="" height="70" width="70">
     </div>
-    <div class="m-8 mx-2">
-      <h1 class="text-2xl mb-1">{{ user.name }}</h1>
-      <p class="mb-1">{{ user.introduce }}</p>
+    <div class="mt-10 mb-8 mx-2">
+      <div class="flex items-center">
+        <h1 class="text-xl mb-1 mr-3 font-bold">{{ user.name }}</h1>
+        <i @click="$emit('toggleEditModal')" class="fas fa-pen text-gray-500"></i>
+      </div>
+      <p class="mb-1 whitespace-pre-wrap break-words">{{ user.introduce }}</p>
       <a class="text-silver-500 underline" :href="user.link" target="_blank" rel="nofollow noopener">{{ user.link }}</a>
       <p class="mt-2 mx-2">
         <a href="#" class="mr-1"><span class="font-bold mr-1">24</span>{{ $t("profile.follow") }}</a>/
@@ -20,12 +23,12 @@
 
 <script>
 import dummy_header from '../../assets/dummy-header.jpg'
-import logo from '../../assets/logo.png'
+import default_image from '../../assets/profile_default.png'
 export default {
   data(){
     return {
       dummy_header,
-      logo,
+      default_image,
     }
   },
   props: {
@@ -34,9 +37,15 @@ export default {
       name: String,
       introduce: String,
       picture: String,
+      picture_url: String,
       cover: String,
     }
   },
+  methods: {
+    returnPictureFullPath(path){
+      return 'http://localhost:3000'+path
+    }
+  }
 }
 </script>
 

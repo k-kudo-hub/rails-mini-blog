@@ -12,15 +12,21 @@
 </template>
 
 <script>
-import menu from '../../menu.js'
+import menu from '../../plugins/menu.js'
 export default {
-  data(){
-    return {
-      menus: menu.blogs,
+  props: {
+    user: {
+      id: Number
     }
   },
-  methods: {
-    
+  computed: {
+    menus: function(){
+      if(this.user.id) {
+        return menu.blogs
+      } else {
+        return menu.visitor
+      }
+    }
   }
 }
 </script>

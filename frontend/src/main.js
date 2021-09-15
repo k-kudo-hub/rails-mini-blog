@@ -6,7 +6,7 @@ import App from './App.vue'
 import axios from 'axios'
 import en_file from './lang/en'
 import ja_file from './lang/ja'
-import routes from './router.js'
+import routes from './plugins/router.js'
 import './index.css'
 
 const messages = {

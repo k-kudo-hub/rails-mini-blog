@@ -27,6 +27,7 @@ export default {
         introduce: "",
         picture: "",
         cover: "",
+        link: "",
       }
     }
   },

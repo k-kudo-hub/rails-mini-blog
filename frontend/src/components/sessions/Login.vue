@@ -7,15 +7,15 @@
       </div>
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
-          <label for="email" class="mb-2 flex items-center">{{ $t("session.email") }}<require-label/></label>
+          <label for="email" class="mb-2 flex items-center">{{ $t("user.email") }}<require-label/></label>
           <input v-model="visitor.email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text" name="email">
           <template v-if="errors.email.length > 0">
             <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
           </template>
         </div>
         <div class="flex flex-col mb-3">
-          <label for="password" class="mb-2 flex items-center">{{ $t("session.password") }}<require-label/></label>
-          <input v-model="visitor.password" :class="addErrorBorder(errors.email)" class="border-b h-10" type="password" name="password">
+          <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
+          <input v-model="visitor.password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" name="password">
           <template v-if="errors.password.length > 0">
             <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
           </template>
@@ -27,10 +27,6 @@
           />
         </div>
       </form>
-    </template>
-    <template v-else>
-      <!-- TODO: 可能であればリダイレクト&リロードしたい。 -->
-      <p>ようこそ{{ user.name }}さん！</p>
     </template>
   </div>
 </template>
@@ -66,6 +62,15 @@ export default {
     RequireLabel,
     ButtonDefault
   },
+  watch: {
+    'user.id': function(val){
+      if(val){
+        this.$router.push({
+          path: "/profile"
+        })
+      }
+    }
+  },
   methods: {
     authenticate(){
       axios
@@ -96,8 +101,8 @@ export default {
     },
     inputValidation(){
       this.resetErrors()
-      if(!this.visitor.email){ this.errors.email.push(this.$t("session.email") + this.$t("form.require_message")) }
-      if(!this.visitor.password){ this.errors.password.push(this.$t("session.password") + this.$t("form.require_message")) }
+      if(!this.visitor.email){ this.errors.email.push(this.$t("user.email") + this.$t("form.require_message")) }
+      if(!this.visitor.password){ this.errors.password.push(this.$t("user.password") + this.$t("form.require_message")) }
     },
     resetErrors(){
       // FIXME: 初期化する関数に置き換えたい
