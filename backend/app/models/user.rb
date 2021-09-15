@@ -9,6 +9,8 @@ class User < ApplicationRecord
   NAME_MAXIMUM_LENGTH      = 20
   INTRODUCE_MAXIMUM_LENGTH = 250
 
+  validates :name,      presence:   true, on: :create,
+                        length:     { maximum: NAME_MAXIMUM_LENGTH }
   validates :email,     presence:   true, on: :create,
                         format:     { with: VALID_EMAIL_REGEX }, on: :create,
                         uniqueness: true, on: :create
