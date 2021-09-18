@@ -5,10 +5,11 @@ module.exports = {
     extend: {
       colors: {
         gold: {
-          default: '#CCC0AE',
+          300: '#fff267',
+          500: '#CCC0AE',
         },
         silver: {
-          default: '#C4C4C4',
+          500: '#C4C4C4',
         },
       }
     },
