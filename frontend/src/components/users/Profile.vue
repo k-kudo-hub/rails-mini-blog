@@ -2,21 +2,21 @@
   <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
       <ProfileEdit
-        v-if="isOpenEditModal"
+        v-if="modal.is_edit_open"
         :errors="errors"
         :user="user"
         @toggleEditModal="toggleEditModal"
         @updateUserInfo="beforeUpdateUserInfo"
       />
       <ProfilePictureEdit
-        v-if="isOpenPictureModal"
+        v-if="modal.is_picture_open"
         :errors="errors"
         :user="user"
         @togglePictureModal="togglePictureModal"
         @updateUserPicture="beforeUpdateUserPicture"
       />
       <ProfileCoverEdit
-        v-if="isOpenCoverModal"
+        v-if="modal.is_cover_open"
         :errors="errors"
         :user="user"
         @toggleCoverModal="toggleCoverModal"
@@ -45,6 +45,7 @@
 import axios                  from 'axios'
 import User                   from '../../models/user.js'
 import UserError              from '../../models/userError.js'
+import UserModal              from '../../models/userModal.js'
 import FlashMessage           from '../../models/flashMessage.js'
 import ButtonDefault          from '../shared/ButtonDefault.vue'
 import ProfileCards           from './ProfileCards.vue'
@@ -59,10 +60,8 @@ export default {
     return {
       user: new User(),
       errors: new UserError(),
+      modal: new UserModal(),
       flashMessage: new FlashMessage(),
-      isOpenEditModal: false,
-      isOpenPictureModal: false,
-      isOpenCoverModal: false,
     }
   },
   components: {
@@ -80,9 +79,7 @@ export default {
   },
   computed: {
     whenOpenModal: function(){
-      if(this.isOpenPictureModal || this.isOpenEditModal || this.isOpenCoverModal){
-        return "h-main-fixed"
-      }
+      this.modal.fixBackground()
     }
   },
   methods: {
@@ -96,15 +93,15 @@ export default {
         })
     },
     toggleEditModal(){
-      this.isOpenEditModal ? this.isOpenEditModal = false : this.isOpenEditModal = true;
+      this.modal.toggleEdit()
       this.errors = new UserError();
     },
     togglePictureModal(){
-      this.isOpenPictureModal ? this.isOpenPictureModal = false : this.isOpenPictureModal = true;
+      this.modal.togglePicture()
       this.errors = new UserError();
     },
     toggleCoverModal(){
-      this.isOpenCoverModal ? this.isOpenCoverModal = false : this.isOpenCoverModal = true;
+      this.modal.toggleCover();
       this.errors = new UserError();
     },
     // 多少非効率だが、ユーザー情報を再取得している。
