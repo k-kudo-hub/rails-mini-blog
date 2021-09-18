@@ -5,6 +5,7 @@ class Api::V1::BlogsController < ApplicationController
 
   def create
     blog = Blog.new(blog_params)
+    blog.set_new_data()
     if blog.save
       render json: blog, status: :created
     else
