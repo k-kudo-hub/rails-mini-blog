@@ -30,9 +30,9 @@
       />
       <ProfileCards
       />
-      <flash-message
-        :hook="displayFlashMessages"
-        :message="flashMessage"
+      <flash-message-view
+        :hook="flashMessage.is_displayed"
+        :message="flashMessage.content"
       />
       <ProfileFooter
         @signOut="signOut"
@@ -45,7 +45,7 @@
 import axios                  from 'axios'
 import User                   from '../../models/user.js'
 import UserError              from '../../models/userError.js'
-import { catchErrorMessages } from '../../plugins/user.js'
+import FlashMessage           from '../../models/flashMessage.js'
 import ButtonDefault          from '../shared/ButtonDefault.vue'
 import ProfileCards           from './ProfileCards.vue'
 import ProfileEdit            from './ProfileEdit.vue'
@@ -53,14 +53,13 @@ import ProfileFooter          from './ProfileFooter.vue'
 import ProfileHeader          from './ProfileHeader.vue'
 import ProfilePictureEdit     from './ProfilePictureEdit.vue'
 import ProfileCoverEdit       from './ProfileCoverEdit.vue'
-import FlashMessage           from '../shared/FlashMessage.vue'
+import FlashMessageView       from '../shared/FlashMessage.vue'
 export default {
   data(){
     return {
       user: new User(),
       errors: new UserError(),
-      displayFlashMessages: false,
-      flashMessage: "",
+      flashMessage: new FlashMessage(),
       isOpenEditModal: false,
       isOpenPictureModal: false,
       isOpenCoverModal: false,
@@ -74,7 +73,7 @@ export default {
     ProfileHeader,
     ProfilePictureEdit,
     ProfileCoverEdit,
-    FlashMessage,
+    FlashMessageView,
   },
   created() {
     this.getUsersInfo()
@@ -144,7 +143,7 @@ export default {
         .then(response => {
           this.user.setInfo(response.data)
           this.toggleEditModal()
-          this.putFlashMessage(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update_success"))
         })
         .catch(error => {
           console.log(error.response.data)
@@ -168,7 +167,7 @@ export default {
         .then(response => {
           this.user.setPicture(response.data)
           this.togglePictureModal()
-          this.putFlashMessage(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update_success"))
         })
         .catch(error => {
           console.log(error.response.data)
@@ -192,21 +191,13 @@ export default {
         .then(response => {
           this.user.setCover(response.data)
           this.toggleCoverModal()
-          this.putFlashMessage(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update_success"))
         })
         .catch(error => {
           console.log(error.response.data)
           this.errors.catchErrorMessages(error.response.data)
         })
-    },
-    // 更新時フラッシュメッセージ出力
-    putFlashMessage(message){
-      this.flashMessage = message
-      this.displayFlashMessages = true
-      setTimeout(() => {
-        this.displayFlashMessages = false
-      }, 2000)
-    },
+    }
   }
 }
 </script>
