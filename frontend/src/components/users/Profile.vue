@@ -113,7 +113,7 @@ export default {
       axios
         .get('http://localhost:3000/api/v1/users/0')
         .then(response => {
-          this.user = response.data
+          this.user.setData(response.data)
         })
         .catch(error => {
           console.log(error)
@@ -145,9 +145,7 @@ export default {
           }
         })
         .then(response => {
-          this.user.name = response.data.name
-          this.user.introduce = response.data.introduce
-          this.user.link = response.data.link
+          this.user.setInfo(response.data)
           this.toggleEditModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })
@@ -171,7 +169,7 @@ export default {
       axios
         .put(`http://localhost:3000/api/v1/pictures/upload_picture`, formData)
         .then(response => {
-          this.user.picture_url = response.data
+          this.user.setPicture(response.data)
           this.togglePictureModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })
@@ -195,7 +193,7 @@ export default {
       axios
         .put(`http://localhost:3000/api/v1/pictures/upload_cover`, formData)
         .then(response => {
-          this.user.cover_url = response.data
+          this.user.setCover(response.data)
           this.toggleCoverModal()
           this.putFlashMessage(this.$t("form.update_success"))
         })
