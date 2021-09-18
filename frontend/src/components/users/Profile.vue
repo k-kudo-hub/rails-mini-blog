@@ -122,9 +122,6 @@ export default {
           })
         })
     },
-    inputValidation(){
-      this.errors.name.push(this.$t("user.name") + this.$t("form.require_message"))
-    },
     // プロフィール情報更新
     beforeUpdateUserInfo(...args){
       this.errors = new UserError();
@@ -132,7 +129,7 @@ export default {
       if(params[0]){
         this.updateUserInfo(params[0], params[1], params[2]);
       } else {
-        this.inputValidation();
+        this.errors.inputValidation(this.$t("user.name") + this.$t("form.require_message"));
       }
     },
     updateUserInfo(newName, newIntroduce, newLink){
@@ -151,7 +148,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          catchErrorMessages(error.response.data, this)
+          this.errors.catchErrorMessages(error.response.data)
         })
     },
     // プロフィール画像・カバー更新
@@ -175,7 +172,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          catchErrorMessages(error.response.data, this)
+          this.errors.catchErrorMessages(error.response.data)
         })
     },
     // カバー更新
@@ -199,7 +196,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          catchErrorMessages(error.response.data, this)
+          this.errors.catchErrorMessages(error.response.data)
         })
     },
     // 更新時フラッシュメッセージ出力
