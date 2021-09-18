@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_085140) do
+ActiveRecord::Schema.define(version: 2021_09_16_223610) do
+
+  create_table "blogs", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "subject", default: "untitled", null: false
+    t.text "body"
+    t.string "cover_image"
+    t.integer "state_number", limit: 1, null: false
+    t.string "url", limit: 50, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20, null: false
@@ -28,4 +40,5 @@ ActiveRecord::Schema.define(version: 2021_09_10_085140) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "blogs", "users"
 end
