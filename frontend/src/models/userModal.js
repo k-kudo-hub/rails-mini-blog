@@ -13,9 +13,7 @@ export default class {
   toggleCover(){
     this.is_cover_open ? this.is_cover_open = false : this.is_cover_open = true;
   }
-  fixBackground(){
-    if(this.is_edit_open || this.is_picture_open || this.is_cover_open){
-      return "h-main-fixed"
-    }
+  is_open(){
+    return this.is_edit_open || this.is_picture_open || this.is_cover_open
   }
 }

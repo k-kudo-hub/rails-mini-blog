@@ -79,7 +79,9 @@ export default {
   },
   computed: {
     whenOpenModal: function(){
-      this.modal.fixBackground()
+      if(this.modal.is_open()){
+        return "h-main-fixed"
+      }
     }
   },
   methods: {
