@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_223610) do
+ActiveRecord::Schema.define(version: 2021_09_18_121214) do
 
   create_table "blogs", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "subject", default: "untitled", null: false
     t.text "body"
     t.string "cover_image"
-    t.integer "state_number", limit: 1, null: false
+    t.integer "state_number", limit: 1, default: 0, null: false
     t.string "url", limit: 50, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["url"], name: "index_blogs_on_url", unique: true
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
