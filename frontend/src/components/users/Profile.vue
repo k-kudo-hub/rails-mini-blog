@@ -142,7 +142,7 @@ export default {
         .then(response => {
           this.user.setInfo(response.data)
           this.toggleEditModal()
-          this.flashMessage.display(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update") + this.$t("form.success"))
         })
         .catch(error => {
           console.log(error.response.data)

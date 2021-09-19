@@ -23,7 +23,7 @@
           />
           <button-filled
           @click="$emit('updateUserCover', newCover)"
-          :text="$t('form.update')"
+          :text="$t('form.updating')"
           />
         </div>
       </form>

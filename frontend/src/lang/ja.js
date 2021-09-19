@@ -7,10 +7,13 @@ const messages = Object.freeze({
     edit: '編集',
     require: '必須',
     require_message: 'を入力してください。',
-    save: '保存する',
-    update: '更新する',
-    update_success: '更新が成功しました。',
+    save: '保存',
+    saving: '保存する',
+    success: 'が成功しました。',
+    update: '更新',
+    updating: '更新する',
     upload: 'アップロード',
+    uploading: 'アップロードする',
     wrong_message: 'メールアドレスかパスワードが間違っています。'
   },
   link: {
@@ -49,6 +52,11 @@ const messages = Object.freeze({
     body: '本文',
     cover_image: 'カバー画像',
     state_number: '公開状態',
+    options: {
+      draft: '下書き',
+      limited: '限定公開',
+      release: '公開'
+    },
     url: 'URL'
   }
 })

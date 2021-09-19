@@ -7,10 +7,14 @@ const messages = Object.freeze({
     edit: 'Edit ',
     require: 'required',
     require_message: " can't be blank.",
+    saving: 'Save',
     save: 'Save ',
+    saving: 'Save',
+    success: 'was successful.',
     update: 'Update ',
-    update_success: 'The update was successful.',
+    updating: 'Update ',
     upload: 'Upload ',
+    uploading: 'Upload',
     wrong_message: 'Wrong email address or password.'
   },
   link: {
@@ -32,23 +36,28 @@ const messages = Object.freeze({
     registration: 'registration',
   },
   models: {
-    user: 'User',
-    blog: 'Blog',
+    user: 'User ',
+    blog: 'Blog ',
   },
   user: {
-    name: 'Name',
-    email: 'Email',
-    password: 'Password',
-    introduce: 'Self introduce',
-    cover: 'Cover image',
-    picture: 'Profile image',
-    link: 'URL'
+    name: 'Name ',
+    email: 'Email ',
+    password: 'Password ',
+    introduce: 'Self introduce ',
+    cover: 'Cover image ',
+    picture: 'Profile image ',
+    link: 'URL '
   },
   blog: {
-    subject: 'Subject',
+    subject: 'Subject ',
     body: 'body',
     cover_image: 'Cover image',
     state_number: 'State number',
+    options: {
+      draft: 'Draft',
+      limited: 'Limited',
+      release: 'Release'
+    },
     url: 'URL'
   }
 })
