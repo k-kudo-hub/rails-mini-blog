@@ -1,6 +1,6 @@
 <template>
   <transition name="component-fade">
-    <div v-if="hook" class="w-full fixed bottom-20">
+    <div v-if="hook" class="w-full fixed bottom-20 left-0">
       <p class="bg-gold-500 text-white w-3/4 p-2 z-50 rounded-3xl text-center mx-auto">{{ message }}</p>
     </div>
   </transition>
