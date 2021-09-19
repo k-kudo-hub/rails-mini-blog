@@ -5,7 +5,7 @@ class Api::V1::BlogsController < ApplicationController
 
   def create
     blog = Blog.new(blog_params)
-    blog.set_new_data()
+    blog.set_url()
     if blog.save
       render json: blog, status: :created
     else
@@ -16,6 +16,6 @@ class Api::V1::BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:subject, :body, :cover_image).merge(user: @current_user)
+    params.require(:blog).permit(:subject, :body, :cover_image, :state_number).merge(user: @current_user)
   end
 end
