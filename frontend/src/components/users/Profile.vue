@@ -43,9 +43,9 @@
 
 <script>
 import axios                  from 'axios'
-import User                   from '../../models/user.js'
-import UserError              from '../../models/userError.js'
-import UserModal              from '../../models/userModal.js'
+import User                   from '../../models/user/user.js'
+import UserError              from '../../models/user/error.js'
+import UserModal              from '../../models/user/modal.js'
 import FlashMessage           from '../../models/flashMessage.js'
 import ButtonDefault          from '../shared/ButtonDefault.vue'
 import ProfileCards           from './ProfileCards.vue'

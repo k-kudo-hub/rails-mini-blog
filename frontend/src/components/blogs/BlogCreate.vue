@@ -24,11 +24,12 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Blog from '../../models/blog.js'
+import axios         from 'axios'
+import Blog          from '../../models/blog/blog.js'
+import BlogError     from '../../models/blog/error.js'
 import ButtonDefault from '../shared/ButtonDefault.vue'
-import ButtonFilled from '../shared/ButtonFilled.vue'
-import RequireLabel from '../shared/RequireLabel.vue'
+import ButtonFilled  from '../shared/ButtonFilled.vue'
+import RequireLabel  from '../shared/RequireLabel.vue'
 export default {
   data(){
     return {
