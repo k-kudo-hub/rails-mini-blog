@@ -9,9 +9,19 @@
           <p v-for="(item, index) in errors.subject" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
-      <div class="flex flex-col mb-3">
-        <label for="body" class="mb-2 flex items-center">{{ $t('blog.body') }}</label>
-        <textarea v-model="blog.body" ref="body" class="border-b h-20" type="text" name="body"></textarea>
+      <div class="mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <label for="body">{{ $t('blog.body') }}</label>
+          <button @click="togglePreview()" class="mr-4">プレビュー</button>
+        </div>
+        <BlogMarkdown
+          class="mb-3 h-60"
+          v-if="is_preview_open"
+          :content="blog.body"
+        />
+        <div v-else class="flex flex-col">
+          <textarea v-model="blog.body" ref="body" class="border-b h-60" type="text" name="body"></textarea>
+        </div>
       </div>
       <div class="flex mb-5">
         <select v-model="blog.state_number" class="w-1/2 h-8 border-2 border-gold-500">
@@ -46,6 +56,7 @@ import axios            from 'axios'
 import Blog             from '../../models/blog/blog.js'
 import BlogError        from '../../models/blog/error.js'
 import ButtonDefault    from '../shared/ButtonDefault.vue'
+import BlogMarkdown     from './BlogMarkdown.vue'
 import ButtonFilled     from '../shared/ButtonFilled.vue'
 import FlashMessage     from '../../models/flashMessage.js'
 import RequireLabel     from '../shared/RequireLabel.vue'
@@ -60,12 +71,14 @@ export default {
         { id: 0, name: this.$t("blog.options.draft") },
         { id: 1, name: this.$t("blog.options.limited") },
         { id: 2, name: this.$t("blog.options.release") },
-      ]
+      ],
+      is_preview_open: false,
     }
   },
   components: {
     ButtonDefault,
     ButtonFilled,
+    BlogMarkdown,
     RequireLabel,
     FlashMessageView
   },
@@ -98,6 +111,9 @@ export default {
       if(confirm('作成をキャンセルしますか？変更は保存されません。')){
         this.blog = new Blog()
       }
+    },
+    togglePreview(){
+      this.is_preview_open ? this.is_preview_open = false : this.is_preview_open = true;
     }
   }
 }
