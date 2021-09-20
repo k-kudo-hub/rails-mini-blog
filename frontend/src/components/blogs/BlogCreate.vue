@@ -4,7 +4,7 @@
     <form @submit.prevent>
       <div class="flex flex-col mb-3">
         <label for="subject" class="mb-2 flex items-center">{{ $t('blog.subject') }}<require-label/></label>
-        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('form.character_20')">
+        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('form.character_50')">
         <template v-if="errors.subject.length > 0">
           <p v-for="(item, index) in errors.subject" :key="index" class="text-red-500">{{ item }}</p>
         </template>
@@ -12,19 +12,19 @@
       <div class="mb-3">
         <div class="flex items-center justify-between mb-2">
           <label for="body">{{ $t('blog.body') }}</label>
-          <button @click="togglePreview()" class="mr-4">プレビュー</button>
+          <button @click="togglePreview()" class="mr-4">{{ previewButtonText() }}</button>
         </div>
         <BlogMarkdown
-          class="mb-3 h-60"
+          class="mb-3 h-72 overflow-scroll"
           v-if="is_preview_open"
           :content="blog.body"
         />
         <div v-else class="flex flex-col">
-          <textarea v-model="blog.body" ref="body" class="border-b h-60" type="text" name="body"></textarea>
+          <textarea v-model="blog.body" ref="body" class="border-b h-72" type="text" name="body"></textarea>
         </div>
       </div>
       <div class="flex mb-5">
-        <select v-model="blog.state_number" class="w-1/2 h-8 border-2 border-gold-500">
+        <select v-model="blog.state_number" class="w-1/2 h-8 border-2 bg-white border-gold-500">
           <option v-for="option in options" :value="option.id" :key="option.id">
             {{ option.name }}
           </option>
@@ -87,6 +87,9 @@ export default {
       if(array.length > 0){
         return "border-red-500"
       }
+    },
+    previewButtonText(){
+      return this.is_preview_open ? 'エディタ' : 'プレビュー' 
     },
     beforeCreateBlog(){
       if(this.blog.is_valid()){
