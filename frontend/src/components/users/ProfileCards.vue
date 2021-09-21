@@ -1,6 +1,14 @@
 <template>
   <section class="mx-2 mb-4">
-    <h1 class="mb-2 text-md">{{ $t("profile.blogs") }}</h1>
+    <div class="flex justify-end items-center mr-4 mb-4">
+      <h1 class="text-md w-1/2">{{ $t("profile.blogs") }}</h1>
+      <div class="w-1/2 mr-2 text-right">
+        <button-default
+          :text="$t('models.blog') + $t('form.create')"
+          @click="jumpToBlogNew"
+        />
+      </div>
+    </div>
     <article :style="exportBgImage(card.cover)" class="bg-center bg-cover h-24 mb-2" v-for="card in cards" :key="card.id">
       <div class="w-full h-full bg-black bg-opacity-50 text-white pl-4">
         <h1 class="h-1/2 flex items-center">{{ card.title }}</h1>
@@ -16,7 +24,8 @@
 </template>
 
 <script>
-import logo from '../../assets/logo.png'
+import logo          from '../../assets/logo.png'
+import ButtonDefault from '../shared/ButtonDefault.vue'
 export default {
   data(){
     return {
@@ -45,9 +54,17 @@ export default {
       ]
     }
   },
+  components: {
+    ButtonDefault
+  },
   methods: {
     exportBgImage(file){
       return `background-image: url('${file}')`
+    },
+    jumpToBlogNew(){
+      this.$router.push({
+        name: 'blog_create',
+      })
     }
   }
 }

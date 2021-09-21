@@ -9,6 +9,7 @@ ja:
     models:
       user: ユーザー
       session: セッション
+      blog: ブログ
     attributes:
       user:
         id: ユーザーID
@@ -21,6 +22,19 @@ ja:
         link: URL
         uid: 外部認証ID
         provider: 外部認証プロバイダ
+      blog: 
+        id: ブログID
+        subject: タイトル
+        body: 本文
+        cover_image: カバー画像
+        state_number: 公開状態
+        url: URL
+  enumerize: 
+    blog:
+      state_number:
+        draft: 下書き
+        limited: 限定公開
+        release: 公開
   date:
     abbr_day_names:
     - 日

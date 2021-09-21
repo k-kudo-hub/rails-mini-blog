@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     namespace :v1 do
       resources :users,    only: [:create, :show, :update, :destroy]
+      resources :blogs,    only: [:create]
       resources :sessions, only: [:create, :destroy]
-      resources :pictures,  only: [] do
+      resources :pictures, only: [] do
         collection do
           put   'upload_picture'
           put   'upload_cover'

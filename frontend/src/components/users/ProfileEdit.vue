@@ -26,12 +26,12 @@
         </div>
         <div class="flex items-center w-3/4 justify-between mx-auto">
           <button-default
-          @click="$emit('toggleEditModal')"
-          :text="$t('form.cancel')"
+            @click="$emit('toggleEditModal')"
+            :text="$t('form.cancel')"
           />
           <button-filled
-          @click="$emit('updateUserInfo', updateUserInfoParams())"
-          :text="$t('form.update')"
+            @click="$emit('updateUserInfo', updateUserInfoParams())"
+            :text="$t('form.updating')"
           />
         </div>
       </form>
