@@ -4,7 +4,7 @@
       <h1 class="text-md w-1/2">{{ $t("profile.blogs") }}</h1>
       <div class="w-1/2 mr-2 text-right">
         <button-default
-          :text='"ブログ作成"'
+          :text="$t('models.blog') + $t('form.create')"
           @click="jumpToBlogNew"
         />
       </div>

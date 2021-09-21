@@ -1,7 +1,9 @@
 const messages = Object.freeze({
   form: {
     cancel: 'Cancel ',
+    cancel_message: 'Would you like to cancel? Changes are not saved.',
     character_20: '20 characters or less',
+    character_50: '50 characters or less',
     character_8_password: '8 characters or more. Must use Alphabets and numbers',
     create: 'Create ',
     edit: 'Edit ',
@@ -58,7 +60,11 @@ const messages = Object.freeze({
       limited: 'Limited',
       release: 'Release'
     },
-    url: 'URL'
+    url: 'URL',
+    markdown: {
+      editor: 'Editor',
+      preview: 'Preview'
+    },
   }
 })
 

@@ -1,7 +1,9 @@
 const messages = Object.freeze({
   form: {
     cancel: 'キャンセル',
+    cancel_message: 'キャンセルしますか？変更は保存されません。',
     character_20: '20文字以内',
+    character_50: '50文字以内',
     character_8_password: '8文字以上・英数字混合',
     create: '作成',
     edit: '編集',
@@ -57,7 +59,11 @@ const messages = Object.freeze({
       limited: '限定公開',
       release: '公開'
     },
-    url: 'URL'
+    url: 'URL',
+    markdown: {
+      editor: 'エディタ',
+      preview: 'プレビュー'
+    },
   }
 })
 

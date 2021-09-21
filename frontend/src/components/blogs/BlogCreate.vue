@@ -12,10 +12,11 @@
       <div class="mb-3">
         <div class="flex items-center justify-between mb-2">
           <label for="body">{{ $t('blog.body') }}</label>
-          <button @click="togglePreview()" class="mr-4">{{ previewButtonText() }}</button>
+          <button @click="togglePreview()" v-if="is_preview_open" class="mr-4 text-gray-500">{{ $t('blog.markdown.editor') }} <i class="fas fa-pen"></i></button>
+          <button @click="togglePreview()" v-else class="mr-4 text-gray-500">{{ $t('blog.markdown.preview') }} <i class='fas fa-eye'></i></button>
         </div>
         <BlogMarkdown
-          class="mb-3 h-72 overflow-scroll"
+          class="mb-3 h-72 overflow-scroll border-b"
           v-if="is_preview_open"
           :content="blog.body"
         />
@@ -88,14 +89,11 @@ export default {
         return "border-red-500"
       }
     },
-    previewButtonText(){
-      return this.is_preview_open ? 'エディタ' : 'プレビュー' 
-    },
     beforeCreateBlog(){
       if(this.blog.is_valid()){
         this.createBlog()
       } else {
-        this.errors.inputValidation(this.errors.subject, "タイトルを入力してください")
+        this.errors.inputValidation(this.errors.subject, this.$t('blog.subject') + this.$t('form.require_message'))
       }
     },
     createBlog(){
@@ -111,8 +109,9 @@ export default {
         })
     },
     cancelCreateBlog(){
-      if(confirm('作成をキャンセルしますか？変更は保存されません。')){
+      if(confirm(this.$t('form.cancel_message'))){
         this.blog = new Blog()
+        this.$router.go(-1)
       }
     },
     togglePreview(){
