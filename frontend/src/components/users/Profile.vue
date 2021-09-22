@@ -111,7 +111,7 @@ export default {
       axios
         .get('http://localhost:3000/api/v1/users/0')
         .then(response => {
-          this.user.setData(response.data)
+          this.user.set(response.data)
         })
         .catch(error => {
           console.log(error)

@@ -9,7 +9,7 @@ export default class {
     this.cover_url   = '';
     this.link        = '';
   }
-  setData(data){
+  set(data){
     this.id          = data.id;
     this.name        = data.name;
     this.introduce   = data.introduce;
