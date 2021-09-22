@@ -1,18 +1,11 @@
-export default class {
+import Error from '../error.js'
+export default class extends Error {
   constructor(){
+    super()
     this.subject      = [];
     this.body         = [];
     this.cover_image  = [];
     this.state_number = [];
-  }
-  _push(error, pattern, target){
-    if(error.match(pattern)){ 
-      target.push(error)
-      return
-    }
-  }
-  inputValidation(target, message){
-    target.push(message)
   }
   catchErrorMessages(errors){
     // FIXME: Vuei18nを使用して動的に判別したい

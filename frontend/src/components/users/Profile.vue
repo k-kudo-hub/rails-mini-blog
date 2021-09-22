@@ -127,7 +127,7 @@ export default {
       if(params[0]){
         this.updateUserInfo(params[0], params[1], params[2]);
       } else {
-        this.errors.inputValidation(this.$t("user.name") + this.$t("form.require_message"));
+        this.errors.inputValidation(this.errors.name, this.$t("user.name") + this.$t("form.require_message"));
       }
     },
     updateUserInfo(newName, newIntroduce, newLink){
