@@ -110,7 +110,6 @@ export default {
     },
     cancelCreateBlog(){
       if(confirm(this.$t('form.cancel_message'))){
-        this.blog = new Blog()
         this.$router.go(-1)
       }
     },
