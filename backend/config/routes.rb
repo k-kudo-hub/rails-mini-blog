@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users,    only: [:create, :show, :update, :destroy]
       resources :blogs,    only: [:create]
+      resources :assets,   only: [:create, :destroy]
       resources :sessions, only: [:create, :destroy]
       resources :pictures, only: [] do
         collection do

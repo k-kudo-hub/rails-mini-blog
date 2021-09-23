@@ -3,6 +3,9 @@ class User < ApplicationRecord
   mount_uploader :picture, PictureUploader
   mount_uploader :cover,   CoverUploader
 
+  has_many :blogs
+  has_many :assets
+
   VALID_EMAIL_REGEX        = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGAX     = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
   VALID_URL_REGAX          = /\A#{URI::regexp(%w(http https))}\z/
