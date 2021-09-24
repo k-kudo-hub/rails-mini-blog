@@ -1,6 +1,10 @@
 <template>
   <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
+      <AssetIndex
+        v-if="modal.is_asset_open"
+        @toggleAssetModal="toggleAssetModal"
+      />
       <ProfileEdit
         v-if="modal.is_edit_open"
         :errors="errors"
@@ -29,6 +33,7 @@
         @toggleCoverModal="toggleCoverModal"
       />
       <ProfileCards
+        @toggleAssetModal="toggleAssetModal"
       />
       <flash-message-view
         :hook="flashMessage.is_displayed"
@@ -47,6 +52,7 @@ import User                   from '../../models/user/user.js'
 import UserError              from '../../models/user/error.js'
 import UserModal              from '../../models/user/modal.js'
 import FlashMessage           from '../../models/flashMessage.js'
+import AssetIndex             from '../asset/AssetIndex.vue'
 import ButtonDefault          from '../shared/ButtonDefault.vue'
 import ProfileCards           from './ProfileCards.vue'
 import ProfileEdit            from './ProfileEdit.vue'
@@ -65,6 +71,7 @@ export default {
     }
   },
   components: {
+    AssetIndex,
     ButtonDefault,
     ProfileCards,
     ProfileEdit,
@@ -93,6 +100,9 @@ export default {
             name: 'home',
           })
         })
+    },
+    toggleAssetModal(){
+      this.modal.toggleAsset()
     },
     toggleEditModal(){
       this.modal.toggleEdit()
