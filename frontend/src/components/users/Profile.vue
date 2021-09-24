@@ -159,7 +159,7 @@ export default {
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    // プロフィール画像・カバー更新
+    // プロフィール画像更新
     beforeUpdateUserPicture(...args){
       const newPicture = args[0]
       if(newPicture.name){
@@ -176,14 +176,14 @@ export default {
         .then(response => {
           this.user.setPicture(response.data)
           this.togglePictureModal()
-          this.flashMessage.display(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update") + this.$t("form.success"))
         })
         .catch(error => {
           console.log(error.response.data)
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    // カバー更新
+    // カバー画像更新
     beforeUpdateUserCover(...args){
       const newCover = args[0]
       if(newCover.name){

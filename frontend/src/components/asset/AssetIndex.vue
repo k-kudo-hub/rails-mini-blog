@@ -1,7 +1,9 @@
 <template>
   <div @click.self="$emit('toggleAssetModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
-      <h1 class="mb-2">素材一覧</h1>
+      <header class="mb-2">
+        <h1>素材一覧</h1>
+      </header>
       <div class="h-96 my-3">
         <div v-if="assets.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
           <div v-for="asset in assets" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
