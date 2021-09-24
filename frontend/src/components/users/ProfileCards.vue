@@ -19,7 +19,7 @@
         <h1 class="h-1/2 flex items-center">{{ card.title }}</h1>
         <div class="h-1/2 flex items-center">
           <div class="h-6 w-6 bg-white rounded-2xl mr-2 flex justify-center items-center">
-            <img :src="card.picture" alt="" height="20" width="20">
+            <img :src="card.picture" alt="" class="h-full w-full content-cover">
           </div>
           <p>{{ card.name }}</p>
         </div>
