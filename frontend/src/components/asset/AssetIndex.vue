@@ -9,6 +9,20 @@
         <p v-else class="text-center pt-5 text-silver-500">素材がありません。</p>
       </div>
       <div :class="frame.emphasize()" class="w-full h-24 border-2 border-dashed border-gold-500">
+        <form @drop.prevent="dropAsset"
+              @dragenter="frame.startEmphasize"
+              @dragleave="frame.stopEmphasize"
+              @dragover.prevent 
+              @submit.prevent
+              class="h-full flex justify-center items-center z-30">
+          <label class="text-gold-500 text-center">
+            <i class="fas fa-upload"></i> {{ $t("form.upload") }}
+            <p class="text-xs">またはここにドラッグ&ドロップ</p>
+            <input type="file" class="hidden"
+              @change="beforeUploadAsset"
+            >
+          </label>
+        </form>
       </div>
       <template v-if="errors.file.length > 0">
         <p v-for="(item, index) in errors.file" :key="index" class="my-2 text-xs text-red-500">{{ item }}</p>
@@ -20,10 +34,15 @@
 <script>
 import axios from 'axios'
 import NewAsset from '../../models/asset/newAsset.js'
+import Error from '../../models/asset/error.js'
+import Frame from '../../models/asset/frame.js'
 export default {
   data(){
     return {
       assets: [],
+      newAsset: new NewAsset(),
+      errors: new Error(),
+      frame: new Frame(),
     }
   },
   created(){
@@ -40,6 +59,31 @@ export default {
           console.log(error.response.data)
         })
     },
+    async dropAsset(){
+      this.newAsset.set([...event.dataTransfer.files][0])
+      await this.uploadAsset()
+    },
+    async beforeUploadAsset(e){
+      this.setNewAsset(e)
+      await this.uploadAsset()
+    },
+    setNewAsset(e){
+      e.preventDefault();
+      this.newAsset.set(e.target.files[0])
+    },
+    uploadAsset(){
+      const formData = new FormData()
+      formData.append('asset[file]', this.newAsset.file)
+      axios
+        .post('http://localhost:3000/api/v1/assets', formData)
+        .then(response => {
+          this.assets.unshift(response.data)
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors.catch(error.response.data)
+        })
+    }
   }
 }
 </script>
