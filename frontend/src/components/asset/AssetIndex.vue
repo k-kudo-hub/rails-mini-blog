@@ -3,16 +3,19 @@
     <section class="w-11/12 bg-white fixed-center p-5">
       <h1 class="mb-2">素材一覧</h1>
       <div class="h-96 my-3">
-        <div v-if="assets.length > 0" class="flex flex-wrap h-full overflow-scroll">
-          <img v-for="asset in assets" class="mr-4 mb-2 p-2 h-24 w-24 shadow-md object-cover object-center" :key="asset.id" :src="asset.file_url" :alt="asset.alt">
+        <div v-if="assets.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
+          <div v-for="asset in assets" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
+            <img class="h-full w-full  object-cover object-center" :src="asset.file_url" :alt="asset.alt">
+            <button @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
+          </div>
         </div>
         <p v-else class="text-center pt-5 text-silver-500">素材がありません。</p>
       </div>
-      <div :class="frame.emphasize()" class="w-full h-24 border-2 border-dashed border-gold-500">
+      <div :class="frame.emphasize()" class="w-full h-24 border-2 border-dashed border-gold-500 z-50">
         <form @drop.prevent="dropAsset"
               @dragenter="frame.startEmphasize"
               @dragleave="frame.stopEmphasize"
-              @dragover.prevent 
+              @dragover.prevent
               @submit.prevent
               class="h-full flex justify-center items-center z-30">
           <label class="text-gold-500 text-center">
@@ -54,6 +57,7 @@ export default {
         .get('http://localhost:3000/api/v1/assets')
         .then(response => {
           this.assets = response.data
+          console.log(response.data)
         })
         .catch(error => {
           console.log(error.response.data)
@@ -82,6 +86,19 @@ export default {
         .catch(error => {
           console.log(error.response.data)
           this.errors.catch(error.response.data)
+        })
+    },
+    deleteAsset(id){
+      axios
+        .delete(`http://localhost:3000/api/v1/assets/${id}`)
+        .then(response => {
+          var newArray = this.assets.filter(function(v){
+            return v.id != response.data;
+          })
+          this.assets = newArray;
+        })
+        .catch(error => {
+          console.log(error.response.data)
         })
     }
   }

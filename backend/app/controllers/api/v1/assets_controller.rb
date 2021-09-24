@@ -19,8 +19,9 @@ class Api::V1::AssetsController < ApplicationController
 
   def destroy
     asset = @current_user.assets.find(params[:id])
-    asset.destroy!
-    head :no_content
+    if asset.destroy!
+      render json: params[:id]
+    end
   end
 
   private
