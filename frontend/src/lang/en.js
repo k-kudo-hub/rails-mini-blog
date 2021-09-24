@@ -19,6 +19,9 @@ const messages = Object.freeze({
     uploading: 'Upload',
     wrong_message: 'Wrong email address or password.'
   },
+  motion: {
+    manage: 'manage'
+  },
   link: {
     blog: 'blogs',
     trend: 'trend',
@@ -40,6 +43,7 @@ const messages = Object.freeze({
   models: {
     user: 'User ',
     blog: 'Blog ',
+    asset: 'Asset '
   },
   user: {
     name: 'Name ',

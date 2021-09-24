@@ -18,6 +18,9 @@ const messages = Object.freeze({
     uploading: 'アップロードする',
     wrong_message: 'メールアドレスかパスワードが間違っています。'
   },
+  action: {
+    manage: '管理'
+  },
   link: {
     blog: 'ブログ',
     trend: 'トレンド',
@@ -39,6 +42,7 @@ const messages = Object.freeze({
   models: {
     user: 'ユーザー',
     blog: 'ブログ',
+    asset: '素材'
   },
   user: {
     name: 'ユーザー名',

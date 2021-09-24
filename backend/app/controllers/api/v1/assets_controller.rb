@@ -3,10 +3,15 @@ class Api::V1::AssetsController < ApplicationController
     render json: { error: '404 not found' }, status: :not_found
   end
 
+  def index
+    assets = @current_user.assets_selected
+    render json: assets, methods: [:file_url]
+  end
+
   def create
     asset = Asset.new(asset_params)
     if asset.save
-      render json: asset, status: :created
+      render json: asset, status: :created, methods: [:file_url]
     else
       render json: asset.errors.full_messages, status: :unprocessable_entity
     end

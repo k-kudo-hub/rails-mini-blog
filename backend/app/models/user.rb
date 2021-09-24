@@ -37,6 +37,10 @@ class User < ApplicationRecord
     select(:id, :name, :introduce, :picture, :cover, :link).find(id)
   }
 
+  def assets_selected
+    assets.select(:id, :file, :alt).order(created_at: :desc)
+  end
+
   def link_present?
     link.present?
   end

@@ -10,6 +10,7 @@ ja:
       user: ユーザー
       session: セッション
       blog: ブログ
+      asset: 素材
     attributes:
       user:
         id: ユーザーID
@@ -29,6 +30,10 @@ ja:
         cover_image: カバー画像
         state_number: 公開状態
         url: URL
+      asset:
+        id: 素材ID
+        file: ファイル
+        alt: 代替テキスト
   enumerize: 
     blog:
       state_number:
