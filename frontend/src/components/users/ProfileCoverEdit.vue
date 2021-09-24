@@ -66,9 +66,6 @@ export default {
       e.preventDefault();
       this.newCover = e.target.files[0]
       console.log(this.newCover)
-    },
-    returnCoverFullPath(path){
-      return 'http://localhost:3000'+path
     }
   }
 }

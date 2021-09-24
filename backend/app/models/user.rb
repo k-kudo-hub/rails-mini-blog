@@ -11,6 +11,8 @@ class User < ApplicationRecord
   VALID_URL_REGAX          = /\A#{URI::regexp(%w(http https))}\z/
   NAME_MAXIMUM_LENGTH      = 20
   INTRODUCE_MAXIMUM_LENGTH = 250
+  # TODO: 環境変数で置き換える
+  BASE_URL                 = 'http://localhost:3000'
 
   validates :name,      presence:   true, on: :create,
                         length:     { maximum: NAME_MAXIMUM_LENGTH }
@@ -46,10 +48,10 @@ class User < ApplicationRecord
   end
 
   def cover_url
-    cover.present? ? cover.url : nil
+    cover.present? ? "#{BASE_URL}#{cover.url}" : nil
   end
 
   def picture_url
-    picture.present? ? picture.url : nil
+    picture.present? ? "#{BASE_URL}#{picture.url}" : nil
   end
 end

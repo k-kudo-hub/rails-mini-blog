@@ -66,14 +66,7 @@ export default {
       e.preventDefault();
       this.newPicture = e.target.files[0]
       console.log(this.newPicture)
-    },
-    returnPictureFullPath(path){
-      return 'http://localhost:3000'+path
     }
   }
 }
 </script>
-
-<style>
-
-</style>

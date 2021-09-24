@@ -36,11 +36,6 @@ export default {
       cover: String,
     }
   },
-  methods: {
-    returnPictureFullPath(path){
-      return 'http://localhost:3000'+path
-    }
-  }
 }
 </script>
 
