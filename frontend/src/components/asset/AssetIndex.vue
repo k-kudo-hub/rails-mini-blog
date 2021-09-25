@@ -8,8 +8,8 @@
         </button>
       </header>
       <div class="h-96 my-3">
-        <div v-if="assets.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
-          <div v-for="asset in assets" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
+        <div v-if="assets.items.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
+          <div v-for="asset in assets.items" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
             <img class="h-full w-full  object-cover object-center" :src="asset.file_url" :alt="asset.alt">
             <button v-if="forBlog" @click="$emit('insertAsset', asset)" class="absolute top-1 left-1"><i class="fas fa-plus fa-md bg-gold-500 text-white rounded-full p-2 "></i></button>
             <button v-else @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
@@ -42,13 +42,14 @@
 
 <script>
 import axios from 'axios'
+import Assets from '../../models/asset/assets.js'
 import NewAsset from '../../models/asset/newAsset.js'
 import Error from '../../models/asset/error.js'
 import Frame from '../../models/asset/frame.js'
 export default {
   data(){
     return {
-      assets: [],
+      assets: new Assets(),
       newAsset: new NewAsset(),
       errors: new Error(),
       frame: new Frame(),
@@ -69,8 +70,7 @@ export default {
       axios
         .get('http://localhost:3000/api/v1/assets')
         .then(response => {
-          this.assets = response.data
-          console.log(response.data)
+          this.assets.set(response.data)
         })
         .catch(error => {
           console.log(error.response.data)
@@ -94,7 +94,7 @@ export default {
       axios
         .post('http://localhost:3000/api/v1/assets', formData)
         .then(response => {
-          this.assets.unshift(response.data)
+          this.assets.insert(response.data)
         })
         .catch(error => {
           console.log(error.response.data)
@@ -105,10 +105,7 @@ export default {
       axios
         .delete(`http://localhost:3000/api/v1/assets/${id}`)
         .then(response => {
-          var newArray = this.assets.filter(function(v){
-            return v.id != response.data;
-          })
-          this.assets = newArray;
+          this.assets.delete(response.data)
         })
         .catch(error => {
           console.log(error.response.data)
