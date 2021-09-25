@@ -1,14 +1,18 @@
 <template>
   <div @click.self="$emit('toggleAssetModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
-      <header class="mb-2">
+      <header class="mb-2 flex justify-between">
         <h1>素材一覧</h1>
+        <button @click="$emit('toggleAssetModal')" class="mr-2">
+          <i class="fas fa-times"></i>
+        </button>
       </header>
       <div class="h-96 my-3">
         <div v-if="assets.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
           <div v-for="asset in assets" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
             <img class="h-full w-full  object-cover object-center" :src="asset.file_url" :alt="asset.alt">
-            <button @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
+            <button v-if="forBlog" @click="$emit('insertAsset', asset)" class="absolute top-1 left-1"><i class="fas fa-plus fa-md bg-gold-500 text-white rounded-full p-2 "></i></button>
+            <button v-else @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
           </div>
         </div>
         <p v-else class="text-center pt-5 text-silver-500">素材がありません。</p>
@@ -48,6 +52,13 @@ export default {
       newAsset: new NewAsset(),
       errors: new Error(),
       frame: new Frame(),
+    }
+  },
+  props: {
+    forBlog: {
+      type: Boolean,
+      require: false,
+      default: false,
     }
   },
   created(){
