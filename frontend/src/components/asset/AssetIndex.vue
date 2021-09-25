@@ -75,6 +75,7 @@ export default {
         .catch(error => {
           console.log(error.response.data)
         })
+        // TODO: 処理が重い。ロード画面が欲しい。
     },
     async dropAsset(){
       this.newAsset.set([...event.dataTransfer.files][0])

@@ -118,6 +118,7 @@ export default {
           this.errors = new BlogError()
           this.errors.catchErrorMessages(error.response.data)
         })
+      // TODO: 詳細表示画面ができたらそこに飛ばしたい
     },
     cancelCreateBlog(){
       if(confirm(this.$t('form.cancel_message'))){
@@ -135,6 +136,7 @@ export default {
       setTimeout(() => {
         target.value = target.value.substr(0, target.selectionStart) + `${mdText}\n` + target.value.substr(target.selectionStart)
       }, 500);
+      // TODO: 挿入後に改行やスペースを入力しないと挿入したテキストが消える問題をなんとかしたい。
     }
   }
 }
