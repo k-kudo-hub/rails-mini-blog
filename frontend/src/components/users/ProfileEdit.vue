@@ -5,7 +5,7 @@
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
-          <input :value="propsUser.name" ref="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" name="name" :placeholder="$t('form.character_20')">
+          <input :value="propsUser.name" ref="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" name="name" :placeholder="$t('errors.character_20')">
           <template v-if="errors.name.length > 0">
             <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
           </template>

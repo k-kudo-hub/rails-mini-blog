@@ -89,7 +89,7 @@ export default {
         .catch(error => {
           console.log(error.response.data)
           this.resetErrors()
-          this.errors.common.push(this.$t("form.wrong_message"))
+          this.errors.common.push(this.$t("errors.wrong_message"))
         })
     },
     authenticateVisitor(){
@@ -101,8 +101,8 @@ export default {
     },
     inputValidation(){
       this.resetErrors()
-      if(!this.visitor.email){ this.errors.email.push(this.$t("user.email") + this.$t("form.require_message")) }
-      if(!this.visitor.password){ this.errors.password.push(this.$t("user.password") + this.$t("form.require_message")) }
+      if(!this.visitor.email){ this.errors.email.push(this.$t("user.email") + this.$t("errors.require_input")) }
+      if(!this.visitor.password){ this.errors.password.push(this.$t("user.password") + this.$t("errors.require_input")) }
     },
     resetErrors(){
       // FIXME: 初期化する関数に置き換えたい

@@ -2,7 +2,7 @@
   <div @click.self="$emit('toggleAssetModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
       <header class="mb-2 flex justify-between">
-        <h1>素材一覧</h1>
+        <h1>{{ $t('models.asset') + $t('form.index') }}</h1>
         <button @click="$emit('toggleAssetModal')" class="mr-2">
           <i class="fas fa-times"></i>
         </button>
@@ -15,7 +15,7 @@
             <button v-else @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
           </div>
         </div>
-        <p v-else class="text-center pt-5 text-silver-500">素材がありません。</p>
+        <p v-else class="text-center pt-5 text-silver-500">{{ $t('models.asset') + $t('errors.is_empty') }}</p>
       </div>
       <div :class="frame.emphasize()" class="w-full h-24 border-2 border-dashed border-gold-500 z-50">
         <form @drop.prevent="dropAsset"
@@ -26,7 +26,7 @@
               class="h-full flex justify-center items-center z-30">
           <label class="text-gold-500 text-center">
             <i class="fas fa-upload"></i> {{ $t("form.upload") }}
-            <p class="text-xs">またはここにドラッグ&ドロップ</p>
+            <p class="text-xs">{{ $t('form.drag_and_drop') }}</p>
             <input type="file" class="hidden"
               @change="beforeUploadAsset"
             >

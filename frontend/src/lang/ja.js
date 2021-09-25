@@ -2,13 +2,11 @@ const messages = Object.freeze({
   form: {
     cancel: 'キャンセル',
     cancel_message: 'キャンセルしますか？変更は保存されません。',
-    character_20: '20文字以内',
-    character_50: '50文字以内',
-    character_8_password: '8文字以上・英数字混合',
     create: '作成',
+    drag_and_drop: 'またはここにドラッグ&ドロップ',
     edit: '編集',
-    require: '必須',
-    require_message: 'を入力してください。',
+    index: '一覧',
+    not_selected: '未選択',
     save: '保存',
     saving: '保存する',
     success: 'が成功しました。',
@@ -16,6 +14,15 @@ const messages = Object.freeze({
     updating: '更新する',
     upload: 'アップロード',
     uploading: 'アップロードする',
+  },
+  errors: {
+    character_20: '20文字以内',
+    character_50: '50文字以内',
+    character_8_password: '8文字以上・英数字混合',
+    is_empty: 'が空です。',
+    require: '必須',
+    require_input: 'を入力してください。',
+    require_select: 'を選択して下さい。',
     wrong_message: 'メールアドレスかパスワードが間違っています。'
   },
   action: {
@@ -68,6 +75,10 @@ const messages = Object.freeze({
       editor: 'エディタ',
       preview: 'プレビュー'
     },
+  },
+  asset: {
+    file: "ファイル",
+    alt: '代替テキスト',
   }
 })
 

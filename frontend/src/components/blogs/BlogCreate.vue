@@ -9,7 +9,7 @@
       />
       <div class="flex flex-col mb-3">
         <label for="subject" class="mb-2 flex items-center">{{ $t('blog.subject') }}<require-label/></label>
-        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('form.character_50')">
+        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('errors.character_50')">
         <template v-if="errors.subject.length > 0">
           <p v-for="(item, index) in errors.subject" :key="index" class="text-red-500">{{ item }}</p>
         </template>
