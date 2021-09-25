@@ -20,8 +20,10 @@
           <div class="text-gray-500 flex items-center">
             <label class="flex items-center">
               <i class="fab fa-cc-discover text-gray-500 mr-2"></i>
-              <p v-if="blog.cover_image">{{ blog.cover_image.name }}</p>
-              <p v-else>{{ $t('form.not_selected') }}</p>
+              <div class="mr-2">
+                <p v-if="blog.cover_image">{{ blog.cover_image.name }}</p>
+                <p v-else>{{ $t('form.not_selected') }}</p>
+              </div>
               <input type="file" class="hidden w-full h-full" @change="setCoverImage">
             </label>
             <button @click="asset_modal.toggle" v-if="!is_preview_open" class="mr-4"><i class="far fa-images ml-2"></i></button>
