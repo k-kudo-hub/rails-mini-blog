@@ -1,7 +1,7 @@
-import Asset from './asset.js'
-export default class extends Asset {
+export default class {
   constructor() {
-    super()
+    this.file = '';
+    this.alt  = '';
   }
   set(file){
     this.file = file;
