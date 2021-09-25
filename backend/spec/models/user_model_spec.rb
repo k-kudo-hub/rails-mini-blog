@@ -5,6 +5,8 @@ RSpec.describe User, type: :model do
     @user = FactoryBot.build(:user)
   end
 
+  # bundle exec rspec spec/models/user_model_spec.rb
+
   describe 'User registration' do
     context 'Registration is successful' do
       it 'If Name, Email, Password exist, you can register.' do

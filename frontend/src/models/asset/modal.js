@@ -9,4 +9,3 @@ export default class {
     return this.is_asset_open
   }
 }
-

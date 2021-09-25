@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     whenOpenModal: function(){
-      if(this.modal.is_open()){
+      if(this.modal.is_open() || this.asset_modal.is_open()){
         return "h-main-fixed"
       }
     }
