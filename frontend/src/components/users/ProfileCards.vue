@@ -1,9 +1,14 @@
 <template>
   <section class="mx-2 mb-4">
     <div class="flex justify-end items-center mr-4 mb-4">
-      <h1 class="text-md w-1/2">{{ $t("profile.blogs") }}</h1>
-      <div class="w-1/2 mr-2 text-right">
+      <h1 class="text-md w-1/3">{{ $t("profile.blogs") }}</h1>
+      <div class="w-2/3 text-right flex justify-end items-center">
         <button-default
+          class="mr-3"
+          :text="$t('models.asset') + $t('action.manage')"
+          @click="$emit('toggleAssetModal')"
+        />
+        <button-filled
           :text="$t('models.blog') + $t('form.create')"
           @click="jumpToBlogNew"
         />
@@ -14,7 +19,7 @@
         <h1 class="h-1/2 flex items-center">{{ card.title }}</h1>
         <div class="h-1/2 flex items-center">
           <div class="h-6 w-6 bg-white rounded-2xl mr-2 flex justify-center items-center">
-            <img :src="card.picture" alt="" height="20" width="20">
+            <img :src="card.picture" alt="" class="h-full w-full content-cover">
           </div>
           <p>{{ card.name }}</p>
         </div>
@@ -26,6 +31,7 @@
 <script>
 import logo          from '../../assets/logo.png'
 import ButtonDefault from '../shared/ButtonDefault.vue'
+import ButtonFilled  from '../shared/ButtonFilled.vue'
 export default {
   data(){
     return {
@@ -55,7 +61,8 @@ export default {
     }
   },
   components: {
-    ButtonDefault
+    ButtonDefault,
+    ButtonFilled
   },
   methods: {
     exportBgImage(file){
@@ -65,7 +72,7 @@ export default {
       this.$router.push({
         name: 'blog_create',
       })
-    }
+    },
   }
 }
 </script>

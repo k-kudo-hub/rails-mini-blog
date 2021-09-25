@@ -3,8 +3,8 @@
     <section class="w-11/12 bg-white fixed-center p-5">
       <h1 class="mb-4">{{ $t("user.picture") + " " + $t("form.edit") }}</h1>
       <div class="h-28 w-28 bg-gold-500 rounded-full mx-auto mb-2 flex items-center justify-center bg-white border-4 border-white overflow-hidden">
-        <img v-if="propsUser.picture_url" :src="returnPictureFullPath(propsUser.picture_url)" height="112" width="112" alt="">
-        <img v-else :src="default_image" height="100" width="100" alt="">
+        <img v-if="propsUser.picture_url" :src="propsUser.picture_url" class="h-full w-full content-cover" alt="">
+        <img v-else :src="default_image" class="h-full w-full content-cover" alt="">
       </div>
       <form @submit.prevent>
         <div class="flex items-center justify-center mb-4">
@@ -66,14 +66,7 @@ export default {
       e.preventDefault();
       this.newPicture = e.target.files[0]
       console.log(this.newPicture)
-    },
-    returnPictureFullPath(path){
-      return 'http://localhost:3000'+path
     }
   }
 }
 </script>
-
-<style>
-
-</style>

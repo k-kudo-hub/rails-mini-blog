@@ -29,3 +29,6 @@
 tmp/cache
 public/uploads/*
 !public/uploads/.keep
+!public/uploads/preview
+public/uploads/preview/*
+!public/uploads/preview/.keep

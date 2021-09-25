@@ -36,7 +36,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_allowlist
-    %w(jpg png)
+    %w[jpg png]
   end
 
   # Override the filename of the uploaded files:

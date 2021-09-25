@@ -1,5 +1,7 @@
 <template>
-  <div class="markdown" v-html="compileMarkdown"></div>
+  <article class="mb-3 h-96 overflow-scroll border-b">
+    <div class="markdown" v-html="compileMarkdown"></div>
+  </article>
 </template>
 
 <script>
@@ -67,5 +69,13 @@ export default {
 }
 .markdown li li {
   margin-left: 2rem;
+}
+.markdown a {
+  color: blue;
+  text-decoration: underline;
+}
+.markdown a:visited {
+  color: rgb(138, 0, 162);
+  text-decoration: underline;
 }
 </style>

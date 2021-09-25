@@ -1,6 +1,10 @@
 <template>
   <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
+      <AssetIndex
+        v-if="asset_modal.is_asset_open"
+        @toggleAssetModal="toggleAssetModal"
+      />
       <ProfileEdit
         v-if="modal.is_edit_open"
         :errors="errors"
@@ -29,6 +33,7 @@
         @toggleCoverModal="toggleCoverModal"
       />
       <ProfileCards
+        @toggleAssetModal="toggleAssetModal"
       />
       <flash-message-view
         :hook="flashMessage.is_displayed"
@@ -43,10 +48,12 @@
 
 <script>
 import axios                  from 'axios'
+import AssetModal             from '../../models/asset/modal.js'
 import User                   from '../../models/user/user.js'
 import UserError              from '../../models/user/error.js'
 import UserModal              from '../../models/user/modal.js'
 import FlashMessage           from '../../models/flashMessage.js'
+import AssetIndex             from '../asset/AssetIndex.vue'
 import ButtonDefault          from '../shared/ButtonDefault.vue'
 import ProfileCards           from './ProfileCards.vue'
 import ProfileEdit            from './ProfileEdit.vue'
@@ -61,10 +68,12 @@ export default {
       user: new User(),
       errors: new UserError(),
       modal: new UserModal(),
+      asset_modal: new AssetModal(),
       flashMessage: new FlashMessage(),
     }
   },
   components: {
+    AssetIndex,
     ButtonDefault,
     ProfileCards,
     ProfileEdit,
@@ -79,7 +88,7 @@ export default {
   },
   computed: {
     whenOpenModal: function(){
-      if(this.modal.is_open()){
+      if(this.modal.is_open() || this.asset_modal.is_open()){
         return "h-main-fixed"
       }
     }
@@ -93,6 +102,9 @@ export default {
             name: 'home',
           })
         })
+    },
+    toggleAssetModal(){
+      this.asset_modal.toggle()
     },
     toggleEditModal(){
       this.modal.toggleEdit()
@@ -111,7 +123,7 @@ export default {
       axios
         .get('http://localhost:3000/api/v1/users/0')
         .then(response => {
-          this.user.setData(response.data)
+          this.user.set(response.data)
         })
         .catch(error => {
           console.log(error)
@@ -127,7 +139,7 @@ export default {
       if(params[0]){
         this.updateUserInfo(params[0], params[1], params[2]);
       } else {
-        this.errors.inputValidation(this.$t("user.name") + this.$t("form.require_message"));
+        this.errors.inputValidation(this.errors.name, this.$t("user.name") + this.$t("errors.require_input"));
       }
     },
     updateUserInfo(newName, newIntroduce, newLink){
@@ -149,7 +161,7 @@ export default {
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    // プロフィール画像・カバー更新
+    // プロフィール画像更新
     beforeUpdateUserPicture(...args){
       const newPicture = args[0]
       if(newPicture.name){
@@ -166,14 +178,14 @@ export default {
         .then(response => {
           this.user.setPicture(response.data)
           this.togglePictureModal()
-          this.flashMessage.display(this.$t("form.update_success"))
+          this.flashMessage.display(this.$t("form.update") + this.$t("form.success"))
         })
         .catch(error => {
           console.log(error.response.data)
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    // カバー更新
+    // カバー画像更新
     beforeUpdateUserCover(...args){
       const newCover = args[0]
       if(newCover.name){

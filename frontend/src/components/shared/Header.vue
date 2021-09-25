@@ -1,13 +1,13 @@
 <template>
   <header class="h-12 w-full text-gold-500 shadow-md flex">
     <div class="w-1/6 flex justify-center items-center">
-      <img :src="logo" height="30" width="30">
+      <img :src="logo" class="h-8 w-8">
     </div>
     <div v-if="user.id" class="w-5/6 flex justify-end items-center">
       <p class="mr-2">{{ user.name }}</p>
       <div class="w-8 h-8 mr-2 border-2 rounded-3xl border-white overflow-hidden">
-        <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" height="32" width="32">
-        <img v-else :src="logo" height="32" width="32">
+        <img v-if="user.picture_url" :src="user.picture_url" class="h-full w-full content-cover">
+        <img v-else :src="logo" class="h-full w-full content-cover">
       </div>
     </div>
     <div v-else class="w-5/6 flex justify-end items-center">
@@ -36,11 +36,6 @@ export default {
       cover: String,
     }
   },
-  methods: {
-    returnPictureFullPath(path){
-      return 'http://localhost:3000'+path
-    }
-  }
 }
 </script>
 

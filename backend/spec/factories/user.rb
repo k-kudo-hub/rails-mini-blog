@@ -6,8 +6,8 @@ FactoryBot.define do
     introduce  { 'Hello, world!!' }
     picture    { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/assets/images/git-logo-fire.png')) }
     cover      { 'dummy-header.png' }
-    provider   {  }
-    uid        {  }
+    provider   {}
+    uid        {}
     link       { 'https://www.error-note.com' }
   end
 end

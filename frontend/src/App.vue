@@ -3,11 +3,11 @@
     <Header 
       :user="user"
     />
-    <article class="h-main p-3 bg-gray-100">
+    <main class="h-main p-3 bg-gray-100">
       <router-view 
         :user="user"
       />
-    </article>
+    </main>
     <Footer 
       :user="user"
     />

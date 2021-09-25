@@ -2,14 +2,11 @@ const messages = Object.freeze({
   form: {
     cancel: 'Cancel ',
     cancel_message: 'Would you like to cancel? Changes are not saved.',
-    character_20: '20 characters or less',
-    character_50: '50 characters or less',
-    character_8_password: '8 characters or more. Must use Alphabets and numbers',
     create: 'Create ',
+    drag_and_drop: 'or drag and drop here',
     edit: 'Edit ',
-    require: 'required',
-    require_message: " can't be blank.",
-    saving: 'Save',
+    index: 'List',
+    not_selected: 'Unselected',
     save: 'Save ',
     saving: 'Save',
     success: 'was successful.',
@@ -17,7 +14,19 @@ const messages = Object.freeze({
     updating: 'Update ',
     upload: 'Upload ',
     uploading: 'Upload',
+  },
+  errors: {
+    character_20: '20 characters or less',
+    character_50: '50 characters or less',
+    character_8_password: '8 characters or more. Must use Alphabets and numbers',
+    is_empty: 'is empty.',
+    require: 'required',
+    require_input: " can't be blank.",
+    require_select: ' is not selected.',
     wrong_message: 'Wrong email address or password.'
+  },
+  action: {
+    manage: 'manage'
   },
   link: {
     blog: 'blogs',
@@ -40,6 +49,7 @@ const messages = Object.freeze({
   models: {
     user: 'User ',
     blog: 'Blog ',
+    asset: 'Asset '
   },
   user: {
     name: 'Name ',
@@ -65,6 +75,10 @@ const messages = Object.freeze({
       editor: 'Editor',
       preview: 'Preview'
     },
+    asset: {
+      file: "File ",
+      alt: 'Alternative ',
+    }
   }
 })
 

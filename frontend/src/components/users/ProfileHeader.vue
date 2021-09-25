@@ -1,12 +1,14 @@
 <template>
   <section>
-    <img v-if="user.cover_url" @click="$emit('toggleCoverModal')" :src="returnPictureFullPath(user.cover_url)" alt="" class="h-32 w-full object-cover shadow-md">
-    <img v-else :src="dummy_header" @click="$emit('toggleCoverModal')" alt="" class="h-32 w-full object-cover shadow-md">
-    <div @click="$emit('togglePictureModal')" class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
-      <img v-if="user.picture_url" :src="returnPictureFullPath(user.picture_url)" alt="" height="70" width="70">
-      <img v-else :src="default_image" alt="" height="70" width="70">
-    </div>
-    <div class="mt-10 mb-8 mx-2">
+    <section class="h-32 w-full shadow-md">
+      <img v-if="user.cover_url" @click="$emit('toggleCoverModal')" :src="user.cover_url" alt="" class="object-cover h-full w-full">
+      <img v-else :src="dummy_header" @click="$emit('toggleCoverModal')" alt="" class="object-cover h-full w-full">
+    </section>
+    <section @click="$emit('togglePictureModal')" class="absolute h-20 w-20 rounded-full flex items-center justify-center bg-white top-20 left-3 border-4 border-white overflow-hidden">
+      <img v-if="user.picture_url" :src="user.picture_url" alt="" class="h-full w-full content-cover">
+      <img v-else :src="default_image" alt="" class="h-full w-full content-cover">
+    </section>
+    <section class="mt-10 mb-8 mx-2">
       <div class="flex items-center">
         <h1 class="text-xl mb-1 mr-3 font-bold">{{ user.name }}</h1>
         <i @click="$emit('toggleEditModal')" class="fas fa-pen text-gray-500"></i>
@@ -17,7 +19,7 @@
         <a href="#" class="mr-1"><span class="font-bold mr-1">24</span>{{ $t("profile.follow") }}</a>/
         <a href="#" class="ml-1"><span class="font-bold mr-1">145</span>{{ $t("profile.follower") }}</a>
       </p>
-    </div>
+    </section>
   </section>
 </template>
 
@@ -41,11 +43,6 @@ export default {
       cover: String,
     }
   },
-  methods: {
-    returnPictureFullPath(path){
-      return 'http://localhost:3000'+path
-    }
-  }
 }
 </script>
 

@@ -5,12 +5,13 @@ export default class {
     this.cover_image  = '';
     this.state_number =  0;
     this.url          = '';
+    this.cover_image_url = '';
   }
   set(data){
     this.subject      = data.subject;
     this.body         = data.body;
-    this.cover_image  = data.cover_image;
-    this.state_number = data.state_number;
+    this.cover_image  = data.cover_image_url;
+    this.state_number = data.state_value;
     this.url          = data.url;
     console.log(this)
   }
@@ -18,14 +19,11 @@ export default class {
     return this.subject != false
   }
   params(){
-    const params = {
-      blog: {
-        subject: this.subject,
-        body: this.body,
-        cover_image: this.cover_image,
-        state_number: this.state_number
-      }
-    }
-    return params
+    const formData = new FormData()
+    formData.append('blog[subject]', this.subject)
+    formData.append('blog[body]', this.body)
+    formData.append('blog[cover_image]', this.cover_image)
+    formData.append('blog[state_number]', this.state_number)
+    return formData
   }
 }
