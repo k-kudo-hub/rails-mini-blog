@@ -20,4 +20,8 @@ class Blog < ApplicationRecord
   def random_url
     return SecureRandom.hex(20)
   end
+
+  def state_value
+    state_number_value
+  end
 end

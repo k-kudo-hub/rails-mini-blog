@@ -10,7 +10,7 @@ export default class {
     this.subject      = data.subject;
     this.body         = data.body;
     this.cover_image  = data.cover_image;
-    this.state_number = data.state_number;
+    this.state_number = data.state_value;
     this.url          = data.url;
     console.log(this)
   }
