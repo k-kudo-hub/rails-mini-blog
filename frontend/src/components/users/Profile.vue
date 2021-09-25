@@ -2,7 +2,7 @@
   <div :class="whenOpenModal" class="w-full bg-white shadow-md relative pb-5">
     <template v-if="user.id">
       <AssetIndex
-        v-if="modal.is_asset_open"
+        v-if="asset_modal.is_asset_open"
         @toggleAssetModal="toggleAssetModal"
       />
       <ProfileEdit
@@ -48,6 +48,7 @@
 
 <script>
 import axios                  from 'axios'
+import AssetModal             from '../../models/asset/modal.js'
 import User                   from '../../models/user/user.js'
 import UserError              from '../../models/user/error.js'
 import UserModal              from '../../models/user/modal.js'
@@ -67,6 +68,7 @@ export default {
       user: new User(),
       errors: new UserError(),
       modal: new UserModal(),
+      asset_modal: new AssetModal(),
       flashMessage: new FlashMessage(),
     }
   },
@@ -102,7 +104,7 @@ export default {
         })
     },
     toggleAssetModal(){
-      this.modal.toggleAsset()
+      this.asset_modal.toggle()
     },
     toggleEditModal(){
       this.modal.toggleEdit()
