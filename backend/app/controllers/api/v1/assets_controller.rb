@@ -26,7 +26,7 @@ class Api::V1::AssetsController < ApplicationController
 
   private
 
-  def asset_params
-    params.require(:asset).permit(:file, :alt).merge(user: @current_user)
-  end
+    def asset_params
+      params.require(:asset).permit(:file, :alt).merge(user: @current_user)
+    end
 end

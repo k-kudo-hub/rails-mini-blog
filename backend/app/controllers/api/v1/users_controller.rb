@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @current_user, methods: [:picture_url, :cover_url]
+    render json: @current_user, methods: %i[picture_url cover_url]
   end
 
   def update
@@ -29,16 +29,15 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
-  def user_create_params
-    params.require(:user).permit(:name, :email, :password)
-  end
+    def user_create_params
+      params.require(:user).permit(:name, :email, :password)
+    end
 
-  def user_update_params
-    params.require(:user).permit(:name, :introduce, :link)
-  end
+    def user_update_params
+      params.require(:user).permit(:name, :introduce, :link)
+    end
 end

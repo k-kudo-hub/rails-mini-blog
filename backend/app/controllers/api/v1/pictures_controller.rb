@@ -23,11 +23,11 @@ class Api::V1::PicturesController < ApplicationController
 
   private
 
-  def upload_picture_params
-    params.require(:user).permit(:picture)
-  end
+    def upload_picture_params
+      params.require(:user).permit(:picture)
+    end
 
-  def upload_cover_params
-    params.require(:user).permit(:cover)
-  end
+    def upload_cover_params
+      params.require(:user).permit(:cover)
+    end
 end
