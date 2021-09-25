@@ -7,7 +7,7 @@ class Api::V1::BlogsController < ApplicationController
     blog = Blog.new(blog_params)
     blog.set_url
     if blog.save
-      render json: blog, status: :created, methods: [:state_value]
+      render json: blog, status: :created, methods: [:state_value, :cover_image_url]
     else
       render json: blog.errors.full_messages, status: :unprocessable_entity
     end

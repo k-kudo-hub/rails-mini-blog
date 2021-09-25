@@ -16,8 +16,14 @@
       </div>
       <div class="mb-3">
         <div class="flex items-center justify-between mb-2">
-          <label for="body">{{ $t('blog.body') }}</label>
-          <div class="text-gray-500">
+          <label for="body" class="mr-3">{{ $t('blog.body') }}</label>
+          <div class="text-gray-500 flex items-center">
+            <label class="flex items-center">
+              <i class="fab fa-cc-discover text-gray-500 mr-2"></i>
+              <p v-if="blog.cover_image">{{ blog.cover_image.name }}</p>
+              <p v-else>{{ $t('form.not_selected') }}</p>
+              <input type="file" class="hidden w-full h-full" @change="setCoverImage">
+            </label>
             <button @click="asset_modal.toggle" v-if="!is_preview_open" class="mr-4"><i class="far fa-images ml-2"></i></button>
             <button @click="togglePreview()" v-if="is_preview_open" class="mr-4"><i class="fas fa-pen"></i></button>
             <button @click="togglePreview()" v-else class="mr-4"><i class='fas fa-eye'></i></button>
@@ -32,6 +38,9 @@
       <div v-else class="flex flex-col mb-3">
         <textarea v-model="blog.body" ref="body" class="border-b h-96" type="text" name="body" id="blog_body"></textarea>
       </div>
+      <template v-if="errors.cover_image.length > 0">
+        <p v-for="(item, index) in errors.cover_image" :key="index" class="text-red-500 mb-2">{{ item }}</p>
+      </template>
       <div class="flex items-center w-3/4 justify-between mx-auto">
         <button-default
           @click="cancelCreateBlog"
@@ -104,7 +113,8 @@ export default {
       if(this.blog.is_valid()){
         this.createBlog()
       } else {
-        this.errors.inputValidation(this.errors.subject, this.$t('blog.subject') + this.$t('form.require_message'))
+        this.errors = new BlogError()
+        this.errors.inputValidation(this.errors.subject, this.$t('blog.subject') + this.$t('errors.require_input'))
       }
     },
     createBlog(){
@@ -137,6 +147,11 @@ export default {
         target.value = target.value.substr(0, target.selectionStart) + `${mdText}\n` + target.value.substr(target.selectionStart)
       }, 500);
       // TODO: 挿入後に改行やスペースを入力しないと挿入したテキストが消える問題をなんとかしたい。
+    },
+    setCoverImage(e){
+      e.preventDefault();
+      this.blog.cover_image = e.target.files[0]
+      console.log(this.blog.cover_image)
     }
   }
 }
