@@ -1,5 +1,7 @@
 <template>
-  <div class="markdown" v-html="compileMarkdown"></div>
+  <article class="mb-3 h-96 overflow-scroll border-b">
+    <div class="markdown" v-html="compileMarkdown"></div>
+  </article>
 </template>
 
 <script>

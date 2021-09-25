@@ -1,7 +1,12 @@
 <template>
-  <section class="w-full bg-white shadow-md relative p-5 mx-auto">
-    <h1 class="mb-4">{{ $t('models.blog') + $t('form.create') }}</h1>
+  <section class="w-full h-full bg-white shadow-md relative p-5 mx-auto">
     <form @submit.prevent>
+      <AssetIndex
+        v-if="asset_modal.is_asset_open"
+        @toggleAssetModal="asset_modal.toggle()"
+        @insertAsset="insertAsset"
+        :forBlog="true"
+      />
       <div class="flex flex-col mb-3">
         <label for="subject" class="mb-2 flex items-center">{{ $t('blog.subject') }}<require-label/></label>
         <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('form.character_50')">
@@ -12,37 +17,34 @@
       <div class="mb-3">
         <div class="flex items-center justify-between mb-2">
           <label for="body">{{ $t('blog.body') }}</label>
-          <button @click="togglePreview()" v-if="is_preview_open" class="mr-4 text-gray-500">{{ $t('blog.markdown.editor') }} <i class="fas fa-pen"></i></button>
-          <button @click="togglePreview()" v-else class="mr-4 text-gray-500">{{ $t('blog.markdown.preview') }} <i class='fas fa-eye'></i></button>
-        </div>
-        <BlogMarkdown
-          class="mb-3 h-72 overflow-scroll border-b"
-          v-if="is_preview_open"
-          :content="blog.body"
-        />
-        <div v-else class="flex flex-col">
-          <textarea v-model="blog.body" ref="body" class="border-b h-72" type="text" name="body"></textarea>
+          <div class="text-gray-500">
+            <button @click="asset_modal.toggle" v-if="!is_preview_open" class="mr-4"><i class="far fa-images ml-2"></i></button>
+            <button @click="togglePreview()" v-if="is_preview_open" class="mr-4"><i class="fas fa-pen"></i></button>
+            <button @click="togglePreview()" v-else class="mr-4"><i class='fas fa-eye'></i></button>
+          </div>
         </div>
       </div>
-      <div class="flex mb-5">
-        <select v-model="blog.state_number" class="w-1/2 h-8 border-2 bg-white border-gold-500">
-          <option v-for="option in options" :value="option.id" :key="option.id">
-            {{ option.name }}
-          </option>
-        </select>
-        <template v-if="errors.state_number.length > 0">
-          <p v-for="(item, index) in errors.subject" :key="index" class="text-red-500">{{ item }}</p>
-        </template>
+      <BlogMarkdown
+        v-if="is_preview_open"
+        :subject="blog.subject"
+        :content="blog.body"
+      />
+      <div v-else class="flex flex-col mb-3">
+        <textarea v-model="blog.body" ref="body" class="border-b h-96" type="text" name="body" id="blog_body"></textarea>
       </div>
       <div class="flex items-center w-3/4 justify-between mx-auto">
         <button-default
           @click="cancelCreateBlog"
           :text="$t('form.cancel')"
         />
-        <button-filled
-          @click="beforeCreateBlog"
-          :text="$t('form.saving')"
-        />
+        <div class="flex bg-gold-500 text-white px-3 rounded-2xl shadow-md">
+          <button @click="beforeCreateBlog" class="mr-2">{{ textByState }}</button>
+          <select v-model="blog.state_number" class="w-4 h-8 bg-gold-700">
+            <option class="text-white" v-for="option in options" :value="option.id" :key="option.id">
+              {{ option.name }}
+            </option>
+          </select>
+        </div>
       </div>
     </form>
     <flash-message-view
@@ -54,6 +56,8 @@
 
 <script>
 import axios            from 'axios'
+import AssetIndex       from '../asset/AssetIndex.vue'
+import AssetModal       from '../../models/asset/modal.js'
 import Blog             from '../../models/blog/blog.js'
 import BlogError        from '../../models/blog/error.js'
 import ButtonDefault    from '../shared/ButtonDefault.vue'
@@ -74,14 +78,21 @@ export default {
         { id: 2, name: this.$t("blog.options.release") },
       ],
       is_preview_open: false,
+      asset_modal: new AssetModal()
     }
   },
   components: {
+    AssetIndex,
     ButtonDefault,
     ButtonFilled,
     BlogMarkdown,
     RequireLabel,
     FlashMessageView
+  },
+  computed: {
+    textByState(){
+      return this.options.find((item) => item.id === this.blog.state_number).name
+    }
   },
   methods: {
     addErrorBorder(array){
@@ -115,11 +126,16 @@ export default {
     },
     togglePreview(){
       this.is_preview_open ? this.is_preview_open = false : this.is_preview_open = true;
+    },
+    insertAsset(...args){
+      this.asset_modal.toggle() 
+      const asset = args[0] // [id, file, alt, file_url]
+      const mdText = `![${asset.alt}](${asset.file_url})`
+      const target = document.getElementById('blog_body')
+      setTimeout(() => {
+        target.value = target.value.substr(0, target.selectionStart) + `${mdText}\n` + target.value.substr(target.selectionStart)
+      }, 500);
     }
   }
 }
 </script>
-
-<style>
-
-</style>
