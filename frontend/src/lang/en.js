@@ -14,6 +14,9 @@ const messages = Object.freeze({
     updating: 'Update ',
     upload: 'Upload ',
     uploading: 'Upload',
+    blog: {
+      body_placeholder: 'Feel free to write a blog!\nSupports markdown notation'
+    }
   },
   errors: {
     character_20: '20 characters or less',

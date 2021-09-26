@@ -14,6 +14,9 @@ const messages = Object.freeze({
     updating: '更新する',
     upload: 'アップロード',
     uploading: 'アップロードする',
+    blog: {
+      body_placeholder: '自由にブログを書いてみましょう。\nマークダウンに対応しています。'
+    }
   },
   errors: {
     character_20: '20文字以内',

@@ -10,8 +10,8 @@
       <div class="h-96 my-3">
         <div v-if="assets.items.length > 0" class="flex flex-wrap h-full content-start overflow-scroll">
           <div v-for="asset in assets.items" :key="asset.id" class="relative h-24 w-24 mr-4 mb-2 p-2 shadow-md">
-            <img class="h-full w-full  object-cover object-center" :src="asset.file_url" :alt="asset.alt">
-            <button v-if="forBlog" @click="$emit('insertAsset', asset)" class="absolute top-1 left-1"><i class="fas fa-plus fa-md bg-gold-500 text-white rounded-full p-2 "></i></button>
+            <img class="h-full w-full object-cover object-center" :src="asset.file_url" :alt="asset.alt">
+            <button v-if="forBlog" @click="$emit('insertAsset', asset)" class="absolute top-1 left-1"><i class="fas fa-plus bg-gold-500 text-white rounded-full p-1"></i></button>
             <button v-else @click="deleteAsset(asset.id)" class="absolute top-0 left-0"><i class="fas fa-times-circle fa-lg text-gray-400"></i></button>
           </div>
         </div>
@@ -27,9 +27,7 @@
           <label class="text-gold-500 text-center">
             <i class="fas fa-upload"></i> {{ $t("form.upload") }}
             <p class="text-xs">{{ $t('form.drag_and_drop') }}</p>
-            <input type="file" class="hidden"
-              @change="beforeUploadAsset"
-            >
+            <input type="file" class="hidden" @change="beforeUploadAsset">
           </label>
         </form>
       </div>
