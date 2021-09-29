@@ -26,7 +26,8 @@ const messages = Object.freeze({
     require: 'required',
     require_input: " can't be blank.",
     require_select: ' is not selected.',
-    wrong_message: 'Wrong email address or password.'
+    wrong_message: 'Wrong email address or password.',
+    no_posts_message: 'No posts yet.' 
   },
   action: {
     manage: 'manage'

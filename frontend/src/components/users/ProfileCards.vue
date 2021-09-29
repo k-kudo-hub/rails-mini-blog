@@ -21,7 +21,7 @@
       @touchmove="slideMove"
       @touchend="swipe.slideEnd()"
     />
-    <p v-else class="text-silver-500 text-center py-4">まだ投稿はありません。</p>
+    <p v-else class="text-silver-500 text-center py-4">{{ $t("errors.no_posts_message") }}</p>
   </section>
 </template>
 

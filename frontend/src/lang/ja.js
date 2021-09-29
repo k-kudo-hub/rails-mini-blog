@@ -26,7 +26,8 @@ const messages = Object.freeze({
     require: '必須',
     require_input: 'を入力してください。',
     require_select: 'を選択して下さい。',
-    wrong_message: 'メールアドレスかパスワードが間違っています。'
+    wrong_message: 'メールアドレスかパスワードが間違っています。',
+    no_posts_message: 'まだ投稿はありません。' 
   },
   action: {
     manage: '管理'
