@@ -19,6 +19,10 @@ class Blog < ApplicationRecord
     where(state_number: 2)
   }
 
+  scope :personal, ->(id) {
+    where(user_id: id)
+  }
+
   scope :select_for_index, -> {
     select(:id, :user_id, :subject, :cover_image, :url, :created_at).order(created_at: :desc)
   }
