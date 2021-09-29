@@ -2,6 +2,9 @@
   <transition-group name="slide-fade" tag="section">
     <div
       class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider"
+      @touchstart="$emit('touchstart', $event)"
+      @touchmove="$emit('touchmove', $event, blog.id)"
+      @touchend="$emit('touchend')"
       v-for="blog in blogs.items"
       :key="blog.id"
     >
@@ -30,6 +33,12 @@
             </div>
           </div>
         </article>
+        <div class="w-3/12 bg-gold-500 h-full text-white">
+          <div class="h-2/3 flex items-center justify-center">
+            <img class="h-12 w-12 mt-4" src="/src/assets/star.png" alt="">
+          </div>
+          <p class="h-1/3 text-center font-bold">STAR</p>
+        </div>
       </div>
     </div>
   </transition-group>
