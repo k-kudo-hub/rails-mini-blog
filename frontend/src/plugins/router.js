@@ -1,11 +1,12 @@
 import Home         from '../components/Home.vue'
+import BlogIndex    from '../components/blogs/BlogIndex.vue'
 import Profile      from '../components/users/Profile.vue'
 import Registration from '../components/sessions/Registration.vue'
 import Login        from '../components/sessions/Login.vue'
 import BlogCreate   from '../components/blogs/BlogCreate.vue'
 const routes = [
   {
-    component: Home,
+    component: BlogIndex,
     name: 'home',
     path: '/'
   },

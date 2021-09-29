@@ -3,7 +3,7 @@
     <Header 
       :user="user"
     />
-    <main class="h-main p-3 bg-gray-100">
+    <main class="h-main bg-gray-100">
       <router-view 
         :user="user"
       />
@@ -56,7 +56,8 @@ export default {
 
 <style>
 .h-main {
-  min-height: calc(100vh - 48px - 64px);
+  height: calc(100vh - 48px - 64px);
   margin-bottom: 64px;
+  overflow-y: scroll;
 }
 </style>

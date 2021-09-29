@@ -1,6 +1,6 @@
 <template>
-  <section class="w-full h-full bg-white shadow-md relative p-5 mx-auto">
-    <form @submit.prevent>
+  <section class="w-full h-full bg-white shadow-md relative p-3 mx-auto">
+    <form @submit.prevent class="h-full pb-3 overflow-scroll">
       <AssetIndex
         v-if="asset_modal.is_asset_open"
         @toggleAssetModal="asset_modal.toggle()"
@@ -8,42 +8,42 @@
         :forBlog="true"
       />
       <div class="flex flex-col mb-3">
-        <label for="subject" class="mb-2 flex items-center">{{ $t('blog.subject') }}<require-label/></label>
-        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('errors.character_50')">
+        <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('blog.subject')">
         <template v-if="errors.subject.length > 0">
           <p v-for="(item, index) in errors.subject" :key="index" class="text-red-500">{{ item }}</p>
         </template>
       </div>
-      <div class="mb-3">
+      <div class="mb-3 border-b h-1/16" :class="addErrorBorder(errors.cover_image)">
         <div class="flex items-center justify-between mb-2">
-          <label for="body" class="mr-3">{{ $t('blog.body') }}</label>
           <div class="text-gray-500 flex items-center">
             <label class="flex items-center">
               <i class="fab fa-cc-discover text-gray-500 mr-2"></i>
               <div class="mr-2">
                 <p v-if="blog.cover_image">{{ blog.cover_image.name }}</p>
-                <p v-else>{{ $t('form.not_selected') }}</p>
+                <p v-else>{{ $t('blog.cover_image') + ': ' + $t('form.not_selected') }}</p>
               </div>
-              <input type="file" class="hidden w-full h-full" @change="setCoverImage">
+              <input type="file" class="hidden w-full" @change="setCoverImage">
             </label>
+          </div>
+          <div class="text-gray-500 flex items-center">
             <button @click="asset_modal.toggle" v-if="!is_preview_open" class="mr-4"><i class="far fa-images ml-2"></i></button>
             <button @click="togglePreview()" v-if="is_preview_open" class="mr-4"><i class="fas fa-pen"></i></button>
             <button @click="togglePreview()" v-else class="mr-4"><i class='fas fa-eye'></i></button>
           </div>
         </div>
       </div>
+      <template v-if="errors.cover_image.length > 0">
+        <p v-for="(item, index) in errors.cover_image" :key="index" class="text-red-500 mb-2">{{ item }}</p>
+      </template>
       <BlogMarkdown
         v-if="is_preview_open"
         :subject="blog.subject"
         :content="blog.body"
       />
-      <div v-else class="flex flex-col mb-3">
-        <textarea v-model="blog.body" ref="body" class="border-b h-96" type="text" name="body" id="blog_body"></textarea>
+      <div v-else class="flex flex-col mb-3 h-12/16">
+        <textarea v-model="blog.body" ref="body" class="border-b h-full" type="text" name="body" id="blog_body" :placeholder="$t('form.blog.body_placeholder')"></textarea>
       </div>
-      <template v-if="errors.cover_image.length > 0">
-        <p v-for="(item, index) in errors.cover_image" :key="index" class="text-red-500 mb-2">{{ item }}</p>
-      </template>
-      <div class="flex items-center w-3/4 justify-between mx-auto">
+      <div class="flex items-center h-1/16 w-3/4 justify-between mx-auto mb-2">
         <button-default
           @click="cancelCreateBlog"
           :text="$t('form.cancel')"

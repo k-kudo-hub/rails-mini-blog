@@ -15,6 +15,18 @@ class Blog < ApplicationRecord
   validates :state_number,  numericality: { in: 0..2 }
   validates :url,           uniqueness:   { message: 'URL生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
+  scope :released, -> {
+    where(state_number: 2)
+  }
+
+  scope :personal, ->(id) {
+    where(user_id: id)
+  }
+
+  scope :select_for_index, -> {
+    select(:id, :user_id, :subject, :cover_image, :url, :created_at).order(created_at: :desc)
+  }
+
   def set_url
     self.url = random_url
   end
@@ -29,5 +41,17 @@ class Blog < ApplicationRecord
 
   def cover_image_url
     cover_image.present? ? "#{BASE_URL}#{cover_image.url}" : nil
+  end
+
+  def format_created_at
+    created_at.to_s(:short)
+  end
+
+  def user_picture
+    user.picture.present? ? "#{BASE_URL}#{user.picture.url}" : nil
+  end
+
+  def user_name
+    user.name
   end
 end

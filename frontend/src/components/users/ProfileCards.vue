@@ -14,57 +14,57 @@
         />
       </div>
     </div>
-    <article :style="exportBgImage(card.cover)" class="bg-center bg-cover h-24 mb-2" v-for="card in cards" :key="card.id">
-      <div class="w-full h-full bg-black bg-opacity-50 text-white pl-4">
-        <h1 class="h-1/2 flex items-center">{{ card.title }}</h1>
-        <div class="h-1/2 flex items-center">
-          <div class="h-6 w-6 bg-white rounded-2xl mr-2 flex justify-center items-center">
-            <img :src="card.picture" alt="" class="h-full w-full content-cover">
-          </div>
-          <p>{{ card.name }}</p>
-        </div>
-      </div>
-    </article>
+    <BlogCard
+      v-if="blogs.items.length > 0"
+      :blogs="blogs"
+      @touchstart="swipe.slideStart($event)"
+      @touchmove="slideMove"
+      @touchend="swipe.slideEnd()"
+    />
+    <p v-else class="text-silver-500 text-center py-4">{{ $t("errors.no_posts_message") }}</p>
   </section>
 </template>
 
 <script>
 import logo          from '../../assets/logo.png'
+import BlogCard      from '../blogs/BlogCard.vue'
 import ButtonDefault from '../shared/ButtonDefault.vue'
 import ButtonFilled  from '../shared/ButtonFilled.vue'
+import Blogs         from '../../models/blog/blogs.js'
+import Swipe         from '../../models/swipe.js'
+import axios from 'axios'
 export default {
   data(){
     return {
-      cards: [
-        {
-          id: 1,
-          title: "dummy blog title",
-          cover: "/src/assets/dummy-header.jpg",
-          picture: logo,
-          name: "John Star"
-        },
-        {
-          id: 2,
-          title: "dummy blog title2",
-          cover: "/src/assets/dummy-header2.jpg",
-          picture: logo,
-          name: "Ivan Lod"
-        },
-        {
-          id: 3,
-          title: "dummy blog title3",
-          cover: "/src/assets/dummy-header3.jpg",
-          picture: logo,
-          name: "Jeff Arren"
-        }
-      ]
+      blogs: new Blogs(),
+      swipe: new Swipe()
     }
   },
   components: {
+    BlogCard,
     ButtonDefault,
     ButtonFilled
   },
+  created(){
+    this.getBlogs()
+  },
   methods: {
+    getBlogs(){
+      axios
+        .get('http://localhost:3000/api/v1/my_blogs')
+        .then(response => {
+          this.blogs.set(response.data)
+        })
+        .catch(error => {
+          console.log(response.data)
+        })
+    },
+    slideMove(...args){ // [0]touchEvent, [1]blog.id 
+      if(this.swipe.slideMove(args[0])){
+        this.blogs.delete(args[1])
+        this.swipe.flag = false;
+      }
+    },
     exportBgImage(file){
       return `background-image: url('${file}')`
     },

@@ -3,6 +3,11 @@ class Api::V1::BlogsController < ApplicationController
     render json: { error: '404 not found' }, status: :not_found
   end
 
+  def index
+    blogs = Blog.released.select_for_index
+    render json: blogs, methods: [:format_created_at, :cover_image_url, :user_picture, :user_name]
+  end
+
   def create
     blog = Blog.new(blog_params)
     blog.set_url

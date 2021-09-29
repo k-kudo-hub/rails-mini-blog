@@ -14,6 +14,9 @@ const messages = Object.freeze({
     updating: 'Update ',
     upload: 'Upload ',
     uploading: 'Upload',
+    blog: {
+      body_placeholder: 'Feel free to write a blog!\nSupports markdown notation'
+    }
   },
   errors: {
     character_20: '20 characters or less',
@@ -23,7 +26,8 @@ const messages = Object.freeze({
     require: 'required',
     require_input: " can't be blank.",
     require_select: ' is not selected.',
-    wrong_message: 'Wrong email address or password.'
+    wrong_message: 'Wrong email address or password.',
+    no_posts_message: 'No posts yet.' 
   },
   action: {
     manage: 'manage'
