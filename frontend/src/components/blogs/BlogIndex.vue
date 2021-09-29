@@ -1,11 +1,13 @@
 <template>
   <section class="w-full h-full bg-white shadow-md relative p-3 mx-auto">
     <BlogCards
+      v-if="blogs.items.length > 0"
       :blogs="blogs"
       @touchstart="swipe.slideStart($event)"
       @touchmove="slideMove"
       @touchend="swipe.slideEnd()"
     />
+    <p v-else>まだ投稿はありません。</p>
   </section>
 </template>
 
@@ -38,32 +40,12 @@ export default {
           console.log(response.data)
         })
     },
-    slideMove(...args){
-      if(this.swipe.slideMove(args[0])){ // touchEvent
-        this.blogs.delete(args[1]) // blog.id
+    slideMove(...args){ // [0]touchEvent, [1]blog.id 
+      if(this.swipe.slideMove(args[0])){
+        this.blogs.delete(args[1])
         this.swipe.flag = false;
       }
     },
   }
 }
 </script>
-
-<style>
-.slide-fade-enter-active {
-  transition: all .2s ease;
-}
-.slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(-20px);
-  opacity: 0;
-}
-.slider {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.slider::-webkit-scrollbar {
-  display:none;
-}
-</style>
