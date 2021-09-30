@@ -12,10 +12,15 @@ class Api::V1::BlogsController < ApplicationController
     blog = Blog.new(blog_params)
     blog.set_url
     if blog.save
-      render json: blog, status: :created, methods: [:state_value, :cover_image_url]
+      render json: blog, status: :created, methods: [:format_created_at, :cover_image_url, :user_picture, :user_name]
     else
       render json: blog.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def show
+    blog = Blog.find_by(url: params[:url])
+    render json: blog, methods: [:format_created_at, :cover_image_url, :user_picture, :user_name, :user_introduce, :user_id]
   end
 
   private
