@@ -71,12 +71,12 @@ import AssetIndex       from '../asset/AssetIndex.vue'
 import AssetModal       from '../../models/asset/modal.js'
 import Blog             from '../../models/blog/blog.js'
 import BlogError        from '../../models/blog/error.js'
-import ButtonDefault    from '../shared/ButtonDefault.vue'
 import BlogMarkdown     from './BlogMarkdown.vue'
+import ButtonDefault    from '../shared/ButtonDefault.vue'
 import ButtonFilled     from '../shared/ButtonFilled.vue'
 import FlashMessage     from '../../models/flashMessage.js'
-import RequireLabel     from '../shared/RequireLabel.vue'
 import FlashMessageView from '../shared/FlashMessage.vue'
+import RequireLabel     from '../shared/RequireLabel.vue'
 export default {
   data(){
     return {
