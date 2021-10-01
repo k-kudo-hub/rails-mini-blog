@@ -1,22 +1,19 @@
 const messages = Object.freeze({
   form: {
-    cancel: 'Cancel ',
     cancel_message: 'Would you like to cancel? Changes are not saved.',
-    create: 'Create ',
     drag_and_drop: 'or drag and drop here',
-    edit: 'Edit ',
-    index: 'List',
-    not_selected: 'Unselected',
-    save: 'Save ',
-    saving: 'Save',
+    not_selected: 'Unselected',   
     success: 'was successful.',
-    update: 'Update ',
-    updating: 'Update ',
-    upload: 'Upload ',
-    uploading: 'Upload',
     blog: {
       body_placeholder: 'Feel free to write a blog!\nSupports markdown notation'
     }
+  },
+  button: {
+    cancel: 'Cancel ',
+    updating: 'Update ',
+    uploading: 'Upload',
+    save: 'Save ',
+    saving: 'Save',
   },
   errors: {
     character_20: '20 characters or less',
@@ -30,7 +27,12 @@ const messages = Object.freeze({
     no_posts_message: 'No posts yet.' 
   },
   action: {
-    manage: 'manage'
+    create: 'Create ',
+    edit: 'Edit ',
+    index: 'List',
+    manage: 'manage',
+    update: 'Update ',
+    upload: 'Upload ',
   },
   link: {
     blog: 'blogs',
@@ -82,6 +84,9 @@ const messages = Object.freeze({
     asset: {
       file: "File ",
       alt: 'Alternative ',
+    },
+    common: {
+      updated_at: 'Updated at ',
     }
   }
 })

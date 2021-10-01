@@ -1,7 +1,7 @@
 <template>
   <div @click.self="$emit('toggleEditModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
-      <h1 class="mb-4">{{ $t("profile.profile") + " " + $t("form.edit") }}</h1>
+      <h1 class="mb-4">{{ $t("profile.profile") + " " + $t("action.edit") }}</h1>
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
@@ -27,11 +27,11 @@
         <div class="flex items-center w-3/4 justify-between mx-auto">
           <button-default
             @click="$emit('toggleEditModal')"
-            :text="$t('form.cancel')"
+            :text="$t('button.cancel')"
           />
           <button-filled
             @click="$emit('updateUserInfo', updateUserInfoParams())"
-            :text="$t('form.updating')"
+            :text="$t('button.updating')"
           />
         </div>
       </form>

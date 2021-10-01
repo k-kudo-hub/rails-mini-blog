@@ -1,22 +1,19 @@
 const messages = Object.freeze({
   form: {
-    cancel: 'キャンセル',
     cancel_message: 'キャンセルしますか？変更は保存されません。',
-    create: '作成',
     drag_and_drop: 'またはここにドラッグ&ドロップ',
-    edit: '編集',
-    index: '一覧',
     not_selected: '未選択',
-    save: '保存',
-    saving: '保存する',
     success: 'が成功しました。',
-    update: '更新',
-    updating: '更新する',
-    upload: 'アップロード',
-    uploading: 'アップロードする',
     blog: {
       body_placeholder: '自由にブログを書いてみましょう。\nマークダウンに対応しています。'
     }
+  },
+  button: {
+    cancel: 'キャンセル',
+    updating: '更新する',
+    uploading: 'アップロードする',
+    save: '保存',
+    saving: '保存する',
   },
   errors: {
     character_20: '20文字以内',
@@ -30,7 +27,12 @@ const messages = Object.freeze({
     no_posts_message: 'まだ投稿はありません。' 
   },
   action: {
-    manage: '管理'
+    create: '作成',
+    edit: '編集',
+    index: '一覧',
+    manage: '管理',
+    update: '更新',
+    upload: 'アップロード',
   },
   link: {
     blog: 'ブログ',
@@ -83,6 +85,9 @@ const messages = Object.freeze({
   asset: {
     file: "ファイル",
     alt: '代替テキスト',
+  },
+  common: {
+    updated_at: '最終更新日',
   }
 })
 
