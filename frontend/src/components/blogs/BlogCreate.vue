@@ -125,17 +125,25 @@ export default {
         .then(response => {
           this.blog.set(response.data)
           this.flashMessage.display(this.$t("button.save") + this.$t("form.success"))
+          this.jumpToBlogsShow(response.data.url)
         })
         .catch(error => {
           this.errors = new BlogError()
           this.errors.catchErrorMessages(error.response.data)
         })
-      // TODO: 詳細表示画面ができたらそこに飛ばしたい
     },
     cancelCreateBlog(){
       if(confirm(this.$t('button.cancel_message'))){
         this.$router.go(-1)
       }
+    },
+    jumpToBlogsShow(url){
+      this.$router.push({
+        name: 'blog_show',
+        params: {
+          url: url 
+        }
+      })
     },
     togglePreview(){
       this.is_preview_open ? this.is_preview_open = false : this.is_preview_open = true;
