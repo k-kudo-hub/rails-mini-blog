@@ -61,7 +61,7 @@ export default {
 }
 .markdown pre {
   background-color: rgb(255, 252, 220);
-  padding: 5px;
+  padding: 10px 5px;
   margin-bottom: 1rem;
   overflow-x: scroll;
 }

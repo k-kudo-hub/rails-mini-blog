@@ -6,7 +6,7 @@
       <img :src="pictureUrl" alt="" class="h-10 w-10 rounded-full mr-4">
       <h2>{{ blog.user_name }}</h2>
     </div>
-    <p class="text-silver-500 text-right text-sm mr-2">最終更新日: {{ blog.created_at }}</p>
+    <p class="text-silver-500 text-right text-sm mr-2">{{ $t('common.updated_at') }}: {{ blog.updated_at }}</p>
   </header>
 </template>
 
