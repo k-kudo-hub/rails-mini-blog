@@ -13,7 +13,7 @@ export default class {
     this.cover_image  = data.cover_image_url;
     this.state_number = data.state_value;
     this.url          = data.url;
-    this.created_at   = data.format_created_at;
+    this.updated_at   = data.format_updated_at;
     this.user_id      = data.user_id;
     this.user_name    = data.user_name;
     this.user_introduce = data.user_introduce,

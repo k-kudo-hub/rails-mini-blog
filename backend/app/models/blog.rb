@@ -47,6 +47,10 @@ class Blog < ApplicationRecord
     created_at.to_s(:short)
   end
 
+  def format_updated_at
+    updated_at.to_s(:short)
+  end
+
   def user_id
     user.id
   end
