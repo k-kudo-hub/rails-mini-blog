@@ -14,9 +14,9 @@
           class="bg-center bg-cover w-9/12 slider-center"
         >
           <div class="w-full h-full bg-black bg-opacity-50 text-white px-4 py-1 w-8/12">
-            <div class="h-3/6 w-full flex items-center">
+            <button @click="jumpToBlogsShow(blog.url)" class="h-3/6 w-full flex items-center text-left">
               <h1 class="w-full font-bold text-lg whitespace-pre-wrap">{{ blog.subject }}</h1>
-            </div>
+            </button>
             <div class="h-1/6">
               <p class="text-xs">{{ blog.format_created_at }}</p>
             </div>
@@ -56,6 +56,14 @@ export default {
       const path = file ? file : '/src/assets/dummy-header.jpg'
       return `background-image: url(${path})`
     },
+    jumpToBlogsShow(url){
+      this.$router.push({
+        name: 'blog_show',
+        params: {
+          url: url 
+        }
+      })
+    }
   }
 }
 </script>

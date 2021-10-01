@@ -13,7 +13,7 @@
         <h1 class="text-xl mb-1 mr-3 font-bold">{{ user.name }}</h1>
         <i @click="$emit('toggleEditModal')" class="fas fa-pen text-gray-500"></i>
       </div>
-      <p class="mb-1 whitespace-pre-wrap break-words">{{ user.introduce }}</p>
+      <p class="mb-1 whitespace-pre-wrap break-words text-sm px-1">{{ user.introduce }}</p>
       <a class="text-silver-500 underline" :href="user.link" target="_blank" rel="nofollow noopener">{{ user.link }}</a>
       <p class="mt-2 mx-2">
         <a href="#" class="mr-1"><span class="font-bold mr-1">24</span>{{ $t("profile.follow") }}</a>/

@@ -9,7 +9,7 @@
           @click="$emit('toggleAssetModal')"
         />
         <button-filled
-          :text="$t('models.blog') + $t('form.create')"
+          :text="$t('models.blog') + $t('action.create')"
           @click="jumpToBlogNew"
         />
       </div>

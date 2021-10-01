@@ -46,7 +46,7 @@
       <div class="flex items-center h-1/16 w-3/4 justify-between mx-auto mb-2">
         <button-default
           @click="cancelCreateBlog"
-          :text="$t('form.cancel')"
+          :text="$t('button.cancel')"
         />
         <div class="flex bg-gold-500 text-white px-3 rounded-2xl shadow-md">
           <button @click="beforeCreateBlog" class="mr-2">{{ textByState }}</button>
@@ -71,12 +71,12 @@ import AssetIndex       from '../asset/AssetIndex.vue'
 import AssetModal       from '../../models/asset/modal.js'
 import Blog             from '../../models/blog/blog.js'
 import BlogError        from '../../models/blog/error.js'
-import ButtonDefault    from '../shared/ButtonDefault.vue'
 import BlogMarkdown     from './BlogMarkdown.vue'
+import ButtonDefault    from '../shared/ButtonDefault.vue'
 import ButtonFilled     from '../shared/ButtonFilled.vue'
 import FlashMessage     from '../../models/flashMessage.js'
-import RequireLabel     from '../shared/RequireLabel.vue'
 import FlashMessageView from '../shared/FlashMessage.vue'
+import RequireLabel     from '../shared/RequireLabel.vue'
 export default {
   data(){
     return {
@@ -124,18 +124,26 @@ export default {
         .post(`http://localhost:3000/api/v1/blogs/`, this.blog.params())
         .then(response => {
           this.blog.set(response.data)
-          this.flashMessage.display(this.$t("form.save") + this.$t("form.success"))
+          this.flashMessage.display(this.$t("button.save") + this.$t("form.success"))
+          this.jumpToBlogsShow(response.data.url)
         })
         .catch(error => {
           this.errors = new BlogError()
           this.errors.catchErrorMessages(error.response.data)
         })
-      // TODO: 詳細表示画面ができたらそこに飛ばしたい
     },
     cancelCreateBlog(){
-      if(confirm(this.$t('form.cancel_message'))){
+      if(confirm(this.$t('button.cancel_message'))){
         this.$router.go(-1)
       }
+    },
+    jumpToBlogsShow(url){
+      this.$router.push({
+        name: 'blog_show',
+        params: {
+          url: url 
+        }
+      })
     },
     togglePreview(){
       this.is_preview_open ? this.is_preview_open = false : this.is_preview_open = true;

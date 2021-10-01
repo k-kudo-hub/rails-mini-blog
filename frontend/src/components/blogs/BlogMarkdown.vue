@@ -1,5 +1,5 @@
 <template>
-  <article class="mb-3 h-12/16 overflow-scroll border-b">
+  <article class="mb-3 border-b">
     <div class="markdown" v-html="compileMarkdown"></div>
   </article>
 </template>
@@ -42,15 +42,14 @@ export default {
   margin-bottom: 0.2rem;
 }
 .markdown h1 {
-  border-bottom: 0.5px solid rgb(201, 201, 201);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1rem;
 }
 .markdown h2 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 .markdown h3 {
   font-size: 1.2rem;
@@ -61,11 +60,18 @@ export default {
   font-weight: 600;
 }
 .markdown pre {
-  padding: 5px;
+  background-color: rgb(255, 252, 220);
+  padding: 10px 5px;
   margin-bottom: 1rem;
+  overflow-x: scroll;
+}
+.markdown p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
 }
 .markdown li {
   list-style: inside;
+  line-height: 2;
 }
 .markdown li li {
   margin-left: 2rem;

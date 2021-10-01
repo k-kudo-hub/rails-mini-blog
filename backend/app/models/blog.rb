@@ -47,11 +47,23 @@ class Blog < ApplicationRecord
     created_at.to_s(:short)
   end
 
-  def user_picture
-    user.picture.present? ? "#{BASE_URL}#{user.picture.url}" : nil
+  def format_updated_at
+    updated_at.to_s(:short)
   end
 
+  def user_id
+    user.id
+  end
+  
   def user_name
     user.name
+  end
+  
+  def user_introduce
+    user.introduce
+  end
+  
+  def user_picture
+    user.picture.present? ? "#{BASE_URL}#{user.picture.url}" : nil
   end
 end
