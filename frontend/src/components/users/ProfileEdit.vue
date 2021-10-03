@@ -6,9 +6,7 @@
         <div class="flex flex-col mb-3">
           <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
           <input :value="propsUser.name" ref="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" name="name" :placeholder="$t('errors.character_20')">
-          <template v-if="errors.name.length > 0">
-            <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.name" />
         </div>
         <div class="flex flex-col mb-3">
           <label for="introduce" class="mb-2 flex items-center">{{ $t("user.introduce") }}</label>
@@ -20,9 +18,7 @@
         <div class="flex flex-col mb-5">
           <label for="link" class="mb-2 flex items-center">{{ $t("user.link") }}</label>
           <input :value="propsUser.link" ref="link" :class="addErrorBorder(errors.link)" class="border-b h-10" type="text" name="link">
-          <template v-if="errors.link.length > 0">
-            <p v-for="(item, index) in errors.link" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.link" />
         </div>
         <div class="flex items-center w-3/4 justify-between mx-auto">
           <button-default
@@ -42,6 +38,7 @@
 <script>
 import ButtonDefault from '../shared/ButtonDefault.vue'
 import ButtonFilled from '../shared/ButtonFilled.vue'
+import ErrorMessage from '../shared/ErrorMessage.vue'
 import RequireLabel from '../shared/RequireLabel.vue'
 export default {
   props: {
@@ -59,7 +56,8 @@ export default {
   components: {
     ButtonDefault,
     ButtonFilled,
-    RequireLabel
+    RequireLabel,
+    ErrorMessage
   },
   computed: {
     propsUser: {

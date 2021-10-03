@@ -13,9 +13,7 @@
             <input type="file" class="hidden" @change="setPicture">
           </label>
         </div>
-        <div v-if="errors.picture.length > 0" class="mb-3">
-          <p v-for="(item, index) in errors.picture" :key="index" class="text-red-500">{{ item }}</p>
-        </div>
+        <error-message :errors="errors.picture" class="mb-3" />
         <div class="flex items-center w-3/4 justify-between mx-auto">
           <button-default
             @click="$emit('togglePictureModal')"
@@ -33,6 +31,7 @@
 
 <script>
 import ButtonDefault from '../shared/ButtonDefault.vue'
+import ErrorMessage  from '../shared/ErrorMessage.vue'
 import ButtonFilled from '../shared/ButtonFilled.vue'
 import default_image from '../../assets/profile_default.png'
 export default {
@@ -53,6 +52,7 @@ export default {
   components: {
     ButtonDefault,
     ButtonFilled,
+    ErrorMessage
   },
   computed: {
     propsUser: {

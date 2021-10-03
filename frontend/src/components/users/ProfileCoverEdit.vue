@@ -13,9 +13,7 @@
             <input type="file" class="hidden" @change="setCover">
           </label>
         </div>
-        <div v-if="errors.cover.length > 0" class="mb-3">
-          <p v-for="(item, index) in errors.cover" :key="index" class="text-red-500">{{ item }}</p>
-        </div>
+        <error-message :errors="errors.cover" class="mb-3" />
         <div class="flex items-center w-3/4 justify-between mx-auto">
           <button-default
           @click="$emit('toggleCoverModal')"
@@ -35,6 +33,7 @@
 import ButtonDefault from '../shared/ButtonDefault.vue'
 import ButtonFilled from '../shared/ButtonFilled.vue'
 import dummy_header from '../../assets/dummy-header.jpg'
+import ErrorMessage from '../shared/ErrorMessage.vue'
 export default {
   data(){
     return {
@@ -53,6 +52,7 @@ export default {
   components: {
     ButtonDefault,
     ButtonFilled,
+    ErrorMessage
   },
   computed: {
     propsUser: {

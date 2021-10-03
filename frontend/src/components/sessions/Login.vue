@@ -2,23 +2,17 @@
   <div class="w-full bg-white shadow-md relative p-5">
     <template v-if="!user.id">
       <h1 class="mb-4 text-lg">{{ $t("session.sign_in") }}</h1>
-      <div v-if="errors.common.length > 0" class="mb-3">
-        <p v-for="(item, index) in errors.common" :key="index" class="text-red-500">{{ item }}</p>
-      </div>
+      <error-message :errors="errors.common" class="mb-3" />
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="email" class="mb-2 flex items-center">{{ $t("user.email") }}<require-label/></label>
           <input v-model="visitor.email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text" name="email">
-          <template v-if="errors.email.length > 0">
-            <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.email" class="mb-3" />
         </div>
         <div class="flex flex-col mb-3">
           <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
           <input v-model="visitor.password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" name="password">
-          <template v-if="errors.password.length > 0">
-            <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.password" class="mb-3" />
         </div>
         <div class="flex justify-end mr-4">
           <button-default
@@ -35,6 +29,7 @@
 import axios from 'axios'
 import RequireLabel from '../shared/RequireLabel.vue'
 import ButtonDefault from '../shared/ButtonDefault.vue'
+import ErrorMessage  from '../shared/ErrorMessage.vue'
 export default {
   data(){
     return {
@@ -59,6 +54,7 @@ export default {
     }
   },
   components: {
+    ErrorMessage,
     RequireLabel,
     ButtonDefault
   },
