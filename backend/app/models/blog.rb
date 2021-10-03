@@ -27,6 +27,10 @@ class Blog < ApplicationRecord
     select(:id, :user_id, :subject, :cover_image, :url, :created_at).order(created_at: :desc)
   }
 
+  scope :select_for_edit, -> {
+    select(:id, :subject, :body, :cover_image, :state_number, :url)
+  }
+
   def set_url
     self.url = random_url
   end
@@ -41,6 +45,10 @@ class Blog < ApplicationRecord
 
   def cover_image_url
     cover_image.present? ? "#{BASE_URL}#{cover_image.url}" : nil
+  end
+
+  def cover_image_name
+    cover_image.present? ? cover_image.identifier : nil
   end
 
   def format_created_at
