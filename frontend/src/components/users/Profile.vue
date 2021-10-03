@@ -39,9 +39,7 @@
         :hook="flashMessage.is_displayed"
         :message="flashMessage.content"
       />
-      <ProfileFooter
-        @signOut="signOut"
-      />
+      <ProfileFooter/>
     </template>
   </div>
 </template>
@@ -94,15 +92,6 @@ export default {
     }
   },
   methods: {
-    signOut(){
-      axios
-        .delete('http://localhost:3000/api/v1/sessions/0')
-        .then(response => {
-          this.$router.go({
-            name: 'home',
-          })
-        })
-    },
     toggleAssetModal(){
       this.asset_modal.toggle()
     },
