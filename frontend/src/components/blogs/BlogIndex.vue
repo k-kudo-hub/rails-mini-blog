@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full h-full bg-white shadow-md relative p-3 mx-auto">
+  <section class="w-full h-full overflow-scroll bg-white shadow-md relative p-3 mx-auto">
     <BlogCards
       v-if="blogs.items.length > 0"
       :blogs="blogs"
@@ -40,9 +40,9 @@ export default {
           console.log(response.data)
         })
     },
-    slideMove(...args){ // [0]touchEvent, [1]blog.id 
+    slideMove(...args){ // [0]touchEvent, [1]blog 
       if(this.swipe.slideMove(args[0])){
-        this.blogs.delete(args[1])
+        this.blogs.delete(args[1].id)
         this.swipe.flag = false;
       }
     },
