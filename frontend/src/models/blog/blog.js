@@ -22,7 +22,7 @@ export default class {
   is_valid(){
     return this.subject != false
   }
-  params(){
+  to_param(){
     const formData = new FormData()
     formData.append('blog[subject]', this.subject)
     formData.append('blog[body]', this.body)

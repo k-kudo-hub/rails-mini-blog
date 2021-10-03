@@ -121,7 +121,7 @@ export default {
     },
     createBlog(){
       axios
-        .post(`http://localhost:3000/api/v1/blogs/`, this.blog.params())
+        .post(`http://localhost:3000/api/v1/blogs/`, this.blog.to_param())
         .then(response => {
           this.jumpToBlogsShow(response.data)
         })

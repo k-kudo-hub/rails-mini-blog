@@ -125,7 +125,7 @@ export default {
     },
     updateBlog(){
       axios
-        .put(`http://localhost:3000/api/v1/blogs/${this.blog.url}`, this.blog.params())
+        .put(`http://localhost:3000/api/v1/blogs/${this.blog.url}`, this.blog.to_param())
         .then(response => {
           this.jumpToBlogsShow(response.data)
         })
