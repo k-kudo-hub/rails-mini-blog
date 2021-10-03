@@ -123,9 +123,7 @@ export default {
       axios
         .post(`http://localhost:3000/api/v1/blogs/`, this.blog.params())
         .then(response => {
-          this.blog.set(response.data)
-          this.flashMessage.display(this.$t("button.save") + this.$t("form.success"))
-          this.jumpToBlogsShow(response.data.url)
+          this.jumpToBlogsShow(response.data)
         })
         .catch(error => {
           this.errors = new BlogError()
