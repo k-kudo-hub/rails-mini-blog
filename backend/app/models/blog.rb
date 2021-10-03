@@ -16,11 +16,11 @@ class Blog < ApplicationRecord
   validates :url,           uniqueness:   { message: 'URL生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
   scope :released, -> {
-    where(state_number: 2)
+    includes(:user).where(state_number: 2)
   }
 
   scope :personal, ->(id) {
-    where(user_id: id)
+    includes(:user).where(user_id: id)
   }
 
   scope :select_for_index, -> {
