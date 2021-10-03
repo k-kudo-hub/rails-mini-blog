@@ -1,12 +1,12 @@
 <template>
   <section class="w-full h-full bg-white shadow-md relative p-3 mx-auto">
+    <AssetIndex
+      v-if="asset_modal.is_asset_open"
+      @toggleAssetModal="asset_modal.toggle()"
+      @insertAsset="insertAsset"
+      :forBlog="true"
+    />
     <form @submit.prevent class="h-full pb-3 overflow-scroll">
-      <AssetIndex
-        v-if="asset_modal.is_asset_open"
-        @toggleAssetModal="asset_modal.toggle()"
-        @insertAsset="insertAsset"
-        :forBlog="true"
-      />
       <div class="flex flex-col mb-3">
         <input v-model="blog.subject" ref="subject" :class="addErrorBorder(errors.subject)" class="border-b h-10" type="text" name="subject" :placeholder="$t('blog.subject')">
         <template v-if="errors.subject.length > 0">
@@ -131,7 +131,7 @@ export default {
         })
     },
     cancelCreateBlog(){
-      if(confirm(this.$t('button.cancel_message'))){
+      if(confirm(this.$t('form.cancel_message'))){
         this.$router.go(-1)
       }
     },
