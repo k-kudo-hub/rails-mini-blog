@@ -2,7 +2,7 @@
   <div @click.self="$emit('togglePictureModal')" class="h-full w-full bg-gray-300 bg-opacity-70 fixed top-0 left-0 z-30">
     <section class="w-11/12 bg-white fixed-center p-5">
       <h1 class="mb-4">{{ $t("user.picture") + " " + $t("action.edit") }}</h1>
-      <div class="h-28 w-28 bg-gold-500 rounded-full mx-auto mb-2 flex items-center justify-center bg-white border-4 border-white overflow-hidden">
+      <div class="h-28 w-28 rounded-full mx-auto mb-2 flex items-center justify-center bg-white border-4 border-white overflow-hidden">
         <img v-if="propsUser.picture_url" :src="propsUser.picture_url" class="h-full w-full content-cover" alt="">
         <img v-else :src="default_image" class="h-full w-full content-cover" alt="">
       </div>
