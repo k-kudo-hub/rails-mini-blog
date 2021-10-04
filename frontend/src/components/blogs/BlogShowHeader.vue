@@ -7,9 +7,12 @@
         <img :src="pictureUrl" alt="" class="h-10 w-10 rounded-full mr-4">
         <h2>{{ blog.user_name }}</h2>
       </div>
-      <div class="flex items-center w-4/12 justify-end">
-        <button v-if="user.id === blog.user_id" @click="jumpToBlogEdit" class="text-silver-500">
+      <div v-if="user.id === blog.user_id" class="flex items-center w-4/12 justify-end">
+        <button @click="jumpToBlogEdit" class="text-silver-500 mr-4">
           <i class="fas fa-pen"></i>
+        </button>
+        <button @click="deleteBlog" class="text-silver-500">
+          <i class="fas fa-trash-alt"></i>
         </button>
       </div>
     </div>
@@ -18,6 +21,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import default_cover_image  from '../../assets/dummy-header.jpg'
 import default_user_picture from '../../assets/profile_default.png'
 export default {
@@ -47,6 +51,20 @@ export default {
           url: this.blog.url
         }
       })
+    },
+    deleteBlog(){
+      if(confirm(`「${this.blog.subject}」${this.$t('form.delete_message')}`)){
+        axios
+          .delete(`http://localhost:3000/api/v1/blogs/${this.blog.url}`)
+          .then(response => {
+            this.$router.push({
+              path: '/'
+            })
+          })
+          .catch(error => {
+            console.log(error.response.data)
+          })
+      }
     }
   }
 }
