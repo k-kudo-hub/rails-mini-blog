@@ -12,8 +12,10 @@ class Blog < ApplicationRecord
 
   validates :subject,       presence: true,
                             length: { maximum: SUBJECT_MAXIMUM_LENGTH }
-  validates :state_number,  numericality: { in: 0..3 }
-  validates :url,           uniqueness:   { message: 'URL生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
+  validates :state_number,  presence: true,
+                            numericality: { in: 0..3 }
+  validates :url,           presence: true,
+                            uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
   scope :personal, ->(id) {
     includes(:user).where(user_id: id)
