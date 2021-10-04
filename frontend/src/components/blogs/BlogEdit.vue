@@ -46,7 +46,7 @@
       </div>
       <div class="flex items-center h-1/16 w-3/4 justify-between mx-auto mb-2">
         <button-default
-          @click="cancelCreateBlog"
+          @click="cancelUpdateBlog"
           :text="$t('button.cancel')"
         />
         <div class="flex bg-gold-500 text-white px-3 rounded-2xl shadow-md">
@@ -134,7 +134,7 @@ export default {
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    cancelCreateBlog(){
+    cancelUpdateBlog(){
       if(confirm(this.$t('form.cancel_message'))){
         this.$router.go(-1)
       }
