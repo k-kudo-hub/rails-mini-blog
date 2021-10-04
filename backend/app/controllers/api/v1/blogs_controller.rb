@@ -24,12 +24,12 @@ class Api::V1::BlogsController < ApplicationController
   end
 
   def edit
-    blog = Blog.select_for_edit.find_by(url: params[:url])
+    blog = @current_user.blogs.select_for_edit.find_by(url: params[:url])
     render json: blog, methods: [:state_value, :cover_image_name]
   end
 
   def update
-    blog = Blog.find_by(url: params[:url])
+    blog = @current_user.blogs.find_by(url: params[:url])
     if blog.update(blog_params)
       render json: blog.url, status: :created
     else
