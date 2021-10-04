@@ -37,6 +37,12 @@ class Api::V1::BlogsController < ApplicationController
     end
   end
 
+  def destroy
+    blog = @current_user.blogs.find_by(url: params[:url])
+    blog.logical_deletion
+    head :no_content
+  end
+
   private
 
     def blog_params
