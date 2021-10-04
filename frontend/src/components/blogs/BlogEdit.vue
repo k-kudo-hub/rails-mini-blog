@@ -19,7 +19,8 @@
             <label class="flex items-center">
               <i class="fab fa-cc-discover text-gray-500 mr-2"></i>
               <div class="mr-2">
-                <p v-if="blog.cover_image">{{ blog.cover_image.name }}</p>
+                <p v-if="blog.cover_image.name">{{ blog.cover_image.name }}</p>
+                <p v-else-if="blog.cover_image.url">{{ blog.cover_image_name }}</p>
                 <p v-else>{{ $t('blog.cover_image') + ': ' + $t('form.not_selected') }}</p>
               </div>
               <input type="file" class="hidden w-full" @change="setCoverImage">
@@ -45,11 +46,11 @@
       </div>
       <div class="flex items-center h-1/16 w-3/4 justify-between mx-auto mb-2">
         <button-default
-          @click="cancelCreateBlog"
+          @click="cancelUpdateBlog"
           :text="$t('button.cancel')"
         />
         <div class="flex bg-gold-500 text-white px-3 rounded-2xl shadow-md">
-          <button @click="beforeCreateBlog" class="mr-2">{{ textByState }}</button>
+          <button @click="beforeUpdateBlog" class="mr-2">{{ textByState }}</button>
           <select v-model="blog.state_number" class="w-4 h-8 bg-gold-700">
             <option class="text-white" v-for="option in options" :value="option.id" :key="option.id">
               {{ option.name }}
@@ -103,7 +104,10 @@ export default {
   computed: {
     textByState(){
       return this.options.find((item) => item.id === this.blog.state_number).name
-    }
+    },
+  },
+  mounted() {
+    this.getBlog()
   },
   methods: {
     addErrorBorder(array){
@@ -111,17 +115,17 @@ export default {
         return "border-red-500"
       }
     },
-    beforeCreateBlog(){
+    beforeUpdateBlog(){
       if(this.blog.is_valid()){
-        this.createBlog()
+        this.updateBlog()
       } else {
         this.errors = new BlogError()
         this.errors.inputValidation(this.errors.subject, this.$t('blog.subject') + this.$t('errors.require_input'))
       }
     },
-    createBlog(){
+    updateBlog(){
       axios
-        .post(`http://localhost:3000/api/v1/blogs/`, this.blog.to_param())
+        .put(`http://localhost:3000/api/v1/blogs/${this.blog.url}`, this.blog.to_param())
         .then(response => {
           this.jumpToBlogsShow(response.data)
         })
@@ -130,16 +134,26 @@ export default {
           this.errors.catchErrorMessages(error.response.data)
         })
     },
-    cancelCreateBlog(){
+    cancelUpdateBlog(){
       if(confirm(this.$t('form.cancel_message'))){
         this.$router.go(-1)
       }
+    },
+    getBlog(){
+      axios
+        .get(`http://localhost:3000/api/v1/blogs/${this.$route.params['url']}/edit`)
+        .then(response => {
+          this.blog = new Blog(response.data)
+        })
+        .catch(error => {
+          this.errors.catch(error.response.data)
+        })
     },
     jumpToBlogsShow(url){
       this.$router.push({
         name: 'blog_show',
         params: {
-          url: url 
+          url: url
         }
       })
     },

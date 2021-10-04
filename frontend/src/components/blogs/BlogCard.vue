@@ -3,7 +3,7 @@
     <div
       class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider"
       @touchstart="$emit('touchstart', $event)"
-      @touchmove="$emit('touchmove', $event, blog.id)"
+      @touchmove="$emit('touchmove', $event, blog)"
       @touchend="$emit('touchend')"
       v-for="blog in blogs.items"
       :key="blog.id"

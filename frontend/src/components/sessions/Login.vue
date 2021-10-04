@@ -2,28 +2,22 @@
   <div class="w-full bg-white shadow-md relative p-5">
     <template v-if="!user.id">
       <h1 class="mb-4 text-lg">{{ $t("session.sign_in") }}</h1>
-      <div v-if="errors.common.length > 0" class="mb-3">
-        <p v-for="(item, index) in errors.common" :key="index" class="text-red-500">{{ item }}</p>
-      </div>
+      <error-message :errors="errors.common" class="mb-3" />
       <form @submit.prevent>
         <div class="flex flex-col mb-3">
           <label for="email" class="mb-2 flex items-center">{{ $t("user.email") }}<require-label/></label>
           <input v-model="visitor.email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text" name="email">
-          <template v-if="errors.email.length > 0">
-            <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.email" class="mb-3" />
         </div>
         <div class="flex flex-col mb-3">
           <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
           <input v-model="visitor.password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" name="password">
-          <template v-if="errors.password.length > 0">
-            <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
-          </template>
+          <error-message :errors="errors.password" class="mb-3" />
         </div>
         <div class="flex justify-end mr-4">
           <button-default
-          @click="authenticateVisitor"
-          :text="$t('session.sign_in')"
+            @click="authenticateVisitor"
+            :text="$t('session.sign_in')"
           />
         </div>
       </form>
@@ -32,35 +26,28 @@
 </template>
 
 <script>
-import axios from 'axios'
-import RequireLabel from '../shared/RequireLabel.vue'
+import axios         from 'axios'
 import ButtonDefault from '../shared/ButtonDefault.vue'
+import Error         from '../../models/visitor/error.js'
+import ErrorMessage  from '../shared/ErrorMessage.vue'
+import RequireLabel  from '../shared/RequireLabel.vue'
+import Visitor       from '../../models/visitor/visitor.js'
 export default {
   data(){
     return {
-      visitor: {
-        email: "",
-        password: "",
-      },
-      errors: {
-        email: [],
-        password: [],
-        common: [],
-      }
+      visitor: new Visitor(),
+      errors: new Error()
     }
   },
   props: {
     user: {
       id: Number,
-      name: String,
-      introduce: String,
-      picture: String,
-      cover: String,
     }
   },
   components: {
+    ButtonDefault,
+    ErrorMessage,
     RequireLabel,
-    ButtonDefault
   },
   watch: {
     'user.id': function(val){
@@ -74,49 +61,31 @@ export default {
   methods: {
     authenticate(){
       axios
-        .post('http://localhost:3000/api/v1/sessions.json', {
-          session: {
-            email: this.visitor.email,
-            password: this.visitor.password
-          }
-        })
+        .post('http://localhost:3000/api/v1/sessions.json', this.visitor.to_param_for_login())
         .then(response => {
           console.log(`ようこそ、${response.data.name}さん！`)
-          this.$router.go({
-            name: 'home',
-          })
+          this.$router.go()
         })
         .catch(error => {
-          console.log(error.response.data)
-          this.resetErrors()
+          this.errors = new Error()
           this.errors.common.push(this.$t("errors.wrong_message"))
         })
     },
     authenticateVisitor(){
-      if(this.visitor.email && this.visitor.password){
+      if(this.visitor.is_valid_for_login()){
         this.authenticate();
       } else {
         this.inputValidation();
       }
     },
     inputValidation(){
-      this.resetErrors()
+      this.errors = new Error()
       if(!this.visitor.email){ this.errors.email.push(this.$t("user.email") + this.$t("errors.require_input")) }
       if(!this.visitor.password){ this.errors.password.push(this.$t("user.password") + this.$t("errors.require_input")) }
     },
-    resetErrors(){
-      // FIXME: 初期化する関数に置き換えたい
-      this.errors = { common: [], email: [], password: [] }
-    },
     addErrorBorder(array){
-      if(array.length > 0){
-        return "border-red-500"
-      }
+      if(array.length > 0) return "border-red-500";
     }
   }
 }
 </script>
-
-<style>
-
-</style>

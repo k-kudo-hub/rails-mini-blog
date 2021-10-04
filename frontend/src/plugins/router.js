@@ -1,4 +1,5 @@
 import Home         from '../components/Home.vue'
+import BlogEdit     from '../components/blogs/BlogEdit.vue'
 import BlogShow     from '../components/blogs/BlogShow.vue'
 import BlogIndex    from '../components/blogs/BlogIndex.vue'
 import Profile      from '../components/users/Profile.vue'
@@ -15,6 +16,11 @@ const routes = [
     component: BlogCreate,
     name: 'blog_create',
     path: '/blog'
+  },
+  {
+    component: BlogEdit,
+    name: 'blog_edit',
+    path: '/blogs/:url/edit'
   },
   {
     component: BlogShow,

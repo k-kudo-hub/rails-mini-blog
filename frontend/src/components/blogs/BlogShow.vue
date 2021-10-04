@@ -2,6 +2,7 @@
   <section class="w-full h-full overflow-scroll bg-white shadow-md relative p-3 mx-auto">
     <BlogShowHeader
       :blog="blog"
+      :user="user"
     />
     <BlogMarkdown
       :subject="blog.subject"
@@ -30,6 +31,11 @@ export default {
     return {
       blog: new Blog(),
       errors: new Errors(),
+    }
+  },
+  props: {
+    user: {
+      id: Number,
     }
   },
   components: {

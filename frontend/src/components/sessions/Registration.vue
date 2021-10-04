@@ -4,24 +4,18 @@
     <form @submit.prevent>
       <div class="flex flex-col mb-3">
         <label for="name" class="mb-2 flex items-center">{{ $t("user.name") }}<require-label/></label>
-        <input v-model="user.name" name="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" :placeholder="$t('errors.character_20')">
-        <template v-if="errors.name.length > 0">
-          <p v-for="(item, index) in errors.name" :key="index" class="text-red-500">{{ item }}</p>
-        </template>
+        <input v-model="visitor.name" name="name" :class="addErrorBorder(errors.name)" class="border-b h-10" type="text" :placeholder="$t('errors.character_20')">
+        <error-message :errors="errors.name" />
       </div>
       <div class="flex flex-col mb-3">
         <label for="email" class="mb-2 flex items-center">{{ $t("user.email") }}<require-label/></label>
-        <input v-model="user.email" name="email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text">
-        <template v-if="errors.email.length > 0">
-          <p v-for="(item, index) in errors.email" :key="index" class="text-red-500">{{ item }}</p>
-        </template>
+        <input v-model="visitor.email" name="email" :class="addErrorBorder(errors.email)" class="border-b h-10" type="text">
+        <error-message :errors="errors.email" />
       </div>
       <div class="flex flex-col mb-5">
         <label for="password" class="mb-2 flex items-center">{{ $t("user.password") }}<require-label/></label>
-        <input v-model="user.password" name="password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" :placeholder="$t('errors.character_8_password')">
-        <template v-if="errors.password.length > 0">
-          <p v-for="(item, index) in errors.password" :key="index" class="text-red-500">{{ item }}</p>
-        </template>
+        <input v-model="visitor.password" name="password" :class="addErrorBorder(errors.password)" class="border-b h-10" type="password" :placeholder="$t('errors.character_8_password')">
+        <error-message :errors="errors.password" />
       </div>
       <div class="flex justify-end mr-4">
         <button-default 
@@ -34,94 +28,66 @@
 </template>
 
 <script>
-import axios from 'axios'
-import RequireLabel from '../shared/RequireLabel.vue'
+import axios         from 'axios'
 import ButtonDefault from '../shared/ButtonDefault.vue'
+import Error         from '../../models/visitor/error.js'
+import ErrorMessage  from '../shared/ErrorMessage.vue'
+import RequireLabel  from '../shared/RequireLabel.vue'
+import Visitor       from '../../models/visitor/visitor.js'
 export default {
   data(){
     return {
-      user: {
-        name: "",
-        email: "",
-        password: "",
-      },
-      errors: {
-        name: [],
-        email: [],
-        password: [],
-      }
+      visitor: new Visitor(),
+      errors: new Error(),
+    }
+  },
+  props: {
+    user: {
+      id: Number,
     }
   },
   components: {
+    ButtonDefault,
+    ErrorMessage,
     RequireLabel,
-    ButtonDefault
+  },
+  watch: {
+    'user.id': function(val){
+      if(val){
+        this.$router.push({
+          path: "/profile"
+        })
+      }
+    }
   },
   methods: {
     registration(){
       axios
-        .post('http://localhost:3000/api/v1/users.json', {
-          user: {
-            name: this.user.name,
-            email: this.user.email,
-            password: this.user.password
-          }
-        })
+        .post('http://localhost:3000/api/v1/users.json', this.visitor.to_param_for_registration())
         .then(response => {
-          console.log(`${response.data}さんの登録が成功しました！`)
-          this.resetErrors()
-          this.$router.push({
-            name: 'home'
-          })
+          this.$router.go()
         })
         .catch(error => {
-          console.log(error.response.data)
-          this.catchErrorMessages(error.response.data)
+          this.errors = new Error()
+          this.errors.catchErrorMessages(error.response.data)
         })
     },
     registrationUser(){
-      if(this.user.name && this.user.email && this.user.password) {
+      if(this.visitor.is_valid_for_registration()) {
         this.registration();
       } else {
         this.inputValidation();
       }
     },
     inputValidation(){
-      this.resetErrors()
-      if(!this.user.name){ this.errors.name.push(this.$t("user.name") + this.$t("errors.require_input")) }
-      if(!this.user.email){ this.errors.email.push(this.$t("user.email") + this.$t("errors.require_input")) }
-      if(!this.user.password){ this.errors.password.push(this.$t("user.password") + this.$t("errors.require_input")) }
-    },
-    catchErrorMessages(errors){
-      this.resetErrors()
-      // FIXME: Vuei18nを使用して動的に判別したい
-      errors.forEach((error) => {
-        if(error.match('Name|ユーザー名')){ 
-          this.errors.name.push(error)
-          return
-        }
-        if(error.match('Email|メールアドレス')){
-          this.errors.email.push(error)
-          return
-        }
-        if(error.match('Password|パスワード')){
-          this.errors.password.push(error)
-          return
-        }
-      })
-    },
-    resetErrors(){
-      // FIXME: 初期化する関数に置き換えたい
-      this.errors = { name: [], email: [], password: [] }
+      this.errors = new Error()
+      if(!this.visitor.name){ this.errors.name.push(this.$t("user.name") + this.$t("errors.require_input")) }
+      if(!this.visitor.email){ this.errors.email.push(this.$t("user.email") + this.$t("errors.require_input")) }
+      if(!this.visitor.password){ this.errors.password.push(this.$t("user.password") + this.$t("errors.require_input")) }
     },
     addErrorBorder(array){
-      if(array.length > 0){
-        return "border-red-500"
-      }
+      if(array.length > 0) return "border-red-500"
     }
   }
 }
 </script>
-
-<style>
-
-</style>

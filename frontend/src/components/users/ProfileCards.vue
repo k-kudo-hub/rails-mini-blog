@@ -59,10 +59,10 @@ export default {
           console.log(response.data)
         })
     },
-    slideMove(...args){ // [0]touchEvent, [1]blog.id 
+    slideMove(...args){ // [0]touchEvent, [1]blog.url
       if(this.swipe.slideMove(args[0])){
-        this.blogs.delete(args[1])
         this.swipe.flag = false;
+        this.jumpToBlogEdit(args[1].url)
       }
     },
     exportBgImage(file){
@@ -73,6 +73,14 @@ export default {
         name: 'blog_create',
       })
     },
+    jumpToBlogEdit(url){
+      this.$router.push({
+        name: 'blog_edit',
+        params: {
+          url: url 
+        }
+      })
+    }
   }
 }
 </script>

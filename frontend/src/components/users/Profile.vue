@@ -39,9 +39,7 @@
         :hook="flashMessage.is_displayed"
         :message="flashMessage.content"
       />
-      <ProfileFooter
-        @signOut="signOut"
-      />
+      <ProfileFooter/>
     </template>
   </div>
 </template>
@@ -94,15 +92,6 @@ export default {
     }
   },
   methods: {
-    signOut(){
-      axios
-        .delete('http://localhost:3000/api/v1/sessions/0')
-        .then(response => {
-          this.$router.go({
-            name: 'home',
-          })
-        })
-    },
     toggleAssetModal(){
       this.asset_modal.toggle()
     },
@@ -167,6 +156,7 @@ export default {
       if(newPicture.name){
         this.updateUserPicture(newPicture)
       } else {
+        this.errors = new UserError()
         this.errors.picture.push("ファイルが選択されていません。更新できませんでした。")
       }
     },
@@ -181,7 +171,7 @@ export default {
           this.flashMessage.display(this.$t("action.update") + this.$t("form.success"))
         })
         .catch(error => {
-          console.log(error.response.data)
+          this.errors = new UserError()
           this.errors.catchErrorMessages(error.response.data)
         })
     },
@@ -191,6 +181,7 @@ export default {
       if(newCover.name){
         this.updateUserCover(newCover)
       } else {
+        this.errors = new UserError()
         this.errors.cover.push("ファイルが選択されていません。更新できませんでした。")
       }
     },
@@ -205,7 +196,7 @@ export default {
           this.flashMessage.display(this.$t("action.update_success"))
         })
         .catch(error => {
-          console.log(error.response.data)
+          this.errors = new UserError()
           this.errors.catchErrorMessages(error.response.data)
         })
     }

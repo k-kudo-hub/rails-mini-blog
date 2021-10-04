@@ -44,7 +44,6 @@ export default {
         .get('http://localhost:3000/api/v1/users/0')
         .then(response => {
           this.user = response.data
-          console.log(this.user)
         })
         .catch(error => {
           console.log(error)
