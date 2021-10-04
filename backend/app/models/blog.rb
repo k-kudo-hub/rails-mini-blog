@@ -15,12 +15,12 @@ class Blog < ApplicationRecord
   validates :state_number,  numericality: { in: 0..3 }
   validates :url,           uniqueness:   { message: 'URL生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
-  scope :released, -> {
-    includes(:user).where(state_number: 2)
-  }
-
   scope :personal, ->(id) {
     includes(:user).where(user_id: id)
+  }
+
+  scope :released, -> {
+    includes(:user).where(state_number: 2)
   }
 
   scope :select_for_index, -> {
@@ -31,17 +31,6 @@ class Blog < ApplicationRecord
     select(:id, :subject, :body, :cover_image, :state_number, :url)
   }
 
-  def set_url
-    self.url = random_url
-  end
-
-  def random_url
-    SecureRandom.hex(20)
-  end
-
-  def state_value
-    state_number_value
-  end
   scope :undeleted, -> {
     where(state_number: 0..2)
   }
@@ -65,16 +54,25 @@ class Blog < ApplicationRecord
   def logical_deletion
     update(state_number: 3)
   end
-  
-  def user_name
-    user.name
+
+  def random_url
+    SecureRandom.hex(20)
   end
-  
-  def user_introduce
-    user.introduce
+
+  def set_url
+    self.url = random_url
   end
-  
+
+  def state_value
+    state_number_value
+  end
+
   delegate :id, to: :user, prefix: true
+
+  delegate :name, to: :user, prefix: true
+
+  delegate :introduce, to: :user, prefix: true
+
   def user_picture
     user.picture.present? ? "#{BASE_URL}#{user.picture.url}" : nil
   end
