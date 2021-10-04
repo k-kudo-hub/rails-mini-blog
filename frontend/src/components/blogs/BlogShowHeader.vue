@@ -8,7 +8,7 @@
         <h2>{{ blog.user_name }}</h2>
       </div>
       <div class="flex items-center w-4/12 justify-end">
-        <button @click="jumpToBlogEdit" class="text-silver-500">
+        <button v-if="user.id === blog.user_id" @click="jumpToBlogEdit" class="text-silver-500">
           <i class="fas fa-pen"></i>
         </button>
       </div>
@@ -28,7 +28,10 @@ export default {
     }
   },
   props: {
-    blog: {}
+    blog: {},
+    user: {
+      id: Number
+    }
   },
   computed: {
     coverUrl(){
