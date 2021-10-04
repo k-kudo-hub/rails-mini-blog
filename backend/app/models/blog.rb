@@ -42,6 +42,9 @@ class Blog < ApplicationRecord
   def state_value
     state_number_value
   end
+  scope :undeleted, -> {
+    where(state_number: 0..2)
+  }
 
   def cover_image_url
     cover_image.present? ? "#{BASE_URL}#{cover_image.url}" : nil
