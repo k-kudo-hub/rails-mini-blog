@@ -37,6 +37,12 @@ class Blog < ApplicationRecord
     where(state_number: 0..2)
   }
 
+  delegate :id, to: :user, prefix: true
+
+  delegate :name, to: :user, prefix: true
+
+  delegate :introduce, to: :user, prefix: true
+
   def cover_image_url
     cover_image.present? ? "#{BASE_URL}#{cover_image.url}" : nil
   end
@@ -68,13 +74,7 @@ class Blog < ApplicationRecord
   def state_value
     state_number_value
   end
-
-  delegate :id, to: :user, prefix: true
-
-  delegate :name, to: :user, prefix: true
-
-  delegate :introduce, to: :user, prefix: true
-
+  
   def user_picture
     user.picture.present? ? "#{BASE_URL}#{user.picture.url}" : nil
   end

@@ -11,7 +11,7 @@
     </div>
     <div class="h-1/4 flex justify-center items-center">
       <button-filled
-        :text="$t('models.blog') + $t('action.create')"
+        :text="$t('profile.profile')"
       />
     </div>
   </footer>
