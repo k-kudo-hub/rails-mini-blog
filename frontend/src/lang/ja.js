@@ -1,6 +1,7 @@
 const messages = Object.freeze({
   form: {
     cancel_message: 'キャンセルしますか？変更は保存されません。',
+    delete_message: 'を削除しようとしています。本当によろしいですか？',
     drag_and_drop: 'またはここにドラッグ&ドロップ',
     not_selected: '未選択',
     success: 'が成功しました。',

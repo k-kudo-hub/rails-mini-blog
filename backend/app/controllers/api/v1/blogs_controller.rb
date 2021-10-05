@@ -5,7 +5,7 @@ class Api::V1::BlogsController < ApplicationController
 
   def index
     blogs = Blog.released.select_for_index
-    render json: blogs, methods: [:format_created_at, :cover_image_url, :user_picture, :user_name]
+    render json: blogs, methods: %i[format_created_at cover_image_url user_picture user_name]
   end
 
   def create
@@ -20,12 +20,12 @@ class Api::V1::BlogsController < ApplicationController
 
   def show
     blog = Blog.find_by(url: params[:url])
-    render json: blog, methods: [:format_updated_at, :cover_image_url, :user_picture, :user_name, :user_introduce, :user_id]
+    render json: blog, methods: %i[format_updated_at cover_image_url user_picture user_name user_introduce user_id]
   end
 
   def edit
     blog = @current_user.blogs.select_for_edit.find_by(url: params[:url])
-    render json: blog, methods: [:state_value, :cover_image_name]
+    render json: blog, methods: %i[state_value cover_image_name]
   end
 
   def update
@@ -35,6 +35,12 @@ class Api::V1::BlogsController < ApplicationController
     else
       rebder json: blog.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    blog = @current_user.blogs.find_by(url: params[:url])
+    blog.logical_deletion
+    head :no_content
   end
 
   private

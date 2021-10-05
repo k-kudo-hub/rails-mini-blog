@@ -4,7 +4,7 @@ class Blog < ApplicationRecord
   belongs_to :user
 
   mount_uploader :cover_image,   CoverUploader
-  enumerize :state_number, in: { draft: 0, limited: 1, release: 2 }
+  enumerize :state_number, in: { draft: 0, limited: 1, released: 2, deleted: 3 }
 
   # TODO: 環境変数で置き換える
   BASE_URL = 'http://localhost:3000'
@@ -12,15 +12,17 @@ class Blog < ApplicationRecord
 
   validates :subject,       presence: true,
                             length: { maximum: SUBJECT_MAXIMUM_LENGTH }
-  validates :state_number,  numericality: { in: 0..2 }
-  validates :url,           uniqueness:   { message: 'URL生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
-
-  scope :released, -> {
-    includes(:user).where(state_number: 2)
-  }
+  validates :state_number,  presence: true,
+                            numericality: { in: 0..3 }
+  validates :url,           presence: true,
+                            uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
   scope :personal, ->(id) {
     includes(:user).where(user_id: id)
+  }
+
+  scope :released, -> {
+    includes(:user).where(state_number: 2)
   }
 
   scope :select_for_index, -> {
@@ -31,17 +33,15 @@ class Blog < ApplicationRecord
     select(:id, :subject, :body, :cover_image, :state_number, :url)
   }
 
-  def set_url
-    self.url = random_url
-  end
+  scope :undeleted, -> {
+    where(state_number: 0..2)
+  }
 
-  def random_url
-    SecureRandom.hex(20)
-  end
+  delegate :id, to: :user, prefix: true
 
-  def state_value
-    state_number_value
-  end
+  delegate :name, to: :user, prefix: true
+
+  delegate :introduce, to: :user, prefix: true
 
   def cover_image_url
     cover_image.present? ? "#{BASE_URL}#{cover_image.url}" : nil
@@ -59,16 +59,20 @@ class Blog < ApplicationRecord
     updated_at.to_s(:short)
   end
 
-  def user_id
-    user.id
+  def logical_deletion
+    update(state_number: 3)
   end
-  
-  def user_name
-    user.name
+
+  def random_url
+    SecureRandom.hex(20)
   end
-  
-  def user_introduce
-    user.introduce
+
+  def set_url
+    self.url = random_url
+  end
+
+  def state_value
+    state_number_value
   end
   
   def user_picture
