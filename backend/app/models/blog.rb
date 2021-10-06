@@ -2,6 +2,7 @@ class Blog < ApplicationRecord
   require 'securerandom'
   extend Enumerize
   belongs_to :user
+  has_many :stars
 
   mount_uploader :cover_image,   CoverUploader
   enumerize :state_number, in: { draft: 0, limited: 1, released: 2, deleted: 3 }

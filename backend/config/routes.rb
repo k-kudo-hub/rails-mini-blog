@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :my_blogs, only: %i[index]
       resources :assets,   only: %i[index create destroy]
       resources :sessions, only: %i[create destroy]
+      resources :stars,   only: %i[create destroy]
       resources :pictures, only: [] do
         collection do
           put   'upload_picture'
