@@ -19,11 +19,11 @@ class Blog < ApplicationRecord
                             uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
   scope :personal, ->(id) {
-    includes(:user).where(user_id: id)
+    includes(:user, :stars).where(user_id: id)
   }
 
   scope :released, -> {
-    includes(:user).where(state_number: 2)
+    includes(:user, :stars).where(state_number: 2)
   }
 
   scope :select_for_index, -> {
