@@ -4,6 +4,7 @@ class Star < ApplicationRecord
 
   validate :check_own_star
   validate :check_unreleased_blog
+  validates :user_id, uniqueness: { scope: :blog_id }
 
   # 自分のブログはスターできない
   def check_own_star
