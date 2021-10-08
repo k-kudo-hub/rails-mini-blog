@@ -1,7 +1,7 @@
 <template>
   <transition-group name="slide-fade" tag="section">
     <div
-      class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider"
+      class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider shadow-lg"
       @touchstart="$emit('touchstart', $event)"
       @touchmove="$emit('touchmove', $event, blog)"
       @touchend="$emit('touchend')"
