@@ -55,6 +55,6 @@ class User < ApplicationRecord
   end
 
   def star_blog_ids
-    stars.pluck(:blog_id)
+    stars.order(created_at: :desc).pluck(:blog_id)
   end
 end

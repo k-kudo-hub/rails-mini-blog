@@ -10,7 +10,8 @@ class Api::V1::MyBlogsController < ApplicationController
   end
 
   def index_my_stars
-    blogs = Blog.tie.liked(@current_user.star_blog_ids).released
+    ids = @current_user.star_blog_ids
+    blogs = Blog.tie.liked(ids).released.sort!(ids)
     result = serialize_for_index(blogs, @current_user.id)
     render json: result
   end
