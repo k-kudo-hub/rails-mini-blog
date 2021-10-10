@@ -31,7 +31,7 @@ class Blog < ApplicationRecord
   }
 
   scope :select_for_index, -> {
-    select(:id, :user_id, :subject, :cover_image, :url, :created_at)
+    select(:id, :user_id, :subject, :state_number, :cover_image, :url, :created_at)
   }
 
   scope :select_for_edit, -> {

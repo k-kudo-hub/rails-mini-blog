@@ -32,6 +32,7 @@ class Api::V1::MyBlogsController < ApplicationController
                  id: blog.id,
                  subject: blog.subject,
                  url: blog.url,
+                 state_number: blog.state_number.value,
                  format_created_at: blog.format_created_at,
                  cover_image_url: blog.cover_image_url,
                  user_id: blog.user.id,
