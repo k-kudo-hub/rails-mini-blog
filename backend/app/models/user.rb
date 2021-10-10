@@ -39,12 +39,12 @@ class User < ApplicationRecord
   scope :find_and_select_by_id, ->(id) {
     select(:id, :name, :introduce, :picture, :cover, :link).find(id)
   }
+  
+  delegate :present?, to: :link, prefix: true
 
   def assets_selected
     assets.select(:id, :file, :alt).order(created_at: :desc)
   end
-
-  delegate :present?, to: :link, prefix: true
 
   def cover_url
     cover.present? ? "#{BASE_URL}#{cover.url}" : nil
@@ -52,5 +52,9 @@ class User < ApplicationRecord
 
   def picture_url
     picture.present? ? "#{BASE_URL}#{picture.url}" : nil
+  end
+
+  def star_blog_ids
+    stars.pluck(:blog_id)
   end
 end

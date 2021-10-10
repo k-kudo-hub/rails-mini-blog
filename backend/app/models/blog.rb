@@ -18,12 +18,20 @@ class Blog < ApplicationRecord
   validates :url,           presence: true,
                             uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
+  scope :liked, ->(id) {
+    includes(:user, :stars).where(id: id).where(state_number: 2)
+  }
+
   scope :personal, ->(id) {
     includes(:user, :stars).where(user_id: id)
   }
 
   scope :released, -> {
     includes(:user, :stars).where(state_number: 2)
+  }
+
+  scope :rank, ->(limit) {
+    group(:id).order('count(id) DESC').limit(limit)
   }
 
   scope :select_for_index, -> {
