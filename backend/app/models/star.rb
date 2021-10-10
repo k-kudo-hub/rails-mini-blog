@@ -15,4 +15,12 @@ class Star < ApplicationRecord
   def check_unreleased_blog
     errors.add(:blog, ': 公開されていないブログはスターできません。') if blog.state_number_value != 2
   end
+
+  scope :rank, ->(limit) {
+    group(:blog_id).order('count(blog_id) DESC').limit(limit)
+  }
+
+  scope :blog_ids, ->() {
+    pluck(:blog_id)
+  }
 end

@@ -4,7 +4,7 @@ class Api::V1::BlogsController < ApplicationController
   end
 
   def index
-    blogs = Blog.released.select_for_index
+    blogs = Blog.tie.released.select_for_index.newest
     result = serialize_for_index(blogs, @current_user.id)
     render json: result
   end

@@ -4,19 +4,20 @@ class Api::V1::MyBlogsController < ApplicationController
   end
 
   def index
-    blogs = Blog.personal(@current_user.id).undeleted.select_for_index
+    blogs = Blog.tie.personal(@current_user.id).undeleted.select_for_index
     result = serialize_for_index(blogs, @current_user.id)
     render json: result
   end
 
   def index_my_stars
-    blogs = Blog.liked(@current_user.star_blog_ids)
+    blogs = Blog.tie.liked(@current_user.star_blog_ids).released
     result = serialize_for_index(blogs, @current_user.id)
     render json: result
   end
 
   def index_higher_rating
-    blogs = Blog.liked(Star.pluck(:blog_id)).rank(10)
+    ids = Star.rank(10).blog_ids
+    blogs = Blog.tie.liked(ids).sort!(ids)
     result = serialize_for_index(blogs, @current_user.id)
     render json: result
   end

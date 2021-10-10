@@ -19,23 +19,19 @@ class Blog < ApplicationRecord
                             uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
   scope :liked, ->(id) {
-    includes(:user, :stars).where(id: id).where(state_number: 2)
+    where(id: id)
   }
 
   scope :personal, ->(id) {
-    includes(:user, :stars).where(user_id: id)
+    where(user_id: id)
   }
 
   scope :released, -> {
-    includes(:user, :stars).where(state_number: 2)
-  }
-
-  scope :rank, ->(limit) {
-    group(:id).order('count(id) DESC').limit(limit)
+    where(state_number: 2)
   }
 
   scope :select_for_index, -> {
-    select(:id, :user_id, :subject, :cover_image, :url, :created_at).order(created_at: :desc)
+    select(:id, :user_id, :subject, :cover_image, :url, :created_at)
   }
 
   scope :select_for_edit, -> {
@@ -44,6 +40,18 @@ class Blog < ApplicationRecord
 
   scope :undeleted, -> {
     where(state_number: 0..2)
+  }
+
+  scope :newest, -> {
+    order(created_at: :desc)
+  }
+
+  scope :tie, -> {
+    includes(:user, :stars)
+  }
+
+  scope :sort!, ->(ids) {
+    order(Arel.sql("FIELD(id,#{ids.join(',')})"))
   }
 
   delegate :id, to: :user, prefix: true
