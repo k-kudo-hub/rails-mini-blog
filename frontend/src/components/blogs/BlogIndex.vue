@@ -1,30 +1,53 @@
 <template>
   <section class="w-full h-full overflow-scroll bg-white shadow-md relative p-3 mx-auto">
+    <BlogIndexHeader
+      @getBlogs="getBlogs"
+      @getStars="getStars"
+      @getHigherRating="getHigherRating"
+      :currentBlogs="currentBlogs"
+    />
     <BlogCards
       v-if="blogs.items.length > 0"
       :blogs="blogs"
+      :user="user"
       @touchstart="swipe.slideStart($event)"
       @touchmove="slideMove"
       @touchend="swipe.slideEnd()"
     />
     <p v-else class="text-silver-500 text-center py-4">{{ $t("errors.no_posts_message") }}</p>
+    <FlashMessageView
+      :hook="flashMessage.is_displayed"
+      :message="flashMessage.content"
+    />
   </section>
 </template>
 
 <script>
-import axios from 'axios'
-import Blogs from '../../models/blog/blogs.js'
-import BlogCards from './BlogCard.vue'
-import Swipe from '../../models/swipe.js'
+import axios            from 'axios'
+import Blogs            from '../../models/blog/blogs.js'
+import BlogCards        from './BlogCard.vue'
+import BlogIndexHeader  from './BlogIndexHeader.vue'
+import FlashMessage     from '../../models/flashMessage.js'
+import FlashMessageView from '../shared/FlashMessage.vue'
+import Swipe            from '../../models/swipe.js'
 export default {
   data(){
     return {
       blogs: new Blogs(),
       swipe: new Swipe(),
+      flashMessage: new FlashMessage(),
+      currentBlogs: 'latest'
+    }
+  },
+  props: {
+    user: {
+      id: Number
     }
   },
   components: {
-    BlogCards
+    BlogCards,
+    BlogIndexHeader,
+    FlashMessageView,
   },
   created(){
     this.getBlogs()
@@ -35,6 +58,29 @@ export default {
         .get('http://localhost:3000/api/v1/blogs')
         .then(response => {
           this.blogs.set(response.data)
+          this.currentBlogs = 'latest'
+        })
+        .catch(error => {
+          console.log(response.data)
+        })
+    },
+    getStars() {
+      axios
+        .get('http://localhost:3000/api/v1/my_blogs/0/index_my_stars')
+        .then(response => {
+          this.blogs.set(response.data)
+          this.currentBlogs = 'stars'
+        })
+        .catch(error => {
+          console.log(response.data)
+        })
+    },
+    getHigherRating() {
+      axios
+        .get('http://localhost:3000/api/v1/my_blogs/0/index_higher_rating')
+        .then(response => {
+          this.blogs.set(response.data)
+          this.currentBlogs = 'higher_rating'
         })
         .catch(error => {
           console.log(response.data)
@@ -66,6 +112,14 @@ export default {
           this.flashMessage.display('スター済みのブログです。')
         })
     },
+    jumpToBlogEdit(url){
+      this.$router.push({
+        name: 'blog_edit',
+        params: {
+          url: url 
+        }
+      })
+    }
   }
 }
 </script>

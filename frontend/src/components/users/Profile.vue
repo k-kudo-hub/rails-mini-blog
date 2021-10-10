@@ -33,6 +33,7 @@
         @toggleCoverModal="toggleCoverModal"
       />
       <ProfileCards
+        :user="user"
         @toggleAssetModal="toggleAssetModal"
       />
       <flash-message-view

@@ -17,6 +17,7 @@
     <BlogCard
       v-if="blogs.items.length > 0"
       :blogs="blogs"
+      :user="user"
       @touchstart="swipe.slideStart($event)"
       @touchmove="slideMove"
       @touchend="swipe.slideEnd()"
@@ -40,6 +41,11 @@ export default {
       swipe: new Swipe()
     }
   },
+  props: {
+    user: {
+      id: Number,
+    }
+  },
   components: {
     BlogCard,
     ButtonDefault,
@@ -51,7 +57,7 @@ export default {
   methods: {
     getBlogs(){
       axios
-        .get('http://localhost:3000/api/v1/my_blogs')
+        .get('http://localhost:3000/api/v1/my_blogs/0/index')
         .then(response => {
           this.blogs.set(response.data)
         })
