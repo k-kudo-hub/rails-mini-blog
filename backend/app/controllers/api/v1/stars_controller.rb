@@ -15,7 +15,7 @@ class Api::V1::StarsController < ApplicationController
 
   def destroy
     blog = Blog.find_by(url: params[:url])
-    star = @current_user.star.find_by(blog_id: blog.id)
+    star = @current_user.stars.find_by(blog_id: blog.id)
     star.destroy!
     head :no_content
   end
