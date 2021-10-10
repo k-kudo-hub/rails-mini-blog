@@ -28,15 +28,11 @@
                 </div>
                 <h2>{{ blog.user_name }}</h2>
               </div>
-              <div v-if="blog.state_number === 2" :class="this.liked(blog.is_liked)" class="flex items-center">
-                <i class="fas fa-star mr-1"></i>
-                <p>{{ blog.liked_count }}</p>
-              </div>
-              <template v-else>
-                <div :class="optionByState(blog.state_number).class" class="rotated h-12 w-24 border-t-4 border-white text-center absolute -right-12 -bottom-4">
-                  <p class="text-sm font-bold mt-1">{{ optionByState(blog.state_number).text }}</p>
-                </div>
-              </template>
+              <BlogCardStatusLabel
+                :state_number="blog.state_number"
+                :is_liked="blog.is_liked"
+                :liked_count="blog.liked_count"
+              />
             </div>
           </div>
         </article>
@@ -58,15 +54,8 @@
 </template>
 
 <script>
+import BlogCardStatusLabel from './BlogCardStatusLabel.vue'
 export default {
-  data(){
-    return {
-      options: [
-        { id: 0, text: this.$t("blog.options.draft"), class: "bg-blue-800" },
-        { id: 1, text: this.$t("blog.options.limited"), class: "bg-green-800" }
-      ]
-    }
-  },
   props: {
     blogs: {
       items: []
@@ -75,10 +64,10 @@ export default {
       id: Number,
     }
   },
+  components: {
+    BlogCardStatusLabel
+  },
   methods: {
-    optionByState(state_number){
-      return this.options.find((item) => item.id === state_number)
-    },
     can_swipe(blog){
       return blog.is_liked ? "overflow-hidden" : "overflow-x-auto";
     },
@@ -93,9 +82,6 @@ export default {
           url: url 
         }
       })
-    },
-    liked(is_liked){
-      return is_liked ? "text-yellow-300" : ""
     }
   }
 }
@@ -119,10 +105,4 @@ export default {
 .slider::-webkit-scrollbar {
   display:none;
 }
-.rotated {
-  transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
 </style>
-
