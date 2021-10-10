@@ -16,9 +16,9 @@ export default {
   data(){
     return {
       options: [
-        { id: 0, name: 'latest', method: 'getBlogs', text: '最新' },
-        { id: 1, name: 'stars', method: 'getStars', text: 'スター済み' },
-        { id: 2, name: 'higher_rating', method: 'getHigherRating', text: '高評価' }
+        { id: 0, name: 'latest', method: 'getBlogs', text: this.$t("star.options.latest") },
+        { id: 1, name: 'stars', method: 'getStars', text: this.$t("star.options.stars") },
+        { id: 2, name: 'higher_rating', method: 'getHigherRating', text: this.$t("star.options.higher_rating") }
       ]
     }
   },

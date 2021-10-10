@@ -7,7 +7,9 @@ const messages = Object.freeze({
     success: 'が成功しました。',
     blog: {
       body_placeholder: '自由にブログを書いてみましょう。\nマークダウンに対応しています。'
-    }
+    },
+    starred: 'ブログをスターしました。',
+    delete_star: 'スターを取り消しました。'
   },
   button: {
     cancel: 'キャンセル',
@@ -25,7 +27,8 @@ const messages = Object.freeze({
     require_input: 'を入力してください。',
     require_select: 'を選択して下さい。',
     wrong_message: 'メールアドレスかパスワードが間違っています。',
-    no_posts_message: 'まだ投稿はありません。' 
+    no_posts_message: 'まだ投稿はありません。',
+    can_not_star: 'このブログはスターできません。'
   },
   action: {
     create: '作成',
@@ -82,6 +85,13 @@ const messages = Object.freeze({
       editor: 'エディタ',
       preview: 'プレビュー'
     },
+  },
+  star: {
+    options: {
+      latest: '最新',
+      stars: 'スター済み',
+      higher_rating: '高評価'
+    }
   },
   asset: {
     file: "ファイル",

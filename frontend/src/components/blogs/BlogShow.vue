@@ -79,7 +79,7 @@ export default {
         .post(`http://localhost:3000/api/v1/stars?url=${this.blog.url}`)
         .then(response => {
           this.blog.toggleStar()
-          this.flashMessage.display('スターしました。')
+          this.flashMessage.display(this.$t("form.starred"))
         })
         .catch(error => {
           console.log(error.response.data)
@@ -90,7 +90,7 @@ export default {
         .delete(`http://localhost:3000/api/v1/stars/0?url=${this.blog.url}`)
         .then(response => {
           this.blog.toggleStar()
-          this.flashMessage.display('スターを取り消しました。')
+          this.flashMessage.display(this.$t("form.delete_star"))
         })
         .catch(error => {
           console.log(error.response.data)

@@ -105,11 +105,11 @@ export default {
         .post(`http://localhost:3000/api/v1/stars?url=${url}`)
         .then(response => {
           this.blogs.delete(id)
-          this.flashMessage.display('スターしました。')
+          this.flashMessage.display(this.$t("form.starred"))
         })
         .catch(error => {
           console.log(error.response.data)
-          this.flashMessage.display('スター済みのブログです。')
+          this.flashMessage.display(this.$t("errors.can_not_star"))
         })
     },
     jumpToBlogEdit(url){
