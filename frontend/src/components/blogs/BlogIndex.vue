@@ -40,11 +40,31 @@ export default {
           console.log(response.data)
         })
     },
-    slideMove(...args){ // [0]touchEvent, [1]blog 
+    slideMove(...args){ // [0]touchEvent, [1]blog
+      const blog = args[1]
       if(this.swipe.slideMove(args[0])){
-        this.blogs.delete(args[1].id)
+        if(this.user.id === blog.user_id){
+          this.jumpToBlogEdit(blog.url)
+          this.blogs.delete(blog.id)
+        } else {
+          if(!blog.is_liked){
+            this.createStar(blog.url, blog.id)
+          }
+        }
         this.swipe.flag = false;
       }
+    },
+    createStar(url, id){
+      axios
+        .post(`http://localhost:3000/api/v1/stars?url=${url}`)
+        .then(response => {
+          this.blogs.delete(id)
+          this.flashMessage.display('スターしました。')
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.flashMessage.display('スター済みのブログです。')
+        })
     },
   }
 }

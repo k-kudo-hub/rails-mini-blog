@@ -1,7 +1,8 @@
 <template>
   <transition-group name="slide-fade" tag="section">
     <div
-      class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider shadow-lg"
+      class="w-full h-full mb-2 overflow-y-hidden whitespace-nowrap slider shadow-lg"
+      :class="this.can_swipe(blog)"
       @touchstart="$emit('touchstart', $event)"
       @touchmove="$emit('touchmove', $event, blog)"
       @touchend="$emit('touchend')"
@@ -27,17 +28,24 @@
                 </div>
                 <h2>{{ blog.user_name }}</h2>
               </div>
-              <div>
-                <i class="fas fa-star"></i>
+              <div :class="this.liked(blog.is_liked)" class="flex items-center">
+                <i class="fas fa-star mr-1"></i>
+                <p>{{ blog.liked_count }}</p>
               </div>
             </div>
           </div>
         </article>
-        <div class="w-3/12 bg-gold-500 h-full text-white">
+        <div v-if="blog.user_id != user.id" class="w-3/12 bg-gold-500 h-full text-white">
           <div class="h-2/3 flex items-center justify-center">
             <img class="h-12 w-12 mt-4" src="/src/assets/star.png" alt="">
           </div>
           <p class="h-1/3 text-center font-bold">STAR</p>
+        </div>
+        <div v-else class="w-3/12 bg-silver-500 h-full text-white">
+          <div class="h-2/3 flex items-center justify-center">
+            <i class="fas fa-pen fa-2x h-12 w-12 mt-4"></i>
+          </div>
+          <p class="h-1/3 text-center font-bold">EDIT</p>
         </div>
       </div>
     </div>
@@ -49,9 +57,15 @@ export default {
   props: {
     blogs: {
       items: []
+    },
+    user: {
+      id: Number,
     }
   },
   methods: {
+    can_swipe(blog){
+      return blog.is_liked ? "overflow-hidden" : "overflow-x-auto";
+    },
     exportBgImage(file){
       const path = file ? file : '/src/assets/dummy-header.jpg'
       return `background-image: url(${path})`
@@ -63,6 +77,9 @@ export default {
           url: url 
         }
       })
+    },
+    liked(is_liked){
+      return is_liked ? "text-yellow-300" : ""
     }
   }
 }
