@@ -36,18 +36,11 @@
             </div>
           </div>
         </article>
-        <div v-if="blog.user_id != user.id" class="w-3/12 bg-gold-500 h-full text-white">
-          <div class="h-2/3 flex items-center justify-center">
-            <img class="h-12 w-12 mt-4" src="/src/assets/star.png" alt="">
-          </div>
-          <p class="h-1/3 text-center font-bold">STAR</p>
-        </div>
-        <div v-else class="w-3/12 bg-silver-500 h-full text-white">
-          <div class="h-2/3 flex items-center justify-center">
-            <i class="fas fa-pen fa-2x h-12 w-12 mt-4"></i>
-          </div>
-          <p class="h-1/3 text-center font-bold">EDIT</p>
-        </div>
+        <BlogCardSwipeBack
+          :blog_user_id="blog.user_id"
+          :user_id="user.id"
+          :width="'w-3/12'"
+        />
       </div>
     </div>
   </transition-group>
@@ -55,6 +48,7 @@
 
 <script>
 import BlogCardStatusLabel from './BlogCardStatusLabel.vue'
+import BlogCardSwipeBack   from './BlogCardSwipeBack.vue'
 export default {
   props: {
     blogs: {
@@ -65,7 +59,8 @@ export default {
     }
   },
   components: {
-    BlogCardStatusLabel
+    BlogCardStatusLabel,
+    BlogCardSwipeBack
   },
   methods: {
     can_swipe(blog){
