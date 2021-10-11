@@ -15,6 +15,10 @@
           <i class="fas fa-trash-alt"></i>
         </button>
       </div>
+      <div v-else :class="this.liked(blog.is_liked)" class="flex items-center">
+        <i @click="$emit('toggleStar')" class="fas fa-star mr-1"></i>
+        <p>{{ blog.liked_count }}</p>
+      </div>
     </div>
     <p class="text-silver-500 text-right text-sm mr-2">{{ $t('common.updated_at') }}: {{ blog.updated_at }}</p>
   </header>
@@ -43,6 +47,11 @@ export default {
     },
     pictureUrl(){
       return this.blog.user_picture ? this.blog.user_picture : this.default_user_picture
+    },
+  },
+  methods: {
+    liked(is_liked){
+      return is_liked ? "text-yellow-300" : "text-silver-500"
     },
     jumpToBlogEdit(){
       this.$router.push({

@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :blogs
   has_many :assets
+  has_many :stars
 
   VALID_EMAIL_REGEX        = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGAX     = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
@@ -38,12 +39,12 @@ class User < ApplicationRecord
   scope :find_and_select_by_id, ->(id) {
     select(:id, :name, :introduce, :picture, :cover, :link).find(id)
   }
+  
+  delegate :present?, to: :link, prefix: true
 
   def assets_selected
     assets.select(:id, :file, :alt).order(created_at: :desc)
   end
-
-  delegate :present?, to: :link, prefix: true
 
   def cover_url
     cover.present? ? "#{BASE_URL}#{cover.url}" : nil
@@ -51,5 +52,9 @@ class User < ApplicationRecord
 
   def picture_url
     picture.present? ? "#{BASE_URL}#{picture.url}" : nil
+  end
+
+  def star_blog_ids
+    stars.order(created_at: :desc).pluck(:blog_id)
   end
 end

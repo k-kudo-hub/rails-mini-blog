@@ -1,6 +1,7 @@
 <template>
   <section class="w-full h-full overflow-scroll bg-white shadow-md relative p-3 mx-auto">
     <BlogShowHeader
+      @toggleStar="toggleStar"
       :blog="blog"
       :user="user"
     />
@@ -16,6 +17,10 @@
       :user_introduce="blog.user_introduce"
       :user_id="blog.user_id"
     />
+    <FlashMessageView
+      :hook="flashMessage.is_displayed"
+      :message="flashMessage.content"
+    />
   </section>
 </template>
 
@@ -26,11 +31,14 @@ import BlogShowHeader from './BlogShowHeader.vue'
 import BlogShowFooter from './BlogShowFooter.vue'
 import BlogMarkdown   from './BlogMarkdown.vue'
 import Errors         from '../../models/blog/error.js'
+import FlashMessage     from '../../models/flashMessage.js'
+import FlashMessageView from '../shared/FlashMessage.vue'
 export default {
   data(){
     return {
       blog: new Blog(),
       errors: new Errors(),
+      flashMessage: new FlashMessage(),
     }
   },
   props: {
@@ -41,7 +49,8 @@ export default {
   components: {
     BlogMarkdown,
     BlogShowHeader,
-    BlogShowFooter
+    BlogShowFooter,
+    FlashMessageView,
   },
   created(){
     this.getBlog()
@@ -57,7 +66,36 @@ export default {
         .catch(error => {
           this.errors.catch(error.response.data)
         })
-    }
+    },
+    toggleStar(){
+      if(this.blog.is_liked){
+        this.deleteStar()
+      } else {
+        this.createStar()
+      }
+    },
+    createStar(){
+      axios
+        .post(`http://localhost:3000/api/v1/stars?url=${this.blog.url}`)
+        .then(response => {
+          this.blog.toggleStar()
+          this.flashMessage.display(this.$t("form.starred"))
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+    },
+    deleteStar(){
+      axios
+        .delete(`http://localhost:3000/api/v1/stars/0?url=${this.blog.url}`)
+        .then(response => {
+          this.blog.toggleStar()
+          this.flashMessage.display(this.$t("form.delete_star"))
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+    },
   }
 }
 </script>

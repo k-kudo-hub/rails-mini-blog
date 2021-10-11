@@ -16,8 +16,10 @@ export default class {
     this.updated_at   = data.format_updated_at;
     this.user_id      = data.user_id;
     this.user_name    = data.user_name;
-    this.user_introduce = data.user_introduce,
+    this.user_introduce = data.user_introduce;
     this.user_picture = data.user_picture;
+    this.is_liked     = data.is_liked;
+    this.liked_count  = data.liked_count;
   }
   is_valid(){
     return this.subject != false
@@ -31,5 +33,14 @@ export default class {
       formData.append('blog[cover_image]', this.cover_image)
     } // typeキーが存在しない場合はappendしない。
     return formData
+  }
+  toggleStar(){
+    if(this.is_liked){
+      this.is_liked = false;
+      this.liked_count -= 1;
+    } else {
+      this.is_liked = true;
+      this.liked_count += 1;
+    }
   }
 }

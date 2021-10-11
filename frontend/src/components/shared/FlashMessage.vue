@@ -9,8 +9,16 @@
 <script>
 export default {
   props: {
-    hook: false,
-    message: "",
+    hook: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    message: {
+      type: String,
+      default: "",
+      required: true,
+    },
   }
 }
 </script>

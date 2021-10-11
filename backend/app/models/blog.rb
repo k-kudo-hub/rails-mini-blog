@@ -2,6 +2,7 @@ class Blog < ApplicationRecord
   require 'securerandom'
   extend Enumerize
   belongs_to :user
+  has_many :stars
 
   mount_uploader :cover_image,   CoverUploader
   enumerize :state_number, in: { draft: 0, limited: 1, released: 2, deleted: 3 }
@@ -17,16 +18,20 @@ class Blog < ApplicationRecord
   validates :url,           presence: true,
                             uniqueness:   { message: 'の生成で問題が発生しました。お手数ですが再度「保存する」を押してください。' }, on: :create
 
+  scope :liked, ->(id) {
+    where(id: id)
+  }
+
   scope :personal, ->(id) {
-    includes(:user).where(user_id: id)
+    where(user_id: id)
   }
 
   scope :released, -> {
-    includes(:user).where(state_number: 2)
+    where(state_number: 2)
   }
 
   scope :select_for_index, -> {
-    select(:id, :user_id, :subject, :cover_image, :url, :created_at).order(created_at: :desc)
+    select(:id, :user_id, :subject, :state_number, :cover_image, :url, :created_at)
   }
 
   scope :select_for_edit, -> {
@@ -35,6 +40,18 @@ class Blog < ApplicationRecord
 
   scope :undeleted, -> {
     where(state_number: 0..2)
+  }
+
+  scope :newest, -> {
+    order(created_at: :desc)
+  }
+
+  scope :tie, -> {
+    includes(:user, :stars)
+  }
+
+  scope :sort!, ->(ids) {
+    order(Arel.sql("FIELD(id,#{ids.join(',')})"))
   }
 
   delegate :id, to: :user, prefix: true

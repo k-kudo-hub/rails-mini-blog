@@ -7,7 +7,9 @@ const messages = Object.freeze({
     success: 'was successful.',
     blog: {
       body_placeholder: 'Feel free to write a blog!\nSupports markdown notation'
-    }
+    },
+    starred: 'Highly appreciated.',
+    delete_star: 'Withdrew high praise.'
   },
   button: {
     cancel: 'Cancel ',
@@ -25,7 +27,8 @@ const messages = Object.freeze({
     require_input: " can't be blank.",
     require_select: ' is not selected.',
     wrong_message: 'Wrong email address or password.',
-    no_posts_message: 'No posts yet.' 
+    no_posts_message: 'No posts yet.',
+    can_not_star: 'This blog can not star',
   },
   action: {
     create: 'Create ',
@@ -67,6 +70,13 @@ const messages = Object.freeze({
     picture: 'Profile image ',
     link: 'URL '
   },
+  star: {
+    options: {
+      latest: 'Latest',
+      stars: 'Liked',
+      higher_rating: 'High rating'
+    }
+  },
   blog: {
     subject: 'Subject ',
     body: 'body',
@@ -86,9 +96,9 @@ const messages = Object.freeze({
       file: "File ",
       alt: 'Alternative ',
     },
-    common: {
-      updated_at: 'Updated at ',
-    }
+  },
+  common: {
+    updated_at: 'Updated at ',
   }
 })
 

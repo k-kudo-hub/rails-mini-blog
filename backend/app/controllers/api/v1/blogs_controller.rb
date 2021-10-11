@@ -4,8 +4,9 @@ class Api::V1::BlogsController < ApplicationController
   end
 
   def index
-    blogs = Blog.released.select_for_index
-    render json: blogs, methods: %i[format_created_at cover_image_url user_picture user_name]
+    blogs = Blog.tie.released.select_for_index.newest
+    result = serialize_for_index(blogs, @current_user.id)
+    render json: result
   end
 
   def create
@@ -20,7 +21,8 @@ class Api::V1::BlogsController < ApplicationController
 
   def show
     blog = Blog.find_by(url: params[:url])
-    render json: blog, methods: %i[format_updated_at cover_image_url user_picture user_name user_introduce user_id]
+    result = serialize_for_show(blog, @current_user.id)
+    render json: result
   end
 
   def edit
@@ -47,5 +49,46 @@ class Api::V1::BlogsController < ApplicationController
 
     def blog_params
       params.require(:blog).permit(:subject, :body, :cover_image, :state_number).merge(user: @current_user)
+    end
+
+    # FIXME!: ここにserializeを置いておきたくない
+    def serialize_for_index(blogs, id)
+      result = blogs.map do |blog|
+                 stars = blog.stars.pluck(:user_id)
+                 item = {
+                   id: blog.id,
+                   subject: blog.subject,
+                   url: blog.url,
+                   state_number: blog.state_number.value,
+                   format_created_at: blog.format_created_at,
+                   cover_image_url: blog.cover_image_url,
+                   user_id: blog.user.id,
+                   user_name: blog.user.name,
+                   user_picture: blog.user_picture,
+                   is_liked: stars.include?(id),
+                   liked_count: stars.count
+                 }
+               end
+      result
+    end
+
+    # FIXME!: ここにserializeを置いておきたくない
+    def serialize_for_show(blog, id)
+      stars = blog.stars.pluck(:user_id)
+      result = {
+        id: blog.id,
+        subject: blog.subject,
+        body: blog.body,
+        url: blog.url,
+        format_updated_at: blog.format_updated_at,
+        cover_image_url: blog.cover_image_url,
+        user_id: blog.user.id,
+        user_name: blog.user.name,
+        user_picture: blog.user_picture,
+        user_introduce: blog.user.introduce,
+        is_liked: stars.include?(id),
+        liked_count: stars.count
+      }
+      result
     end
 end

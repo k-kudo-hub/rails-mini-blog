@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_062215) do
+ActiveRecord::Schema.define(version: 2021_10_05_232559) do
 
   create_table "assets", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 2021_09_23_062215) do
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
+  create_table "stars", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "blog_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blog_id"], name: "index_stars_on_blog_id"
+    t.index ["user_id", "blog_id"], name: "index_stars_on_user_id_and_blog_id", unique: true
+    t.index ["user_id"], name: "index_stars_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20, null: false
     t.string "email", null: false
@@ -52,4 +62,6 @@ ActiveRecord::Schema.define(version: 2021_09_23_062215) do
 
   add_foreign_key "assets", "users"
   add_foreign_key "blogs", "users"
+  add_foreign_key "stars", "blogs"
+  add_foreign_key "stars", "users"
 end

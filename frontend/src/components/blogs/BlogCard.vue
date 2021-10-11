@@ -1,7 +1,8 @@
 <template>
   <transition-group name="slide-fade" tag="section">
     <div
-      class="w-full h-full mb-2 overflow-x-auto overflow-y-hidden whitespace-nowrap slider"
+      class="w-full h-full mb-2 overflow-y-hidden whitespace-nowrap slider shadow-lg"
+      :class="this.can_swipe(blog)"
       @touchstart="$emit('touchstart', $event)"
       @touchmove="$emit('touchmove', $event, blog)"
       @touchend="$emit('touchend')"
@@ -20,38 +21,51 @@
             <div class="h-1/6">
               <p class="text-xs">{{ blog.format_created_at }}</p>
             </div>
-            <div class="h-2/6 flex items-center justify-between">
+            <div class="h-2/6 flex items-center justify-between relative">
               <div class="flex items-center">
                 <div class="h-6 w-6 bg-white mr-2 flex items-center rounded-2xl overflow-hidden">
                   <img :src="blog.user_picture" alt="" class="h-full w-full content-cover">
                 </div>
                 <h2>{{ blog.user_name }}</h2>
               </div>
-              <div>
-                <i class="fas fa-star"></i>
-              </div>
+              <BlogCardStatusLabel
+                :state_number="blog.state_number"
+                :is_liked="blog.is_liked"
+                :liked_count="blog.liked_count"
+              />
             </div>
           </div>
         </article>
-        <div class="w-3/12 bg-gold-500 h-full text-white">
-          <div class="h-2/3 flex items-center justify-center">
-            <img class="h-12 w-12 mt-4" src="/src/assets/star.png" alt="">
-          </div>
-          <p class="h-1/3 text-center font-bold">STAR</p>
-        </div>
+        <BlogCardSwipeBack
+          :blog_user_id="blog.user_id"
+          :user_id="user.id"
+          :width="'w-3/12'"
+        />
       </div>
     </div>
   </transition-group>
 </template>
 
 <script>
+import BlogCardStatusLabel from './BlogCardStatusLabel.vue'
+import BlogCardSwipeBack   from './BlogCardSwipeBack.vue'
 export default {
   props: {
     blogs: {
       items: []
+    },
+    user: {
+      id: Number,
     }
   },
+  components: {
+    BlogCardStatusLabel,
+    BlogCardSwipeBack
+  },
   methods: {
+    can_swipe(blog){
+      return blog.is_liked ? "overflow-hidden" : "overflow-x-auto";
+    },
     exportBgImage(file){
       const path = file ? file : '/src/assets/dummy-header.jpg'
       return `background-image: url(${path})`
@@ -87,4 +101,3 @@ export default {
   display:none;
 }
 </style>
-
