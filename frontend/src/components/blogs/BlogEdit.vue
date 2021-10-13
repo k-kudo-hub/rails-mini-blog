@@ -162,7 +162,7 @@ export default {
     },
     insertAsset(...args){
       this.asset_modal.toggle() 
-      const asset = args[0] // [id, file, alt, file_url]
+      const asset = args[0]
       const mdText = `![${asset.alt}](${asset.file_url})`
       const target = document.getElementById('blog_body')
       setTimeout(() => {
